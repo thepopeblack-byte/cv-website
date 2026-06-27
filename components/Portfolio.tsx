@@ -19,18 +19,18 @@ export function Portfolio() {
           <div className="mt-4 grid gap-8 lg:grid-cols-[0.34fr_0.66fr] lg:items-start">
             <div>
               <h2 className="section-title">
-                Commercial proof across Web3 partnerships, ecosystem growth,
-                and intelligence.
+                Commercial proof across Web3 partnerships, ecosystem growth, and
+                intelligence.
               </h2>
               <p className="section-copy">
                 Four high-signal proof points across revenue growth,
-                go-to-market strategy, blockchain infrastructure,
-                confidential computing, Africa Web3 ecosystem expansion, and
-                blockchain intelligence.
+                go-to-market strategy, blockchain infrastructure, confidential
+                computing, Africa Web3 ecosystem expansion, and blockchain
+                intelligence.
               </p>
             </div>
 
-            <div className="grid gap-5 md:grid-cols-2">
+            <div className="portfolio-card-grid grid gap-5 md:grid-cols-2">
               {portfolioItems.map((item, index) => {
                 const hrefIsExternal = item.href
                   ? isExternalHref(item.href)
@@ -38,7 +38,7 @@ export function Portfolio() {
 
                 return (
                   <SectionReveal key={item.title} delay={0.03 + index * 0.03}>
-                    <article className="group h-full">
+                    <article className="portfolio-card group h-full">
                       <div className="image-panel relative h-56 sm:h-64">
                         <Image
                           src={item.image}

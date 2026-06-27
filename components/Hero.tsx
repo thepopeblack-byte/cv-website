@@ -23,7 +23,11 @@ const heroActions: HeroAction[] = [
     variant: "button-primary",
     external: true,
   },
-  { label: "View Experience", href: "#experience", variant: "button-secondary" },
+  {
+    label: "View Experience",
+    href: "#experience",
+    variant: "button-secondary",
+  },
   {
     label: "Download CV",
     href: profile.cvUrl,
@@ -64,9 +68,9 @@ export function Hero() {
                 <div>BLOCKCHAIN INTELLIGENCE / AML-CFT / OSINT</div>
               </div>
 
-              <div className="flex flex-wrap gap-3">
+              <div className="hero-actions flex flex-wrap gap-3">
                 {heroActions.map((link) => (
-                  <div key={link.label}>
+                  <div key={link.label} className="hero-action-item">
                     <Link
                       href={link.href}
                       target={link.external ? "_blank" : undefined}
@@ -95,7 +99,7 @@ export function Hero() {
                 <p>{profile.currentFocus}</p>
               </div>
 
-              <div className="mt-10 grid gap-3 border-t border-[var(--line)] pt-6 md:grid-cols-2">
+              <div className="hero-quick-facts mt-10 grid gap-3 border-t border-[var(--line)] pt-6 md:grid-cols-2">
                 {quickFacts.map((fact, index) => (
                   <div key={fact} className="flex gap-4">
                     <span className="meta-stack">0{index + 1}</span>

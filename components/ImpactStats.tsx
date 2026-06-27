@@ -3,7 +3,8 @@ import { SectionReveal } from "@/components/SectionReveal";
 import { profile } from "@/data/profile";
 
 function formatMetric(value: number, prefix = "", suffix = "") {
-  const formatted = value >= 1000 ? value.toLocaleString("en-US") : String(value);
+  const formatted =
+    value >= 1000 ? value.toLocaleString("en-US") : String(value);
   return `${prefix}${formatted}${suffix}`;
 }
 
@@ -27,10 +28,12 @@ export function ImpactStats() {
                 {profile.proofLine}
               </p>
 
-              <div className="mt-6 grid gap-3">
+              <div className="proof-positioning-list mt-6 grid gap-3">
                 {profile.aboutCards.map((card, index) => (
                   <article key={card.title} className="proof-positioning-card">
-                    <div className="meta-stack">0{index + 1} / CORE CAPABILITY</div>
+                    <div className="meta-stack">
+                      0{index + 1} / CORE CAPABILITY
+                    </div>
                     <h3>{card.title}</h3>
                     <p>{card.text}</p>
                   </article>

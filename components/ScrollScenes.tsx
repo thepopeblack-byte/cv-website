@@ -22,17 +22,22 @@ export function ScrollScenes() {
 
   useEffect(() => {
     const sections = Array.from(
-      document.querySelectorAll<HTMLElement>("main#main-content > section.page-layer"),
+      document.querySelectorAll<HTMLElement>(
+        "main#main-content > section.page-layer",
+      ),
     );
 
     if (!sections.length) {
       return;
     }
 
-    setSceneCount(sections.length);
     sections.forEach((section, index) => {
       section.classList.add("scroll-scene");
       section.dataset.sceneIndex = String(index + 1);
+    });
+    const initialFrameId = window.requestAnimationFrame(() => {
+      setSceneCount(sections.length);
+      activateScene(findBestScene());
     });
 
     const activateScene = (nextActiveScene: number) => {
@@ -56,9 +61,13 @@ export function ScrollScenes() {
 
       sections.forEach((section, index) => {
         const rect = section.getBoundingClientRect();
-        const visible = rect.bottom > viewportHeight * 0.08 && rect.top < viewportHeight * 0.92;
-        const sectionAnchor = rect.top + Math.min(rect.height * 0.28, viewportHeight * 0.36);
-        const score = Math.abs(sectionAnchor - anchor) + (visible ? 0 : viewportHeight);
+        const visible =
+          rect.bottom > viewportHeight * 0.08 &&
+          rect.top < viewportHeight * 0.92;
+        const sectionAnchor =
+          rect.top + Math.min(rect.height * 0.28, viewportHeight * 0.36);
+        const score =
+          Math.abs(sectionAnchor - anchor) + (visible ? 0 : viewportHeight);
 
         if (score < bestScore) {
           bestScore = score;
@@ -69,25 +78,31 @@ export function ScrollScenes() {
       return nextActiveScene;
     };
 
-    activateScene(findBestScene());
-
     if (typeof window.IntersectionObserver === "undefined") {
       let frameId = 0;
 
       const requestUpdate = () => {
         window.cancelAnimationFrame(frameId);
-        frameId = window.requestAnimationFrame(() => activateScene(findBestScene()));
+        frameId = window.requestAnimationFrame(() =>
+          activateScene(findBestScene()),
+        );
       };
 
       window.addEventListener("scroll", requestUpdate, { passive: true });
       window.addEventListener("resize", requestUpdate);
 
       return () => {
+        window.cancelAnimationFrame(initialFrameId);
         window.cancelAnimationFrame(frameId);
         window.removeEventListener("scroll", requestUpdate);
         window.removeEventListener("resize", requestUpdate);
         sections.forEach((section) => {
-          section.classList.remove("scroll-scene", "scene-active", "scene-before", "scene-after");
+          section.classList.remove(
+            "scroll-scene",
+            "scene-active",
+            "scene-before",
+            "scene-after",
+          );
           delete section.dataset.sceneIndex;
         });
       };
@@ -133,10 +148,16 @@ export function ScrollScenes() {
     window.addEventListener("resize", syncOnResize);
 
     return () => {
+      window.cancelAnimationFrame(initialFrameId);
       observer.disconnect();
       window.removeEventListener("resize", syncOnResize);
       sections.forEach((section) => {
-        section.classList.remove("scroll-scene", "scene-active", "scene-before", "scene-after");
+        section.classList.remove(
+          "scroll-scene",
+          "scene-active",
+          "scene-before",
+          "scene-after",
+        );
         delete section.dataset.sceneIndex;
       });
     };

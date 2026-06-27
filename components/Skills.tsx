@@ -28,13 +28,16 @@ export function Skills() {
     if (typeof window.IntersectionObserver === "undefined") {
       activateCluster(0);
       return;
-    };
+    }
 
     const visibility = new Map<Element, number>();
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          visibility.set(entry.target, entry.isIntersecting ? entry.intersectionRatio : 0);
+          visibility.set(
+            entry.target,
+            entry.isIntersecting ? entry.intersectionRatio : 0,
+          );
         });
 
         let nextActiveIndex = activeIndexRef.current;
@@ -68,6 +71,10 @@ export function Skills() {
   const activeGroup = skillGroups[activeIndex] ?? skillGroups[0];
   const capabilityProgress =
     skillGroups.length > 1 ? (activeIndex / (skillGroups.length - 1)) * 100 : 0;
+  const selectCluster = (nextActiveIndex: number) => {
+    activeIndexRef.current = nextActiveIndex;
+    setActiveIndex(nextActiveIndex);
+  };
 
   return (
     <section id="skills" className="page-layer py-14 md:py-16 lg:py-12">
@@ -101,18 +108,24 @@ export function Skills() {
 
               <div className="capability-rail" aria-label="Capability clusters">
                 {skillGroups.map((group, index) => (
-                  <div
+                  <button
+                    type="button"
                     key={group.title}
                     className={`capability-rail-item ${
                       index === activeIndex ? "is-active" : ""
                     }`}
                     aria-current={index === activeIndex ? "step" : undefined}
+                    onClick={() => selectCluster(index)}
                   >
                     <span>{String(index + 1).padStart(2, "0")}</span>
                     <span>{group.title}</span>
-                  </div>
+                  </button>
                 ))}
               </div>
+              <p className="capability-mobile-hint">
+                Tap a cluster to switch focus. All capabilities remain
+                available.
+              </p>
             </aside>
 
             <div className="capability-cluster-stack">

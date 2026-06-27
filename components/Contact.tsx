@@ -40,7 +40,8 @@ export function Contact() {
     if (!payload.name || !payload.email || !payload.message) {
       setStatus({
         type: "error",
-        message: "Something went wrong. Please use the email link or try again.",
+        message:
+          "Something went wrong. Please use the email link or try again.",
       });
       return;
     }
@@ -68,7 +69,8 @@ export function Contact() {
     } catch {
       setStatus({
         type: "error",
-        message: "Something went wrong. Please use the email link or try again.",
+        message:
+          "Something went wrong. Please use the email link or try again.",
       });
     } finally {
       setSubmitting(false);
@@ -84,9 +86,12 @@ export function Contact() {
             <div>
               <h2 className="section-title">Contact.</h2>
               <p className="section-copy">{profile.audienceLabel}</p>
-              <div className="mt-8 space-y-3">
+              <div className="contact-link-grid mt-8 space-y-3">
                 <div>
-                  <Link href={`mailto:${profile.email}`} className="bracket-link">
+                  <Link
+                    href={`mailto:${profile.email}`}
+                    className="bracket-link"
+                  >
                     [EMAIL]
                   </Link>
                 </div>
@@ -123,7 +128,7 @@ export function Contact() {
               </div>
             </div>
 
-            <form onSubmit={handleSubmit} className="grid gap-4">
+            <form onSubmit={handleSubmit} className="contact-form grid gap-4">
               <div className="grid gap-4 md:grid-cols-2">
                 <label className="grid gap-2 text-sm text-[var(--muted)]">
                   Name
@@ -183,7 +188,11 @@ export function Contact() {
 
               <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
                 <div className="flex flex-col gap-3 sm:flex-row">
-                  <button type="submit" className="button-primary" disabled={submitting}>
+                  <button
+                    type="submit"
+                    className="button-primary"
+                    disabled={submitting}
+                  >
                     {submitting ? (
                       <>
                         <LoaderCircle size={18} className="animate-spin" />
