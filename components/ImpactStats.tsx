@@ -9,7 +9,7 @@ function formatMetric(value: number, prefix = "", suffix = "") {
 
 export function ImpactStats() {
   return (
-    <section id="impact" className="page-layer py-9 md:py-10 lg:py-12">
+    <section id="impact" className="page-layer py-14 md:py-16 lg:py-12">
       <Container>
         <SectionReveal className="section-frame proof-stage">
           <div className="meta-stack">02 / COMMERCIAL PROOF</div>

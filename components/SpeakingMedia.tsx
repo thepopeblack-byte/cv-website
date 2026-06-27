@@ -20,7 +20,7 @@ export function SpeakingMedia() {
   const [activeMedia, setActiveMedia] = useState<ActiveMedia>(null);
 
   return (
-    <section id="speaking" className="page-layer py-9 md:py-10 lg:py-12">
+    <section id="speaking" className="page-layer py-14 md:py-16 lg:py-12">
       <Container>
         <SectionReveal className="section-frame media-stage">
           <div className="meta-stack">09 / SPEAKING & MEDIA</div>

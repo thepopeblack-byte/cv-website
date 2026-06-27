@@ -70,7 +70,7 @@ export function Skills() {
     skillGroups.length > 1 ? (activeIndex / (skillGroups.length - 1)) * 100 : 0;
 
   return (
-    <section id="skills" className="page-layer py-9 md:py-10 lg:py-12">
+    <section id="skills" className="page-layer py-14 md:py-16 lg:py-12">
       <Container>
         <SectionReveal className="section-frame capability-section">
           <div className="meta-stack">04 / CAPABILITIES</div>

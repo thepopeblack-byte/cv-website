@@ -4,7 +4,7 @@ import { profile } from "@/data/profile";
 
 export function Education() {
   return (
-    <section id="education" className="page-layer py-9 md:py-10 lg:py-12">
+    <section id="education" className="page-layer py-14 md:py-16 lg:py-12">
       <Container>
         <SectionReveal className="section-frame education-stage">
           <div className="meta-stack">08 / EDUCATION</div>

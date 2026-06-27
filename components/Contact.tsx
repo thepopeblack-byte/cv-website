@@ -76,7 +76,7 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="page-layer py-8 md:py-10 lg:py-12">
+    <section id="contact" className="page-layer py-14 md:py-16 lg:py-12">
       <Container>
         <SectionReveal className="section-frame">
           <div className="meta-stack">10 / CONTACT</div>

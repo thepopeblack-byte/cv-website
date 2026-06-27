@@ -4,7 +4,7 @@ import { certifications } from "@/data/certifications";
 
 export function Certifications() {
   return (
-    <section id="certifications" className="page-layer py-9 md:py-10 lg:py-12">
+    <section id="certifications" className="page-layer py-14 md:py-16 lg:py-12">
       <Container>
         <SectionReveal className="section-frame">
           <div className="meta-stack">07 / CREDENTIALS</div>
