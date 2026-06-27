@@ -13,6 +13,10 @@ type StatusState = {
   message: string;
 };
 
+const contactEndpoint =
+  process.env.NEXT_PUBLIC_CONTACT_FORM_ENDPOINT ||
+  "https://formspree.io/f/mbdvyddy";
+
 export function Contact() {
   const [submitting, setSubmitting] = useState(false);
   const [status, setStatus] = useState<StatusState>({
@@ -22,15 +26,6 @@ export function Contact() {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-
-    const endpoint = process.env.NEXT_PUBLIC_CONTACT_FORM_ENDPOINT;
-    if (!endpoint) {
-      setStatus({
-        type: "error",
-        message: "Contact form is not configured yet. Please use the email link.",
-      });
-      return;
-    }
 
     const form = event.currentTarget;
     const formData = new FormData(form);
@@ -52,7 +47,7 @@ export function Contact() {
 
     try {
       setSubmitting(true);
-      const response = await fetch(endpoint, {
+      const response = await fetch(contactEndpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
