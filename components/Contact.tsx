@@ -18,7 +18,7 @@ export function Contact() {
   const [status, setStatus] = useState<StatusState>({
     type: "idle",
     message:
-      "Direct submission is optional. Without a configured endpoint the form will fall back to email.",
+      "Use the form for partnership, leadership, speaking, advisory, or intelligence conversations.",
   });
 
   async function handleSubmit(formData: FormData) {
@@ -39,8 +39,7 @@ export function Contact() {
       window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`;
       setStatus({
         type: "success",
-        message:
-          "Email fallback opened. Add NEXT_PUBLIC_FORMSPREE_ENDPOINT for direct submissions.",
+        message: "Email draft opened. You can send it directly from your mail client.",
       });
       return;
     }
@@ -75,7 +74,7 @@ export function Contact() {
     <section id="contact" className="page-layer py-12">
       <Container>
         <SectionReveal className="section-frame">
-          <div className="meta-stack">10 / CONTACT</div>
+          <div className="meta-stack">09 / CONTACT</div>
           <div className="mt-4 grid gap-8 lg:grid-cols-[0.34fr_0.66fr] lg:items-start">
             <div>
               <h2 className="section-title">Contact.</h2>

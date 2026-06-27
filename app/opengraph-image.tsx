@@ -35,7 +35,7 @@ export default function OpenGraphImage() {
           }}
         >
           <span>Popeblack</span>
-          <span>Remote (UTC+1)</span>
+          <span>Global Partnerships</span>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: "22px" }}>
           <div
@@ -56,8 +56,8 @@ export default function OpenGraphImage() {
               lineHeight: 1.3,
             }}
           >
-            Head of Sales & Business Development | Strategic Partnerships |
-            Revenue Growth | Web3 Ecosystem Leadership
+            Web3 Partnerships & Revenue Growth Leader | Confidential
+            Computing | Emerging Markets Growth
           </div>
         </div>
         <div style={{ display: "flex", gap: "18px" }}>

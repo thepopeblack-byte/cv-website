@@ -23,10 +23,10 @@ export function SpeakingMedia() {
     <section id="speaking" className="page-layer py-12">
       <Container>
         <SectionReveal className="section-frame">
-          <div className="meta-stack">06 / MEDIA</div>
+          <div className="meta-stack">06 / SPEAKING & MEDIA</div>
           <div className="mt-4 grid gap-8 lg:grid-cols-[0.34fr_0.66fr] lg:items-start">
             <div>
-              <h2 className="section-title">Speaking and media.</h2>
+              <h2 className="section-title">Speaking, media, and public credibility.</h2>
               <p className="section-copy">{profile.speakingIntro}</p>
             </div>
 
@@ -55,11 +55,6 @@ export function SpeakingMedia() {
                       <p className="mt-4 text-[0.98rem] leading-8 text-[var(--muted)]">
                         {item.description}
                       </p>
-                      {item.placeholderNote ? (
-                        <p className="mt-3 text-sm leading-7 text-[var(--accent-soft)]">
-                          {item.placeholderNote}
-                        </p>
-                      ) : null}
                       <div className="mt-4 flex flex-wrap gap-4">
                         {item.videoEmbedUrl ? (
                           <button
@@ -86,6 +81,29 @@ export function SpeakingMedia() {
                             <ArrowUpRight size={13} />
                           </Link>
                         ) : null}
+                        {item.href ? (
+                          <Link
+                            href={item.href}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="bracket-link inline-flex items-center gap-2"
+                          >
+                            [{item.ctaLabel ?? "EVENT"}]
+                            <ArrowUpRight size={13} />
+                          </Link>
+                        ) : null}
+                        {item.links?.map((link) => (
+                          <Link
+                            key={link.href}
+                            href={link.href}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="bracket-link inline-flex items-center gap-2"
+                          >
+                            [{link.label}]
+                            <ArrowUpRight size={13} />
+                          </Link>
+                        ))}
                       </div>
                     </div>
                   </article>

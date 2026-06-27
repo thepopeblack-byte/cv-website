@@ -1,3 +1,8 @@
+export type PortfolioLink = {
+  label: string;
+  href: string;
+};
+
 export type PortfolioItem = {
   title: string;
   category: string;
@@ -7,133 +12,105 @@ export type PortfolioItem = {
   ctaLabel?: string;
   videoEmbedUrl?: string;
   videoWatchUrl?: string;
-  placeholderNote?: string;
+  links?: PortfolioLink[];
 };
 
-// Replace placeholder images with higher-resolution event media if more assets become available.
 export const portfolioItems: PortfolioItem[] = [
   {
-    title: "Cybertech Africa, Kigali 2023",
-    category: "Conference",
+    title: "Secret Network Commercial Growth & Partnerships",
+    category: "Revenue Growth / Strategic Partnerships",
     description:
-      "Keynote speaker in Kigali, contributing to a panel discussion on blockchain technology and the imperative of securing cryptocurrencies.",
-    image: "/images/kayode-networking.jpg",
-    href: "https://africa.cybertechconference.com/speakers",
-    ctaLabel: "View Event",
-    videoEmbedUrl: "https://www.youtube.com/embed/ktdhwuTZcb0",
-    videoWatchUrl: "https://youtu.be/ktdhwuTZcb0?si=5UBjckrIDlPBHddQ",
+      "Commercial leadership for Secret Network Foundation across global sales strategy, enterprise sales, blockchain partnerships, AI infrastructure partnerships, DeFi partnerships, EVM and Layer-2 partnerships, and partner-led go-to-market execution.",
+    image: "/images/popeblack/success/community-presence.webp",
+    href: "#experience",
+    ctaLabel: "View Experience",
   },
   {
-    title: "Web3 Lagos Conference",
-    category: "Workshop",
+    title: "Secret Network Africa Ecosystem Growth",
+    category: "Africa Web3 Ecosystem",
     description:
-      "Featured speaker leading a developer workshop on Web3 privacy, protocol design, and adoption strategy.",
-    image: "/images/kayode-speaking.jpg",
-    href: "https://event.web3bridge.com/",
-    ctaLabel: "View Event",
-    videoEmbedUrl: "https://www.youtube.com/embed/nC9zMBwnukU?start=3420",
-    videoWatchUrl:
-      "https://www.youtube.com/live/nC9zMBwnukU?si=BtEl8a089EQSmh55&t=3420",
+      "Ecosystem growth work across Nigeria, Kenya, Ghana, Rwanda, and South Africa, including 2,000+ ambassadors onboarded, 50+ events supported, 500+ developers trained, and regional partnerships with universities, hubs, and Web3 communities.",
+    image: "/images/popeblack/success/grassroots-adoption.webp",
+    href: "#impact",
+    ctaLabel: "View Impact",
   },
   {
-    title: "JCI Made 1.0",
-    category: "Speaking",
+    title: "Blockchain Intelligence, AML/CFT & OSINT Capability",
+    category: "Blockchain Intelligence",
     description:
-      "Speaker appearance highlighted on the legacy site as part of a broader event and leadership showcase.",
-    image: "/images/kayode-networking.jpg",
-    placeholderNote:
-      "Current site references this appearance but does not expose a direct destination URL. Add the event page or media link when available.",
+      "Blockchain Intelligence Analyst capability covering crypto investigations, attribution research, AML/CFT risk context, OSINT workflows, digital asset typologies, and evidence-based reporting for complex crypto-related risks.",
+    image: "/images/popeblack/success/getting-started-web3.webp",
+    href: "#experience",
+    ctaLabel: "View Experience",
   },
   {
-    title: "Blockchain Africa Summit South Africa 2023",
-    category: "Conference",
+    title: "Speaking & Media Credibility",
+    category: "Public Visibility",
     description:
-      "Regional ecosystem visibility and on-ground participation across one of Africa's flagship blockchain gatherings.",
-    image: "/images/kayode-speaking.jpg",
-    placeholderNote:
-      "Add the official summit page or a gallery link if a preferred destination becomes available.",
-  },
-  {
-    title: "Tech Talk Episode 4: Web 3.0: The Future of the Internet",
-    category: "Media",
-    description:
-      "Selected media appearance from the current site archive focused on Web3 adoption and the future internet stack.",
-    image: "/images/kayode-speaking.jpg",
-    placeholderNote:
-      "The legacy site lists the title but does not expose a public video URL in the HTML. Add the final video link when confirmed.",
-  },
-  {
-    title: "Secret Agent Showcase",
-    category: "Media",
-    description:
-      "Showcase feature referenced on the current website as part of the broader speaking and thought-leadership library.",
-    image: "/images/kayode-networking.jpg",
-    placeholderNote:
-      "Add the showcase recording or publication URL here when available.",
-  },
-  {
-    title: "Daybreak Extra: Web3 Blockchain and DeFi Privacy",
-    category: "Media",
-    description:
-      "Broadcast-style media feature centered on privacy, digital assets, and the wider DeFi conversation.",
-    image: "/images/kayode-speaking.jpg",
-    placeholderNote:
-      "Current site exposes the title only. Add the verified broadcast or replay link when available.",
-  },
-  {
-    title: "The Alt Kings Episode 111",
-    category: "Podcast",
-    description:
-      "Podcast appearance highlighted in the existing portfolio section as part of ongoing ecosystem commentary.",
-    image: "/images/kayode-networking.jpg",
-    placeholderNote:
-      "Add the public episode URL or streaming link when available.",
-  },
-  {
-    title: "CoCreate West Africa Tech Conference",
-    category: "Conference",
-    description:
-      "Conference reference carried over from the original site to preserve the breadth of public-facing ecosystem activity.",
-    image: "/images/kayode-speaking.jpg",
-    placeholderNote:
-      "Current site lists the event title without a direct link. Add the official event or media page when available.",
+      "Conference participation and ecosystem visibility from Blockchain Africa Summit South Africa 2023, highlighting Web3, blockchain adoption, and African ecosystem engagement.",
+    image: "/images/popeblack/events/blockchain-africa-01.webp",
+    href: "#speaking",
+    ctaLabel: "View Media",
   },
 ];
 
 export const speakingMediaItems: PortfolioItem[] = [
   {
-    title: "Web3 Lagos Conference",
-    category: "Featured Video",
+    title: "Tech Talk Episode 4: Web 3.0: The Future of the Internet",
+    category: "Media Video",
     description:
-      "Developer workshop segment on privacy in Web3 and how design choices shape protocol trust.",
-    image: "/images/kayode-speaking.jpg",
-    videoEmbedUrl: "https://www.youtube.com/embed/nC9zMBwnukU?start=3396",
-    videoWatchUrl:
-      "https://www.youtube.com/live/nC9zMBwnukU?si=PuP2m9ZtZLrmt9q4&t=3396",
+      "A public media appearance on Web3, blockchain infrastructure, digital ownership, and the future internet stack.",
+    image: "/images/popeblack/videos/tech-talk-episode-4.jpg",
+    videoEmbedUrl: "https://www.youtube.com/embed/ZONnY2kfCAQ",
+    videoWatchUrl: "https://www.youtube.com/watch?v=ZONnY2kfCAQ",
   },
   {
-    title: "Cybertech Africa, Kigali 2023",
-    category: "Featured Video",
+    title: "Secret Agent Showcase",
+    category: "Showcase Video",
     description:
-      "Conference appearance focused on blockchain security and the commercial implications of trust in digital assets.",
-    image: "/images/kayode-networking.jpg",
-    videoEmbedUrl: "https://www.youtube.com/embed/ktdhwuTZcb0",
-    videoWatchUrl: "https://youtu.be/ktdhwuTZcb0?si=5UBjckrIDlPBHddQ",
+      "A Secret Network ecosystem feature discussing privacy-first blockchain adoption, community growth, and the value of confidential computing infrastructure.",
+    image: "/images/popeblack/videos/secret-agent-showcase.webp",
+    videoEmbedUrl: "https://www.youtube.com/embed/EUlslDNj-ok?start=114",
+    videoWatchUrl: "https://www.youtube.com/watch?v=EUlslDNj-ok&t=114s",
   },
   {
     title: "Daybreak Extra: Web3 Blockchain and DeFi Privacy",
     category: "Broadcast",
     description:
-      "Legacy site reference preserved as a placeholder until the verified replay URL is added.",
-    image: "/images/kayode-speaking.jpg",
-    placeholderNote: "Add the replay or station page URL here.",
+      "Broadcast appearance focused on Web3, blockchain adoption, DeFi privacy, and the need for privacy-preserving technology in digital asset markets.",
+    image: "/images/popeblack/videos/daybreak-extra.jpg",
+    videoEmbedUrl: "https://www.youtube.com/embed/b9gn2C4DC3M",
+    videoWatchUrl: "https://www.youtube.com/watch?v=b9gn2C4DC3M",
   },
   {
     title: "The Alt Kings Episode 111",
-    category: "Podcast",
+    category: "Podcast Video",
     description:
-      "Current site archive reference retained for continuity while awaiting the confirmed public episode link.",
-    image: "/images/kayode-networking.jpg",
-    placeholderNote: "Add the public podcast link here.",
+      "Podcast appearance covering Web3 ecosystem growth, blockchain partnerships, digital assets, and adoption across emerging markets.",
+    image: "/images/popeblack/videos/alt-kings-episode-111.webp",
+    videoEmbedUrl: "https://www.youtube.com/embed/VxAE2QwMdw8?start=166",
+    videoWatchUrl: "https://www.youtube.com/watch?v=VxAE2QwMdw8&t=166s",
+  },
+  {
+    title: "Speaker at Web3 Lagos Conference",
+    category: "Conference Video",
+    description:
+      "Conference session on Web3 education, developer adoption, ecosystem participation, and blockchain infrastructure opportunities in Africa.",
+    image: "/images/popeblack/videos/web3-lagos-conference.webp",
+    href: "https://event.web3bridge.com/",
+    ctaLabel: "Event",
+    videoEmbedUrl: "https://www.youtube.com/embed/nC9zMBwnukU?start=4440",
+    videoWatchUrl: "https://www.youtube.com/watch?v=nC9zMBwnukU&t=4440s",
+  },
+  {
+    title: "Cybertech Africa Conference Kigali, Rwanda 2023",
+    category: "Conference Video",
+    description:
+      "Conference appearance in Kigali covering blockchain, cybersecurity, digital trust, and emerging market technology adoption.",
+    image: "/images/popeblack/videos/cybertech-africa-2023.webp",
+    href: "https://africa.cybertechconference.com/speakers",
+    ctaLabel: "Event",
+    videoEmbedUrl: "https://www.youtube.com/embed/ktdhwuTZcb0?start=7",
+    videoWatchUrl: "https://www.youtube.com/watch?v=ktdhwuTZcb0&t=7s",
   },
 ];

@@ -6,45 +6,42 @@ export type Stat = {
   description: string;
 };
 
-export type ResumeAsset = {
-  label: string;
-  href: string;
-  available: boolean;
-  helper: string;
-};
-
 export const profile = {
   name: "Kayode Popoola",
   brandName: "Popeblack",
-  location: "Remote (UTC+1)",
+  location: "Global / Remote",
   email: "thepopeblack@gmail.com",
+  bookCallUrl:
+    "mailto:thepopeblack@gmail.com?subject=Book%20a%20call%20with%20Kayode%20Popoola",
+  cvUrl: "/kayode-popoola-cv.pdf",
   linkedin: "https://www.linkedin.com/in/thepopeblack",
   twitter: "https://twitter.com/thepopeblack",
   telegram: "https://t.me/Popeblack",
   headline: "Head of Sales & Business Development",
   strapline:
-    "Strategic Partnerships | Revenue Growth | Web3 Ecosystem Leadership",
+    "Web3 Business Development Leader | Strategic Partnerships | Revenue Growth",
   subheadline:
-    "I build partnerships, revenue systems, and ecosystem growth strategies for Web3, emerging technology, and global innovation teams.",
+    "I help Web3, AI, and emerging technology teams grow through strategic partnerships, revenue systems, ecosystem expansion, and go-to-market execution.",
   executiveSummary:
-    "Commercial and partnerships leader with 10+ years of experience across business development, sales, strategic partnerships, customer acquisition, Web3 ecosystems, blockchain infrastructure, financial technology, digital commerce, and emerging markets.",
+    "Web3 Business Development Leader and Strategic Partnerships Leader with 10+ years of experience across revenue growth, enterprise sales, blockchain partnerships, Web3 partnerships, go-to-market strategy, blockchain infrastructure, financial technology, digital commerce, and emerging markets growth.",
   currentFocus:
-    "Currently serving as Head of Sales & Business Development at Secret Network Foundation, leading global revenue growth, enterprise partnerships, ecosystem expansion, and go-to-market initiatives for a privacy-first blockchain and confidential computing ecosystem.",
+    "Currently Head of Sales & Business Development at Secret Network Foundation, where I lead global revenue growth, enterprise partnerships, and ecosystem adoption for privacy-first blockchain and confidential computing infrastructure.",
   proofLine:
     "Generated over $300,000 in revenue within the first 90 days, closed 50+ strategic deals, helped launch 15+ products on mainnet, and trained 500+ developers through ecosystem programs.",
-  aboutTitle: "Building Growth Systems for Web3, Finance & Emerging Technology",
+  aboutTitle:
+    "Web3 partnerships, revenue growth, and emerging markets execution.",
   aboutBody:
-    "I help organizations grow through strategic partnerships, revenue development, market expansion, ecosystem activation, and stakeholder engagement. My work sits at the intersection of business development, Web3 infrastructure, financial technology, blockchain intelligence, and emerging markets.",
+    "I help organizations grow through strategic partnerships, revenue development, market expansion, ecosystem activation, and stakeholder engagement. My work sits at the intersection of Web3 partnerships, enterprise sales, blockchain infrastructure, confidential computing, privacy-preserving AI, AI infrastructure partnerships, and Africa Web3 ecosystem growth.",
   aboutBodyExtended:
-    "I have worked across sales, partnerships, community growth, developer adoption, customer acquisition, financial crime intelligence, and go-to-market execution. My strength is turning relationships, market insight, and execution discipline into measurable business outcomes.",
+    "I have worked across sales, partnerships, developer adoption, customer acquisition, DeFi partnerships, EVM and Layer-2 partnerships, blockchain intelligence, crypto investigations, AML/CFT, OSINT, and go-to-market execution. My strength is turning relationships, market insight, and execution discipline into measurable business outcomes.",
   speakingIntro:
-    "Selected speaking engagements across Web3, blockchain privacy, DeFi, digital assets, ecosystem growth, and emerging technology adoption.",
+    "Selected appearances across Web3 business development, blockchain privacy, DeFi, digital assets, ecosystem growth, blockchain intelligence, and emerging technology adoption.",
   audienceLabel:
     "Built for recruiters, founders, investors, international organizations, and strategic partners evaluating senior commercial leadership.",
   heroHighlights: [
-    "Global commercial leadership for privacy-first Web3 ecosystems",
-    "Enterprise partnerships, GTM design, and revenue operations",
-    "Cross-functional credibility spanning BD, ecosystem growth, and blockchain intelligence",
+    "Global commercial leadership for privacy-first Web3 and confidential computing ecosystems",
+    "Enterprise sales, blockchain partnerships, GTM design, and revenue operations",
+    "Cross-functional credibility spanning ecosystem growth, AI infrastructure partnerships, and blockchain intelligence",
   ],
   aboutCards: [
     {
@@ -129,6 +126,7 @@ export const profile = {
   opportunityTypes: [
     "Business Development Role",
     "Partnership Opportunity",
+    "AI Infrastructure Partnerships",
     "Speaking Engagement",
     "Advisory / Consulting",
     "Blockchain Intelligence / AML",
@@ -144,34 +142,4 @@ export const profile = {
       "Certified Business Developer by the Federal Government of Nigeria through the National Youth Investment Fund.",
     ],
   },
-  resumeAssets: [
-    {
-      label: "Download Executive Resume PDF",
-      href: "/resume/Kayode_Popoola_Master_Executive_Resume.pdf",
-      available: false,
-      helper:
-        "Add Kayode_Popoola_Master_Executive_Resume.pdf to public/resume/.",
-    },
-    {
-      label: "Download Web3 Executive CV",
-      href: "/resume/Kayode_Popoola_Executive_Web3_CV.pdf",
-      available: false,
-      helper:
-        "Add Kayode_Popoola_Executive_Web3_CV.pdf to public/resume/.",
-    },
-    {
-      label: "Download Blockchain Intelligence CV",
-      href: "/resume/Kayode_Popoola_Blockchain_Intelligence_CV.pdf",
-      available: false,
-      helper:
-        "Add Kayode_Popoola_Blockchain_Intelligence_CV.pdf to public/resume/.",
-    },
-    {
-      label: "Download Word Resume",
-      href: "/resume/Kayode_Popoola_Master_Executive_Resume.docx",
-      available: false,
-      helper:
-        "Add Kayode_Popoola_Master_Executive_Resume.docx to public/resume/.",
-    },
-  ] satisfies ResumeAsset[],
 };

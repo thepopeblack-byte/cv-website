@@ -10,35 +10,45 @@ import "./globals.css";
 
 import { profile } from "@/data/profile";
 
+const siteUrl = "https://popeblack.com";
+const metadataTitle =
+  "Kayode Popoola | Web3 Partnerships & Revenue Growth Leader";
+const metadataDescription =
+  "Kayode Popoola is a Web3 business development and strategic partnerships leader driving revenue growth, ecosystem expansion, blockchain infrastructure adoption, and emerging market partnerships.";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://popeblack.com"),
-  title:
-    "Kayode Popoola | Head of Sales & Business Development | Web3 Partnerships Leader",
-  description:
-    "Executive resume and portfolio website of Kayode Popoola, Head of Sales & Business Development, strategic partnerships leader, Web3 ecosystem growth specialist, blockchain intelligence analyst, and emerging technology commercial strategist.",
+  metadataBase: new URL(siteUrl),
+  title: metadataTitle,
+  description: metadataDescription,
   keywords: [
     "Kayode Popoola",
     "Popeblack",
-    "Head of Sales",
-    "Business Development",
-    "Strategic Partnerships",
-    "Web3",
-    "Blockchain",
-    "Secret Network",
+    "Web3 Business Development Leader",
+    "Head of Sales and Business Development",
+    "Strategic Partnerships Leader",
+    "Blockchain Partnerships",
+    "Web3 Partnerships",
     "Ecosystem Growth",
     "Revenue Growth",
-    "Blockchain Intelligence",
-    "AML",
+    "Go-to-Market Strategy",
+    "Enterprise Sales",
+    "Blockchain Infrastructure",
+    "Confidential Computing",
+    "Privacy-Preserving AI",
+    "AI Infrastructure Partnerships",
+    "DeFi Partnerships",
+    "EVM and Layer-2 Partnerships",
+    "Blockchain Intelligence Analyst",
+    "Crypto Investigations",
+    "AML/CFT",
     "OSINT",
-    "Nigeria",
-    "Africa Web3",
+    "Africa Web3 Ecosystem",
+    "Emerging Markets Growth",
   ],
   openGraph: {
-    title:
-      "Kayode Popoola | Head of Sales & Business Development | Web3 Partnerships Leader",
-    description:
-      "Premium executive website for Kayode Popoola, a senior commercial leader spanning strategic partnerships, ecosystem growth, and blockchain intelligence.",
-    url: "https://popeblack.com",
+    title: metadataTitle,
+    description: metadataDescription,
+    url: siteUrl,
     siteName: "Kayode Popoola | Popeblack",
     images: [
       {
@@ -53,14 +63,12 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title:
-      "Kayode Popoola | Head of Sales & Business Development | Web3 Partnerships Leader",
-    description:
-      "Executive portfolio and resume website for Kayode Popoola, Popeblack.",
+    title: metadataTitle,
+    description: metadataDescription,
     images: ["/opengraph-image"],
   },
   alternates: {
-    canonical: "https://popeblack.com",
+    canonical: siteUrl,
   },
 };
 
@@ -92,26 +100,51 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "Person",
-              name: profile.name,
-              alternateName: profile.brandName,
-              url: "https://popeblack.com",
-              email: `mailto:${profile.email}`,
-              jobTitle: profile.headline,
-              description: `${profile.executiveSummary} ${profile.currentFocus}`,
-              sameAs: [profile.linkedin, profile.twitter, profile.telegram],
-              worksFor: {
-                "@type": "Organization",
-                name: "Secret Network Foundation",
-              },
-              knowsAbout: [
-                "Strategic Partnerships",
-                "Business Development",
-                "Revenue Growth",
-                "Web3 Ecosystems",
-                "Blockchain Intelligence",
-                "AML/CFT",
-                "OSINT",
+              "@graph": [
+                {
+                  "@type": "Person",
+                  "@id": `${siteUrl}/#person`,
+                  name: profile.name,
+                  alternateName: profile.brandName,
+                  url: siteUrl,
+                  email: `mailto:${profile.email}`,
+                  jobTitle: profile.headline,
+                  description: `${profile.executiveSummary} ${profile.currentFocus}`,
+                  sameAs: [profile.linkedin, profile.twitter, profile.telegram],
+                  worksFor: {
+                    "@type": "Organization",
+                    name: "Secret Network Foundation",
+                  },
+                  knowsAbout: [
+                    "Web3 Business Development",
+                    "Strategic Partnerships",
+                    "Revenue Growth",
+                    "Go-to-Market Strategy",
+                    "Enterprise Sales",
+                    "Blockchain Infrastructure",
+                    "Confidential Computing",
+                    "Privacy-Preserving AI",
+                    "AI Infrastructure Partnerships",
+                    "DeFi Partnerships",
+                    "EVM and Layer-2 Partnerships",
+                    "Blockchain Intelligence",
+                    "Crypto Investigations",
+                    "AML/CFT",
+                    "OSINT",
+                    "Africa Web3 Ecosystem",
+                    "Emerging Markets Growth",
+                  ],
+                },
+                {
+                  "@type": "ProfilePage",
+                  "@id": `${siteUrl}/#profile-page`,
+                  url: siteUrl,
+                  name: metadataTitle,
+                  description: metadataDescription,
+                  mainEntity: {
+                    "@id": `${siteUrl}/#person`,
+                  },
+                },
               ],
             }),
           }}

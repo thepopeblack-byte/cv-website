@@ -13,10 +13,12 @@ build
 Thumbs.db
 
 *.log
+.preview-*.log
 .codex-dev-*.log
-tsconfig.tsbuildinfo
-
-tmp-media/
+runtime-logs
+tmp-media
 source-site.html
 start-dev-*.ps1
+tsconfig.tsbuildinfo
 next.config.backup.ts
+CV-3006-format

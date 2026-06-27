@@ -8,7 +8,7 @@ import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { ImpactStats } from "@/components/ImpactStats";
 import { Portfolio } from "@/components/Portfolio";
-import { ResumeDownload } from "@/components/ResumeDownload";
+import { SelectedEcosystems } from "@/components/SelectedEcosystems";
 import { Skills } from "@/components/Skills";
 import { SpeakingMedia } from "@/components/SpeakingMedia";
 
@@ -20,13 +20,13 @@ export default function Page() {
         <Hero />
         <About />
         <Portfolio />
+        <SelectedEcosystems />
         <ExperienceTimeline />
         <ImpactStats />
         <Skills />
         <SpeakingMedia />
         <Certifications />
         <Education />
-        <ResumeDownload />
         <Contact />
       </main>
       <Footer />

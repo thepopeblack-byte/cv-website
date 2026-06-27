@@ -3,7 +3,7 @@ import { SectionReveal } from "@/components/SectionReveal";
 import { experience } from "@/data/experience";
 
 function getStatus(period: string) {
-  return period.includes("Present") ? "active" : "archive";
+  return period.includes("Present") ? "Current" : "Previous";
 }
 
 export function ExperienceTimeline() {

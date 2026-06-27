@@ -1,7 +1,15 @@
 ﻿node_modules
 .next
 .git
+.github
 .env
 .env.local
+.env.production
+.env.development
+runtime-logs
+tmp-media
+*.log
+tsconfig.tsbuildinfo
+next.config.backup.ts
+CV-3006-format
 README.md
-docker-compose.yaml

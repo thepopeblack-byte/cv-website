@@ -23,3 +23,5 @@ docker compose up --build
 ```
 
 The production container serves the Next.js standalone build on port `3000`.
+
+For SecretVM, use the same Dockerfile and publish port `3000` with `NODE_ENV=production`, `PORT=3000`, and `HOSTNAME=0.0.0.0`.
