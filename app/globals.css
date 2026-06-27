@@ -116,6 +116,14 @@ textarea {
   z-index: 1;
 }
 
+main#main-content > section.page-layer {
+  transform-origin: center top;
+}
+
+.scroll-story-progress {
+  display: none;
+}
+
 .container-shell {
   margin: 0 auto;
   width: min(1120px, calc(100% - 2rem));
@@ -342,6 +350,458 @@ textarea {
   box-shadow: none;
 }
 
+.proof-brief,
+.capability-copy {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 1.15rem;
+  background:
+    radial-gradient(circle at 18% 0%, rgba(244, 239, 232, 0.075), transparent 32%),
+    rgba(255, 255, 255, 0.022);
+  padding: 1.25rem;
+}
+
+.proof-brief-glow,
+.capability-orbit {
+  pointer-events: none;
+  position: absolute;
+  border-radius: 999px;
+}
+
+.proof-brief-glow {
+  right: -5rem;
+  top: -5rem;
+  height: 12rem;
+  width: 12rem;
+  background: rgba(216, 209, 194, 0.075);
+  filter: blur(44px);
+}
+
+.proof-positioning-card,
+.capability-active-card,
+.credential-card {
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background:
+    linear-gradient(135deg, rgba(244, 239, 232, 0.045), transparent 45%),
+    rgba(255, 255, 255, 0.025);
+  padding: 1rem;
+}
+
+.proof-positioning-card h3,
+.capability-active-card h3,
+.credential-card h3 {
+  margin: 0.7rem 0 0;
+  font-family: "Sora", "Avenir Next", sans-serif;
+  font-size: 1.08rem;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  color: var(--foreground);
+}
+
+.proof-positioning-card p,
+.capability-active-card p {
+  margin: 0.5rem 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+
+.proof-metric-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.capability-orbit {
+  right: -4rem;
+  top: -4rem;
+  height: 11rem;
+  width: 11rem;
+  border: 1px solid rgba(244, 239, 232, 0.11);
+  box-shadow:
+    inset 0 0 28px rgba(244, 239, 232, 0.035),
+    0 0 36px rgba(216, 209, 194, 0.055);
+}
+
+.capability-active-card {
+  position: relative;
+  margin-top: 1.35rem;
+}
+
+.capability-rail {
+  position: relative;
+  display: grid;
+  gap: 0.78rem;
+  margin-top: 1.35rem;
+  padding-left: 0.8rem;
+}
+
+.capability-rail::before,
+.capability-rail::after {
+  content: "";
+  position: absolute;
+  left: 0.12rem;
+  top: 0.35rem;
+  width: 1px;
+}
+
+.capability-rail::before {
+  bottom: 0.35rem;
+  background: linear-gradient(180deg, var(--line-strong), var(--line), transparent);
+}
+
+.capability-rail::after {
+  height: var(--capability-progress);
+  background: linear-gradient(180deg, var(--accent), rgba(216, 209, 194, 0.22));
+  transition: height 0.35s ease;
+}
+
+.capability-rail-item {
+  position: relative;
+  display: grid;
+  gap: 0.2rem;
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.45;
+  transition:
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.capability-rail-item::before {
+  content: "";
+  position: absolute;
+  left: -0.84rem;
+  top: 0.34rem;
+  height: 0.38rem;
+  width: 0.38rem;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 0 14px rgba(216, 209, 194, 0.24);
+}
+
+.capability-rail-item span:first-child {
+  color: var(--muted-strong);
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+}
+
+.capability-rail-item.is-active {
+  color: var(--foreground);
+  transform: translateX(0.2rem);
+}
+
+.capability-cluster-stack {
+  display: grid;
+  gap: 1rem;
+}
+
+.capability-cluster {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 1.15rem;
+  background:
+    linear-gradient(135deg, rgba(244, 239, 232, 0.035), transparent 46%),
+    rgba(255, 255, 255, 0.023);
+  opacity: 0.76;
+  padding: 1.15rem;
+  transition:
+    border-color 0.3s ease,
+    background-color 0.3s ease,
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+.capability-cluster::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(244, 239, 232, 0.055), transparent 34%),
+    radial-gradient(circle at 100% 0%, rgba(244, 239, 232, 0.05), transparent 24%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.capability-cluster.is-active {
+  border-color: var(--line-strong);
+  background-color: rgba(255, 255, 255, 0.035);
+  opacity: 1;
+  transform: translateX(-0.35rem) scale(1.01);
+}
+
+.capability-cluster.is-active::before {
+  opacity: 1;
+}
+
+.capability-cluster-header {
+  position: relative;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.capability-cluster-header h3 {
+  margin: 0;
+  font-family: "Sora", "Avenir Next", sans-serif;
+  font-size: 1.35rem;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  color: var(--foreground);
+}
+
+.capability-chip-grid {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.capability-chip {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 0.55rem 0.7rem;
+  color: var(--muted-strong);
+  font-size: 0.84rem;
+  line-height: 1;
+  transition:
+    border-color 0.22s ease,
+    background-color 0.22s ease,
+    color 0.22s ease;
+}
+
+.capability-cluster.is-active .capability-chip {
+  border-color: rgba(244, 239, 232, 0.14);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--foreground);
+}
+
+.credential-stage {
+  display: grid;
+  gap: 1rem;
+}
+
+.credential-card {
+  border-top: 1px solid var(--line);
+  border-right: 0;
+  border-bottom: 0;
+  border-left: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 1.15rem 0 0;
+}
+
+.credential-education-card {
+  margin-top: 0.5rem;
+  border: 1px solid var(--line);
+  border-radius: 1.15rem;
+  background:
+    linear-gradient(135deg, rgba(244, 239, 232, 0.04), transparent 48%),
+    rgba(255, 255, 255, 0.023);
+  padding: 1.2rem;
+}
+
+.experience-sidebar {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 1.15rem;
+  background:
+    radial-gradient(circle at 18% 0%, rgba(244, 239, 232, 0.075), transparent 30%),
+    rgba(255, 255, 255, 0.022);
+  padding: 1.25rem;
+}
+
+.experience-sidebar-glow {
+  pointer-events: none;
+  position: absolute;
+  right: -5rem;
+  top: -4rem;
+  height: 11rem;
+  width: 11rem;
+  border-radius: 999px;
+  background: rgba(216, 209, 194, 0.08);
+  filter: blur(42px);
+}
+
+.experience-signal-strip {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.3rem;
+}
+
+.experience-signal-strip span,
+.experience-proof-card {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--muted-strong);
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.experience-signal-strip span {
+  padding: 0.45rem 0.65rem;
+}
+
+.experience-proof-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem;
+  margin-top: 1.2rem;
+}
+
+.experience-active-card {
+  position: relative;
+  margin-top: 1.35rem;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background:
+    linear-gradient(135deg, rgba(244, 239, 232, 0.055), transparent 45%),
+    rgba(255, 255, 255, 0.025);
+  padding: 1rem;
+}
+
+.experience-active-card h3 {
+  margin: 0.7rem 0 0;
+  font-family: "Sora", "Avenir Next", sans-serif;
+  font-size: 1.05rem;
+  line-height: 1.15;
+  color: var(--foreground);
+}
+
+.experience-active-card p {
+  margin: 0.5rem 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.experience-active-card > span {
+  display: inline-flex;
+  margin-top: 0.75rem;
+  color: var(--muted-strong);
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+}
+
+.experience-proof-card {
+  padding: 0.7rem 0.72rem;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.experience-proof-card:hover {
+  border-color: var(--line-strong);
+  background: rgba(255, 255, 255, 0.055);
+  color: var(--foreground);
+  transform: translateY(-1px);
+}
+
+.experience-rail {
+  position: relative;
+  display: grid;
+  gap: 0.8rem;
+  margin-top: 1.45rem;
+  padding-left: 0.8rem;
+}
+
+.experience-rail::before {
+  content: "";
+  position: absolute;
+  bottom: 0.35rem;
+  left: 0.12rem;
+  top: 0.35rem;
+  width: 1px;
+  background: linear-gradient(180deg, var(--line-strong), var(--line), transparent);
+}
+
+.experience-rail::after {
+  content: "";
+  position: absolute;
+  left: 0.12rem;
+  top: 0.35rem;
+  width: 1px;
+  height: var(--experience-progress);
+  background: linear-gradient(180deg, var(--accent), rgba(216, 209, 194, 0.28));
+  transition: height 0.35s ease;
+}
+
+.experience-rail-item {
+  position: relative;
+  display: grid;
+  gap: 0.2rem;
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.45;
+  transition:
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.experience-rail-item::before {
+  content: "";
+  position: absolute;
+  left: -0.84rem;
+  top: 0.34rem;
+  height: 0.38rem;
+  width: 0.38rem;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 0 14px rgba(216, 209, 194, 0.28);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.experience-rail-item.is-active {
+  color: var(--foreground);
+  transform: translateX(0.2rem);
+}
+
+.experience-rail-item.is-active::before {
+  transform: scale(1.55);
+  box-shadow: 0 0 20px rgba(216, 209, 194, 0.46);
+}
+
+.experience-rail-index {
+  color: var(--muted-strong);
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+}
+
+.experience-entry {
+  border: 1px solid var(--line);
+  border-radius: 1.15rem;
+  background: rgba(255, 255, 255, 0.023);
+  padding: 1.35rem;
+}
+
 .logo-marquee {
   position: relative;
   overflow: hidden;
@@ -445,14 +905,57 @@ textarea {
   }
 }
 
+@keyframes signal-breathe {
+  0%,
+  100% {
+    opacity: 0.62;
+  }
+
+  45%,
+  55% {
+    opacity: 0.96;
+  }
+}
+
+@keyframes scene-layer-rise {
+  from {
+    opacity: 0;
+    transform: translateY(1.35rem) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
 
+  main#main-content > section.page-layer,
+  .experience-proof-card,
+  .experience-rail-item,
+  .experience-rail::after,
+  .logo-marquee-card,
+  .logo-marquee-image {
+    transition: none;
+  }
+
   .logo-marquee-track {
     animation: none;
     flex-wrap: wrap;
+  }
+
+  .experience-signal-strip span {
+    animation: none;
+  }
+
+  main#main-content > section.page-layer {
+    opacity: 1;
+    transform: none;
+    filter: none;
   }
 }
 
@@ -482,6 +985,50 @@ textarea {
     letter-spacing: 0.1em;
   }
 
+  .experience-sidebar {
+    padding: 1rem;
+  }
+
+  .experience-proof-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .experience-entry {
+    padding: 1rem;
+  }
+
+  .proof-brief,
+  .capability-copy,
+  .credential-education-card {
+    padding: 1rem;
+  }
+
+  .proof-metric-grid,
+  .capability-cluster-stack {
+    gap: 0.8rem;
+  }
+
+  .capability-cluster {
+    opacity: 1;
+    padding: 1rem;
+    transform: none;
+  }
+
+  .capability-cluster.is-active {
+    transform: none;
+  }
+
+  .capability-chip {
+    font-size: 0.78rem;
+    padding: 0.5rem 0.62rem;
+  }
+
+  main#main-content > section.page-layer {
+    transform: none;
+    opacity: 1;
+    filter: none;
+  }
+
   .logo-marquee::before,
   .logo-marquee::after {
     width: 2.4rem;
@@ -500,5 +1047,164 @@ textarea {
 
   .logo-marquee-image {
     max-height: 2.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  main#main-content {
+    perspective: 1800px;
+  }
+
+  main#main-content > section.page-layer.scroll-scene {
+    display: flex;
+    min-height: calc(100svh - 5rem);
+    align-items: center;
+    padding-block: clamp(3.5rem, 7svh, 6.5rem);
+    transition:
+      opacity 0.55s ease,
+      transform 0.72s cubic-bezier(0.16, 1, 0.3, 1),
+      filter 0.55s ease;
+    transform-style: preserve-3d;
+    will-change: opacity, transform, filter;
+  }
+
+  main#main-content > section.page-layer.scroll-scene > .container-shell {
+    width: min(1120px, calc(100% - 2rem));
+  }
+
+  main#main-content > section.page-layer.scroll-scene::before {
+    content: "";
+    position: absolute;
+    inset: clamp(1rem, 3vw, 2.5rem);
+    z-index: -1;
+    border-radius: 1.8rem;
+    background:
+      linear-gradient(135deg, rgba(244, 239, 232, 0.055), transparent 34%),
+      linear-gradient(rgba(255, 255, 255, 0.026) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.021) 1px, transparent 1px);
+    background-size:
+      auto,
+      3.8rem 3.8rem,
+      3.8rem 3.8rem;
+    opacity: 0;
+    transform: translate3d(0, var(--scene-parallax, 0rem), -1px);
+    transition:
+      opacity 0.55s ease,
+      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+  }
+
+  main#main-content > section.page-layer.scene-active::before {
+    opacity: 0.42;
+  }
+
+  main#main-content > section.page-layer.scene-active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: saturate(1);
+  }
+
+  main#main-content > section.page-layer.scene-before {
+    opacity: 0.54;
+    transform: translateY(-2.4rem) scale(0.965) rotateX(2deg);
+    filter: saturate(0.72) blur(0.2px);
+  }
+
+  main#main-content > section.page-layer.scene-after {
+    opacity: 0.78;
+    transform: translateY(2.1rem) scale(0.982) rotateX(-1deg);
+    filter: saturate(0.86);
+  }
+
+  main#main-content > section.page-layer.scene-active .section-frame {
+    border-color: var(--line-strong);
+  }
+
+  main#main-content > section.page-layer.scene-active .signal-card,
+  main#main-content > section.page-layer.scene-active .logo-marquee,
+  main#main-content > section.page-layer.scene-active .capability-cluster,
+  main#main-content > section.page-layer.scene-active .experience-entry,
+  main#main-content > section.page-layer.scene-active .credential-card,
+  main#main-content > section.page-layer.scene-active form {
+    animation: scene-layer-rise 0.72s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .scroll-story-progress {
+    position: fixed;
+    right: 1.15rem;
+    top: 50%;
+    z-index: 45;
+    display: grid;
+    justify-items: center;
+    gap: 0.55rem;
+    transform: translateY(-50%);
+    color: var(--muted);
+    font-family:
+      ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+      "Courier New", monospace;
+    font-size: 0.66rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    pointer-events: none;
+  }
+
+  .scroll-story-progress-line {
+    position: relative;
+    display: block;
+    height: 8.5rem;
+    width: 1px;
+    overflow: hidden;
+    background: var(--line);
+  }
+
+  .scroll-story-progress-line span {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1px;
+    background: linear-gradient(180deg, var(--accent), transparent);
+    transition: height 0.35s ease;
+  }
+
+  .scroll-story-progress-label {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    color: var(--muted-strong);
+  }
+
+  .experience-sidebar {
+    position: sticky;
+    top: 7.5rem;
+  }
+
+  .proof-brief,
+  .capability-copy {
+    position: sticky;
+    top: 7.5rem;
+  }
+
+  .proof-metric-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .experience-signal-strip span {
+    animation: signal-breathe 7s ease-in-out infinite;
+    animation-delay: calc(var(--signal-index) * 0.18s);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) and (min-width: 1024px) {
+  main#main-content > section.page-layer.scroll-scene,
+  main#main-content > section.page-layer.scroll-scene::before,
+  main#main-content > section.page-layer.scene-active .signal-card,
+  main#main-content > section.page-layer.scene-active .logo-marquee,
+  main#main-content > section.page-layer.scene-active .capability-cluster,
+  main#main-content > section.page-layer.scene-active .experience-entry,
+  main#main-content > section.page-layer.scene-active .credential-card,
+  main#main-content > section.page-layer.scene-active form {
+    animation: none;
+    transition: none;
+    transform: none;
+    filter: none;
   }
 }

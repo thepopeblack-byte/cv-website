@@ -11,8 +11,7 @@ export const profile = {
   brandName: "Popeblack",
   location: "Global / Remote",
   email: "thepopeblack@gmail.com",
-  bookCallUrl:
-    "mailto:thepopeblack@gmail.com?subject=Book%20a%20call%20with%20Kayode%20Popoola",
+  bookCallUrl: "https://calendly.com/thepopeblack/30min",
   cvUrl: "/kayode-popoola-cv.pdf",
   linkedin: "https://www.linkedin.com/in/thepopeblack",
   twitter: "https://twitter.com/thepopeblack",

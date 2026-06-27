@@ -9,10 +9,11 @@ import { profile } from "@/data/profile";
 import { cn } from "@/lib/utils";
 
 const links = [
-  { label: "About", href: "#about" },
-  { label: "Portfolio", href: "#portfolio" },
+  { label: "Proof", href: "#impact" },
+  { label: "Ecosystems", href: "#ecosystems" },
+  { label: "Capabilities", href: "#skills" },
   { label: "Experience", href: "#experience" },
-  { label: "Impact", href: "#impact" },
+  { label: "Work", href: "#portfolio" },
   { label: "Contact", href: "#contact" },
 ];
 

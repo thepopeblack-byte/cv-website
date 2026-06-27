@@ -2,7 +2,7 @@
 
 import { LoaderCircle } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 
 import { Container } from "@/components/Container";
 import { SectionReveal } from "@/components/SectionReveal";
@@ -17,29 +17,35 @@ export function Contact() {
   const [submitting, setSubmitting] = useState(false);
   const [status, setStatus] = useState<StatusState>({
     type: "idle",
-    message:
-      "Use the form for partnership, leadership, speaking, advisory, or intelligence conversations.",
+    message: "",
   });
 
-  async function handleSubmit(formData: FormData) {
-    const endpoint = process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT;
-    const name = String(formData.get("name") ?? "");
-    const email = String(formData.get("email") ?? "");
-    const company = String(formData.get("company") ?? "");
-    const opportunityType = String(formData.get("opportunityType") ?? "");
-    const message = String(formData.get("message") ?? "");
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
 
+    const endpoint = process.env.NEXT_PUBLIC_CONTACT_FORM_ENDPOINT;
     if (!endpoint) {
-      const subject = encodeURIComponent(
-        `${opportunityType || "Opportunity"} from ${name || "Website Visitor"}`,
-      );
-      const body = encodeURIComponent(
-        `Name: ${name}\nEmail: ${email}\nCompany: ${company}\nOpportunity Type: ${opportunityType}\n\nMessage:\n${message}`,
-      );
-      window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`;
       setStatus({
-        type: "success",
-        message: "Email draft opened. You can send it directly from your mail client.",
+        type: "error",
+        message: "Contact form is not configured yet. Please use the email link.",
+      });
+      return;
+    }
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const payload = {
+      name: String(formData.get("name") ?? "").trim(),
+      email: String(formData.get("email") ?? "").trim(),
+      company: String(formData.get("company") ?? "").trim(),
+      opportunityType: String(formData.get("opportunityType") ?? "").trim(),
+      message: String(formData.get("message") ?? "").trim(),
+    };
+
+    if (!payload.name || !payload.email || !payload.message) {
+      setStatus({
+        type: "error",
+        message: "Something went wrong. Please use the email link or try again.",
       });
       return;
     }
@@ -48,8 +54,11 @@ export function Contact() {
       setSubmitting(true);
       const response = await fetch(endpoint, {
         method: "POST",
-        headers: { Accept: "application/json" },
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {
@@ -58,12 +67,13 @@ export function Contact() {
 
       setStatus({
         type: "success",
-        message: "Message sent successfully.",
+        message: "Message sent successfully. I\u2019ll get back to you soon.",
       });
+      form.reset();
     } catch {
       setStatus({
         type: "error",
-        message: "Submission failed. Use the direct email link instead.",
+        message: "Something went wrong. Please use the email link or try again.",
       });
     } finally {
       setSubmitting(false);
@@ -118,7 +128,7 @@ export function Contact() {
               </div>
             </div>
 
-            <form action={handleSubmit} className="grid gap-4">
+            <form onSubmit={handleSubmit} className="grid gap-4">
               <div className="grid gap-4 md:grid-cols-2">
                 <label className="grid gap-2 text-sm text-[var(--muted)]">
                   Name
@@ -150,7 +160,6 @@ export function Contact() {
                 <label className="grid gap-2 text-sm text-[var(--muted)]">
                   Opportunity Type
                   <select
-                    required
                     name="opportunityType"
                     defaultValue=""
                     className="rounded-[0.95rem] border border-[var(--line)] bg-[var(--panel)] px-4 py-3 text-[var(--foreground)] outline-none transition focus:border-[var(--line-strong)]"
@@ -178,27 +187,31 @@ export function Contact() {
               </label>
 
               <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-                <button type="submit" className="button-primary" disabled={submitting}>
-                  {submitting ? (
-                    <>
-                      <LoaderCircle size={18} className="animate-spin" />
-                      Sending...
-                    </>
-                  ) : (
-                    "Send message"
-                  )}
-                </button>
-                <p
-                  className={`max-w-xl text-sm leading-7 ${
-                    status.type === "error"
-                      ? "text-[#e0a7a0]"
-                      : status.type === "success"
-                        ? "text-[#d8d1c2]"
-                        : "text-[var(--muted)]"
-                  }`}
-                >
-                  {status.message}
-                </p>
+                <div className="flex flex-col gap-3 sm:flex-row">
+                  <button type="submit" className="button-primary" disabled={submitting}>
+                    {submitting ? (
+                      <>
+                        <LoaderCircle size={18} className="animate-spin" />
+                        Sending...
+                      </>
+                    ) : (
+                      "Send Message"
+                    )}
+                  </button>
+                </div>
+                {status.message ? (
+                  <p
+                    className={`max-w-xl text-sm leading-7 ${
+                      status.type === "error"
+                        ? "text-[#e0a7a0]"
+                        : status.type === "success"
+                          ? "text-[#d8d1c2]"
+                          : "text-[var(--muted)]"
+                    }`}
+                  >
+                    {status.message}
+                  </p>
+                ) : null}
               </div>
             </form>
           </div>

@@ -1,6 +1,7 @@
 import { Container } from "@/components/Container";
 import { SectionReveal } from "@/components/SectionReveal";
 import { certifications } from "@/data/certifications";
+import { profile } from "@/data/profile";
 
 export function Certifications() {
   return (
@@ -17,20 +18,40 @@ export function Certifications() {
               </p>
             </div>
 
-            <div className="space-y-5">
-              {certifications.map((certification) => (
-                <article
-                  key={`${certification.issuer}-${certification.title}`}
-                  className="border-t border-[var(--line)] pt-5"
-                >
-                  <div className="meta-stack">
-                    {certification.issuer} / {certification.year}
-                  </div>
-                  <h3 className="mt-3 font-['Sora'] text-[1.35rem] tracking-[-0.03em] text-[var(--foreground)]">
-                    {certification.title}
-                  </h3>
-                </article>
-              ))}
+            <div className="credential-stage">
+              <div className="space-y-5">
+                {certifications.map((certification) => (
+                  <article
+                    key={`${certification.issuer}-${certification.title}`}
+                    className="credential-card"
+                  >
+                    <div className="meta-stack">{certification.issuer}</div>
+                    <h3>{certification.title}</h3>
+                  </article>
+                ))}
+              </div>
+
+              <article id="education" className="credential-card credential-education-card">
+                <div className="meta-stack">Education</div>
+                <h3>{profile.education.degree}</h3>
+                <p className="mt-3 text-[0.98rem] leading-8 text-[var(--muted)]">
+                  {profile.education.school}
+                </p>
+                <p className="mt-2 text-[0.98rem] leading-8 text-[var(--muted)]">
+                  {profile.education.course}
+                </p>
+
+                <div className="mt-5 grid gap-3">
+                  {profile.education.highlights.map((highlight) => (
+                    <p
+                      key={highlight}
+                      className="text-[0.98rem] leading-8 text-[var(--muted-strong)]"
+                    >
+                      - {highlight}
+                    </p>
+                  ))}
+                </div>
+              </article>
             </div>
           </div>
         </SectionReveal>

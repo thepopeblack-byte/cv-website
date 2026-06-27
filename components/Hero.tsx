@@ -17,7 +17,12 @@ type HeroAction = {
 };
 
 const heroActions: HeroAction[] = [
-  { label: "Book a Call", href: profile.bookCallUrl, variant: "button-primary" },
+  {
+    label: "Book a Call",
+    href: profile.bookCallUrl,
+    variant: "button-primary",
+    external: true,
+  },
   { label: "View Experience", href: "#experience", variant: "button-secondary" },
   {
     label: "Download CV",
@@ -65,7 +70,7 @@ export function Hero() {
                     <Link
                       href={link.href}
                       target={link.external ? "_blank" : undefined}
-                      rel={link.external ? "noreferrer" : undefined}
+                      rel={link.external ? "noopener noreferrer" : undefined}
                       download={link.download}
                       className={`${link.variant} text-sm`}
                     >
@@ -78,7 +83,7 @@ export function Hero() {
             </div>
 
             <div>
-              <div className="meta-stack">00.A / PROFILE</div>
+              <div className="meta-stack">01 / EXECUTIVE PROFILE</div>
               <h1 className="mt-4 font-['Sora'] text-[4rem] leading-none text-[var(--foreground)] sm:text-[5rem] lg:text-[6rem]">
                 Kayode Popoola
               </h1>
