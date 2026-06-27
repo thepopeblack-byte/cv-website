@@ -513,8 +513,8 @@ main#main-content > section.page-layer {
   transition:
     border-color 0.3s ease,
     background-color 0.3s ease,
-    opacity 0.3s ease,
-    transform 0.3s ease;
+    opacity 0.22s ease,
+    transform 0.24s ease;
 }
 
 .capability-cluster::before {
@@ -574,9 +574,9 @@ main#main-content > section.page-layer {
   font-size: 0.84rem;
   line-height: 1;
   transition:
-    border-color 0.22s ease,
-    background-color 0.22s ease,
-    color 0.22s ease;
+    border-color 0.18s ease,
+    background-color 0.18s ease,
+    color 0.18s ease;
 }
 
 .capability-cluster.is-active .capability-chip {
@@ -600,14 +600,76 @@ main#main-content > section.page-layer {
   padding: 1.15rem 0 0;
 }
 
-.credential-education-card {
-  margin-top: 0.5rem;
+.education-card,
+.media-stage-copy,
+.media-card {
+  position: relative;
+  overflow: hidden;
   border: 1px solid var(--line);
   border-radius: 1.15rem;
   background:
     linear-gradient(135deg, rgba(244, 239, 232, 0.04), transparent 48%),
     rgba(255, 255, 255, 0.023);
+}
+
+.education-card {
   padding: 1.2rem;
+}
+
+.education-card h3 {
+  margin: 0.75rem 0 0;
+  font-family: "Sora", "Avenir Next", sans-serif;
+  font-size: 1.45rem;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: var(--foreground);
+}
+
+.education-highlight-grid {
+  display: grid;
+  gap: 0.8rem;
+  margin-top: 1.2rem;
+}
+
+.education-highlight-card {
+  border-top: 1px solid var(--line);
+  padding-top: 0.9rem;
+}
+
+.education-highlight-card p {
+  margin: 0.55rem 0 0;
+  color: var(--muted-strong);
+  font-size: 0.98rem;
+  line-height: 1.75;
+}
+
+.media-stage-copy {
+  padding: 1.2rem;
+}
+
+.media-card-stack {
+  display: grid;
+  gap: 1rem;
+}
+
+.media-card {
+  display: grid;
+  gap: 1.1rem;
+  padding: 1rem;
+  transition:
+    border-color 0.22s ease,
+    background-color 0.22s ease,
+    transform 0.22s ease;
+}
+
+.media-card:hover {
+  border-color: var(--line-strong);
+  background-color: rgba(255, 255, 255, 0.035);
+  transform: translate3d(0, -0.12rem, 0);
+}
+
+.media-image-panel {
+  min-height: 12.5rem;
 }
 
 .experience-sidebar {
@@ -919,13 +981,13 @@ main#main-content > section.page-layer {
 
 @keyframes scene-layer-rise {
   from {
-    opacity: 0;
-    transform: translateY(1.35rem) scale(0.985);
+    opacity: 0.82;
+    transform: translate3d(0, 0.75rem, 0) scale(0.992);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
   }
 }
 
@@ -938,6 +1000,8 @@ main#main-content > section.page-layer {
   .experience-proof-card,
   .experience-rail-item,
   .experience-rail::after,
+  .education-card,
+  .media-card,
   .logo-marquee-card,
   .logo-marquee-image {
     transition: none;
@@ -985,6 +1049,19 @@ main#main-content > section.page-layer {
     letter-spacing: 0.1em;
   }
 
+  main#main-content > section.page-layer {
+    padding-top: 2.25rem;
+    padding-bottom: 2.25rem;
+  }
+
+  main#main-content > section#home.page-layer {
+    padding-top: 1.25rem;
+  }
+
+  main#main-content > section#contact.page-layer {
+    padding-bottom: 1.5rem;
+  }
+
   .experience-sidebar {
     padding: 1rem;
   }
@@ -999,7 +1076,9 @@ main#main-content > section.page-layer {
 
   .proof-brief,
   .capability-copy,
-  .credential-education-card {
+  .education-card,
+  .media-stage-copy,
+  .media-card {
     padding: 1rem;
   }
 
@@ -1021,6 +1100,10 @@ main#main-content > section.page-layer {
   .capability-chip {
     font-size: 0.78rem;
     padding: 0.5rem 0.62rem;
+  }
+
+  .media-card-stack {
+    gap: 0.85rem;
   }
 
   main#main-content > section.page-layer {
@@ -1057,15 +1140,13 @@ main#main-content > section.page-layer {
 
   main#main-content > section.page-layer.scroll-scene {
     display: flex;
-    min-height: calc(100svh - 5rem);
+    min-height: min(72svh, 42rem);
     align-items: center;
-    padding-block: clamp(3.5rem, 7svh, 6.5rem);
+    padding-block: clamp(1.75rem, 3.8svh, 3.5rem);
     transition:
-      opacity 0.55s ease,
-      transform 0.72s cubic-bezier(0.16, 1, 0.3, 1),
-      filter 0.55s ease;
+      opacity 0.42s ease,
+      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     transform-style: preserve-3d;
-    will-change: opacity, transform, filter;
   }
 
   main#main-content > section.page-layer.scroll-scene > .container-shell {
@@ -1087,10 +1168,10 @@ main#main-content > section.page-layer {
       3.8rem 3.8rem,
       3.8rem 3.8rem;
     opacity: 0;
-    transform: translate3d(0, var(--scene-parallax, 0rem), -1px);
+    transform: translate3d(0, 0.4rem, -1px) scale(0.995);
     transition:
-      opacity 0.55s ease,
-      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+      opacity 0.42s ease,
+      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     pointer-events: none;
   }
 
@@ -1100,33 +1181,27 @@ main#main-content > section.page-layer {
 
   main#main-content > section.page-layer.scene-active {
     opacity: 1;
-    transform: translateY(0) scale(1);
-    filter: saturate(1);
+    transform: translate3d(0, 0, 0) scale(1);
+    will-change: transform, opacity;
   }
 
   main#main-content > section.page-layer.scene-before {
-    opacity: 0.54;
-    transform: translateY(-2.4rem) scale(0.965) rotateX(2deg);
-    filter: saturate(0.72) blur(0.2px);
+    opacity: 0.7;
+    transform: translate3d(0, -1rem, 0) scale(0.985);
   }
 
   main#main-content > section.page-layer.scene-after {
-    opacity: 0.78;
-    transform: translateY(2.1rem) scale(0.982) rotateX(-1deg);
-    filter: saturate(0.86);
+    opacity: 0.84;
+    transform: translate3d(0, 0.9rem, 0) scale(0.992);
   }
 
   main#main-content > section.page-layer.scene-active .section-frame {
     border-color: var(--line-strong);
   }
 
-  main#main-content > section.page-layer.scene-active .signal-card,
-  main#main-content > section.page-layer.scene-active .logo-marquee,
-  main#main-content > section.page-layer.scene-active .capability-cluster,
-  main#main-content > section.page-layer.scene-active .experience-entry,
-  main#main-content > section.page-layer.scene-active .credential-card,
-  main#main-content > section.page-layer.scene-active form {
-    animation: scene-layer-rise 0.72s cubic-bezier(0.16, 1, 0.3, 1) both;
+  main#main-content > section.page-layer.scene-active .section-frame {
+    will-change: transform, opacity;
+    animation: scene-layer-rise 0.48s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 
   .scroll-story-progress {
@@ -1178,7 +1253,8 @@ main#main-content > section.page-layer {
   }
 
   .proof-brief,
-  .capability-copy {
+  .capability-copy,
+  .media-stage-copy {
     position: sticky;
     top: 7.5rem;
   }
@@ -1190,6 +1266,12 @@ main#main-content > section.page-layer {
   .experience-signal-strip span {
     animation: signal-breathe 7s ease-in-out infinite;
     animation-delay: calc(var(--signal-index) * 0.18s);
+  }
+}
+
+@media (min-width: 768px) {
+  .media-card {
+    grid-template-columns: 220px 1fr;
   }
 }
 

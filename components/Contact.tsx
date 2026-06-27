@@ -81,10 +81,10 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="page-layer py-12">
+    <section id="contact" className="page-layer py-8 md:py-10 lg:py-12">
       <Container>
         <SectionReveal className="section-frame">
-          <div className="meta-stack">09 / CONTACT</div>
+          <div className="meta-stack">10 / CONTACT</div>
           <div className="mt-4 grid gap-8 lg:grid-cols-[0.34fr_0.66fr] lg:items-start">
             <div>
               <h2 className="section-title">Contact.</h2>

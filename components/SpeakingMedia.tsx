@@ -20,21 +20,21 @@ export function SpeakingMedia() {
   const [activeMedia, setActiveMedia] = useState<ActiveMedia>(null);
 
   return (
-    <section id="speaking" className="page-layer py-12">
+    <section id="speaking" className="page-layer py-9 md:py-10 lg:py-12">
       <Container>
-        <SectionReveal className="section-frame">
-          <div className="meta-stack">08 / SPEAKING & MEDIA</div>
+        <SectionReveal className="section-frame media-stage">
+          <div className="meta-stack">09 / SPEAKING & MEDIA</div>
           <div className="mt-4 grid gap-8 lg:grid-cols-[0.34fr_0.66fr] lg:items-start">
-            <div>
+            <div className="media-stage-copy">
               <h2 className="section-title">Speaking, media, and public credibility.</h2>
               <p className="section-copy">{profile.speakingIntro}</p>
             </div>
 
-            <div className="space-y-8">
+            <div className="media-card-stack">
               {speakingMediaItems.map((item, index) => (
-                <SectionReveal key={item.title} delay={0.05 + index * 0.05}>
-                  <article className="grid gap-5 border-t border-[var(--line)] pt-6 md:grid-cols-[220px_1fr]">
-                    <div className="image-panel relative min-h-[200px]">
+                <SectionReveal key={item.title} delay={0.03 + index * 0.025}>
+                  <article className="media-card">
+                    <div className="image-panel media-image-panel relative min-h-[200px]">
                       <Image
                         src={item.image}
                         alt={item.title}

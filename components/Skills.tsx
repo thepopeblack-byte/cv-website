@@ -8,50 +8,61 @@ import { skillGroups } from "@/data/skills";
 
 export function Skills() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const activeIndexRef = useRef(0);
   const clusterRefs = useRef<Array<HTMLElement | null>>([]);
 
   useEffect(() => {
-    let frameId = 0;
+    const clusters = clusterRefs.current.filter(Boolean) as HTMLElement[];
 
-    const updateActiveCluster = () => {
-      const viewportHeight = window.innerHeight;
-      const anchor = viewportHeight * 0.42;
-      let nextActiveIndex = 0;
-      let bestScore = Number.POSITIVE_INFINITY;
+    if (!clusters.length) {
+      return;
+    }
 
-      clusterRefs.current.forEach((cluster, index) => {
-        if (!cluster) {
-          return;
+    const activateCluster = (nextActiveIndex: number) => {
+      if (activeIndexRef.current !== nextActiveIndex) {
+        activeIndexRef.current = nextActiveIndex;
+        setActiveIndex(nextActiveIndex);
+      }
+    };
+
+    if (typeof window.IntersectionObserver === "undefined") {
+      activateCluster(0);
+      return;
+    };
+
+    const visibility = new Map<Element, number>();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          visibility.set(entry.target, entry.isIntersecting ? entry.intersectionRatio : 0);
+        });
+
+        let nextActiveIndex = activeIndexRef.current;
+        let bestScore = 0;
+
+        clusters.forEach((cluster) => {
+          const score = visibility.get(cluster) ?? 0;
+          const index = clusterRefs.current.indexOf(cluster);
+
+          if (index >= 0 && score > bestScore) {
+            bestScore = score;
+            nextActiveIndex = index;
+          }
+        });
+
+        if (bestScore > 0.14) {
+          activateCluster(nextActiveIndex);
         }
+      },
+      {
+        rootMargin: "-12% 0px -30% 0px",
+        threshold: [0.18, 0.34, 0.5, 0.68],
+      },
+    );
 
-        const rect = cluster.getBoundingClientRect();
-        const visible = rect.bottom > viewportHeight * 0.12 && rect.top < viewportHeight * 0.88;
-        const clusterAnchor = rect.top + Math.min(rect.height * 0.28, viewportHeight * 0.32);
-        const score = Math.abs(clusterAnchor - anchor) + (visible ? 0 : viewportHeight);
+    clusters.forEach((cluster) => observer.observe(cluster));
 
-        if (score < bestScore) {
-          bestScore = score;
-          nextActiveIndex = index;
-        }
-      });
-
-      setActiveIndex(nextActiveIndex);
-    };
-
-    const requestUpdate = () => {
-      window.cancelAnimationFrame(frameId);
-      frameId = window.requestAnimationFrame(updateActiveCluster);
-    };
-
-    updateActiveCluster();
-    window.addEventListener("scroll", requestUpdate, { passive: true });
-    window.addEventListener("resize", requestUpdate);
-
-    return () => {
-      window.cancelAnimationFrame(frameId);
-      window.removeEventListener("scroll", requestUpdate);
-      window.removeEventListener("resize", requestUpdate);
-    };
+    return () => observer.disconnect();
   }, []);
 
   const activeGroup = skillGroups[activeIndex] ?? skillGroups[0];
@@ -59,7 +70,7 @@ export function Skills() {
     skillGroups.length > 1 ? (activeIndex / (skillGroups.length - 1)) * 100 : 0;
 
   return (
-    <section id="skills" className="page-layer py-12">
+    <section id="skills" className="page-layer py-9 md:py-10 lg:py-12">
       <Container>
         <SectionReveal className="section-frame capability-section">
           <div className="meta-stack">04 / CAPABILITIES</div>

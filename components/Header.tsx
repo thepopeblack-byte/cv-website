@@ -12,8 +12,8 @@ const links = [
   { label: "Proof", href: "#impact" },
   { label: "Ecosystems", href: "#ecosystems" },
   { label: "Capabilities", href: "#skills" },
-  { label: "Experience", href: "#experience" },
   { label: "Work", href: "#portfolio" },
+  { label: "Experience", href: "#experience" },
   { label: "Contact", href: "#contact" },
 ];
 

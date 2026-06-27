@@ -13,7 +13,7 @@ export function SelectedEcosystems() {
   }
 
   return (
-    <section id="ecosystems" className="page-layer py-12">
+    <section id="ecosystems" className="page-layer py-9 md:py-10 lg:py-12">
       <Container>
         <SectionReveal className="section-frame">
           <div className="meta-stack">03 / ECOSYSTEMS & PARTNERS</div>

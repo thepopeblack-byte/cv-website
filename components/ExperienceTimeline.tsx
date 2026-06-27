@@ -30,50 +30,61 @@ function getStatus(period: string) {
 
 export function ExperienceTimeline() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const activeIndexRef = useRef(0);
   const entryRefs = useRef<Array<HTMLElement | null>>([]);
 
   useEffect(() => {
-    let frameId = 0;
+    const entries = entryRefs.current.filter(Boolean) as HTMLElement[];
 
-    const updateActiveEntry = () => {
-      const viewportHeight = window.innerHeight;
-      const anchor = viewportHeight * 0.36;
-      let nextActiveIndex = 0;
-      let bestScore = Number.POSITIVE_INFINITY;
+    if (!entries.length) {
+      return;
+    }
 
-      entryRefs.current.forEach((entry, index) => {
-        if (!entry) {
-          return;
+    const activateEntry = (nextActiveIndex: number) => {
+      if (activeIndexRef.current !== nextActiveIndex) {
+        activeIndexRef.current = nextActiveIndex;
+        setActiveIndex(nextActiveIndex);
+      }
+    };
+
+    if (typeof window.IntersectionObserver === "undefined") {
+      activateEntry(0);
+      return;
+    };
+
+    const visibility = new Map<Element, number>();
+    const observer = new IntersectionObserver(
+      (observerEntries) => {
+        observerEntries.forEach((entry) => {
+          visibility.set(entry.target, entry.isIntersecting ? entry.intersectionRatio : 0);
+        });
+
+        let nextActiveIndex = activeIndexRef.current;
+        let bestScore = 0;
+
+        entries.forEach((entry) => {
+          const score = visibility.get(entry) ?? 0;
+          const index = entryRefs.current.indexOf(entry);
+
+          if (index >= 0 && score > bestScore) {
+            bestScore = score;
+            nextActiveIndex = index;
+          }
+        });
+
+        if (bestScore > 0.12) {
+          activateEntry(nextActiveIndex);
         }
+      },
+      {
+        rootMargin: "-10% 0px -34% 0px",
+        threshold: [0.14, 0.28, 0.44, 0.62],
+      },
+    );
 
-        const rect = entry.getBoundingClientRect();
-        const visible = rect.bottom > viewportHeight * 0.12 && rect.top < viewportHeight * 0.88;
-        const entryAnchor = rect.top + Math.min(rect.height * 0.18, viewportHeight * 0.28);
-        const score = Math.abs(entryAnchor - anchor) + (visible ? 0 : viewportHeight);
+    entries.forEach((entry) => observer.observe(entry));
 
-        if (score < bestScore) {
-          bestScore = score;
-          nextActiveIndex = index;
-        }
-      });
-
-      setActiveIndex(nextActiveIndex);
-    };
-
-    const requestUpdate = () => {
-      window.cancelAnimationFrame(frameId);
-      frameId = window.requestAnimationFrame(updateActiveEntry);
-    };
-
-    updateActiveEntry();
-    window.addEventListener("scroll", requestUpdate, { passive: true });
-    window.addEventListener("resize", requestUpdate);
-
-    return () => {
-      window.cancelAnimationFrame(frameId);
-      window.removeEventListener("scroll", requestUpdate);
-      window.removeEventListener("resize", requestUpdate);
-    };
+    return () => observer.disconnect();
   }, []);
 
   const activeEntry = experience[activeIndex] ?? experience[0];
@@ -82,10 +93,10 @@ export function ExperienceTimeline() {
     experience.length > 1 ? (activeIndex / (experience.length - 1)) * 100 : 0;
 
   return (
-    <section id="experience" className="page-layer py-12">
+    <section id="experience" className="page-layer py-9 md:py-10 lg:py-12">
       <Container>
         <SectionReveal className="section-frame">
-          <div className="meta-stack">05 / EXPERIENCE</div>
+          <div className="meta-stack">06 / EXPERIENCE</div>
           <div className="mt-4 grid gap-8 lg:grid-cols-[0.34fr_0.66fr] lg:items-start">
             <aside
               className="experience-sidebar"

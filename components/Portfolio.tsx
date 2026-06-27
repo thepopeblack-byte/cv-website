@@ -12,10 +12,10 @@ function isExternalHref(href: string) {
 
 export function Portfolio() {
   return (
-    <section id="portfolio" className="page-layer py-12">
+    <section id="portfolio" className="page-layer py-9 md:py-10 lg:py-12">
       <Container>
         <SectionReveal className="section-frame">
-          <div className="meta-stack">06 / SELECTED WORK</div>
+          <div className="meta-stack">05 / SELECTED WORK</div>
           <div className="mt-4 grid gap-8 lg:grid-cols-[0.34fr_0.66fr] lg:items-start">
             <div>
               <h2 className="section-title">
