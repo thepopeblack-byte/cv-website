@@ -6,6 +6,7 @@ import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { ImpactStats } from "@/components/ImpactStats";
+import { LatestWriting } from "@/components/LatestWriting";
 import { Portfolio } from "@/components/Portfolio";
 import { SelectedEcosystems } from "@/components/SelectedEcosystems";
 import { Skills } from "@/components/Skills";
@@ -27,6 +28,7 @@ export default function Page() {
         <Certifications />
         <Education />
         <SpeakingMedia />
+        <LatestWriting />
         <Contact />
       </main>
       <Footer />

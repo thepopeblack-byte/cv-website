@@ -15,7 +15,7 @@ export function Portfolio() {
     <section id="portfolio" className="page-layer py-14 md:py-16 lg:py-12">
       <Container>
         <SectionReveal className="section-frame">
-          <div className="meta-stack">05 / SELECTED WORK</div>
+          <div className="meta-stack">Selected work</div>
           <div className="mt-4 grid gap-8 lg:grid-cols-[0.34fr_0.66fr] lg:items-start">
             <div>
               <h2 className="section-title">
@@ -60,10 +60,7 @@ export function Portfolio() {
                           [{item.category}]
                         </div>
                         <div className="absolute bottom-0 left-0 right-0 p-5">
-                          <div className="meta-stack text-[0.68rem] text-[var(--muted)]">
-                            0{index + 1} / CASE STUDY
-                          </div>
-                          <h3 className="mt-2 font-['Sora'] text-[1.45rem] leading-tight text-[var(--foreground)]">
+                          <h3 className="font-['Sora'] text-[1.45rem] leading-tight text-[var(--foreground)]">
                             {item.title}
                           </h3>
                         </div>

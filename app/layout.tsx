@@ -74,7 +74,7 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: "#08111f",
-  colorScheme: "dark",
+  colorScheme: "dark light",
 };
 
 export default function RootLayout({
@@ -85,6 +85,13 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
+        <script
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{
+            __html:
+              "(()=>{function a(t){document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t;try{localStorage.setItem('popeblack-theme',t)}catch(e){}}try{a(localStorage.getItem('popeblack-theme')==='light'?'light':'dark')}catch(e){a('dark')}document.addEventListener('click',function(e){var b=e.target&&e.target.closest?e.target.closest('[data-theme-toggle]'):null;if(!b)return;e.preventDefault();a(document.documentElement.dataset.theme==='light'?'dark':'light')})})();",
+          }}
+        />
         <a className="skip-link" href="#main-content">
           Skip to content
         </a>

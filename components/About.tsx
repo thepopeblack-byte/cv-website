@@ -7,7 +7,7 @@ export function About() {
     <section id="about" className="page-layer py-12">
       <Container>
         <SectionReveal className="section-frame">
-          <div className="meta-stack">01 / POSITIONING</div>
+          <div className="meta-stack">Positioning</div>
           <div className="mt-4 grid gap-8 lg:grid-cols-[0.35fr_0.65fr] lg:items-start">
             <div>
               <h2 className="section-title">{profile.aboutTitle}</h2>
@@ -22,10 +22,9 @@ export function About() {
               </p>
 
               <div className="mt-8 grid gap-4 md:grid-cols-3">
-                {profile.aboutCards.map((card, index) => (
+                {profile.aboutCards.map((card) => (
                   <article key={card.title} className="signal-card h-full">
-                    <div className="meta-stack">0{index + 1} / CORE CAPABILITY</div>
-                    <h3 className="mt-4 font-['Sora'] text-[1.4rem] tracking-[-0.05em] text-[var(--foreground)]">
+                    <h3 className="font-['Sora'] text-[1.4rem] tracking-[-0.05em] text-[var(--foreground)]">
                       {card.title}
                     </h3>
                     <p className="mt-4 text-[0.98rem] leading-7 text-[var(--muted)]">

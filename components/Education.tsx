@@ -7,7 +7,7 @@ export function Education() {
     <section id="education" className="page-layer py-14 md:py-16 lg:py-12">
       <Container>
         <SectionReveal className="section-frame education-stage">
-          <div className="meta-stack">08 / EDUCATION</div>
+          <div className="meta-stack">Education</div>
           <div className="mt-4 grid gap-8 lg:grid-cols-[0.34fr_0.66fr] lg:items-start">
             <div>
               <h2 className="section-title">Education.</h2>
@@ -28,9 +28,8 @@ export function Education() {
               </div>
 
               <div className="education-highlight-grid">
-                {profile.education.highlights.map((highlight, index) => (
+                {profile.education.highlights.map((highlight) => (
                   <article key={highlight} className="education-highlight-card">
-                    <div className="meta-stack">0{index + 1} / FOUNDATION</div>
                     <p>{highlight}</p>
                   </article>
                 ))}

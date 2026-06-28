@@ -13,7 +13,7 @@ export function ImpactStats() {
     <section id="impact" className="page-layer py-14 md:py-16 lg:py-12">
       <Container>
         <SectionReveal className="section-frame proof-stage">
-          <div className="meta-stack">02 / COMMERCIAL PROOF</div>
+          <div className="meta-stack">Commercial proof</div>
           <div className="mt-4 grid gap-8 lg:grid-cols-[0.38fr_0.62fr] lg:items-start">
             <div className="proof-brief">
               <div className="proof-brief-glow" aria-hidden="true" />
@@ -29,11 +29,8 @@ export function ImpactStats() {
               </p>
 
               <div className="proof-positioning-list mt-6 grid gap-3">
-                {profile.aboutCards.map((card, index) => (
+                {profile.aboutCards.map((card) => (
                   <article key={card.title} className="proof-positioning-card">
-                    <div className="meta-stack">
-                      0{index + 1} / CORE CAPABILITY
-                    </div>
                     <h3>{card.title}</h3>
                     <p>{card.text}</p>
                   </article>
@@ -42,10 +39,9 @@ export function ImpactStats() {
             </div>
 
             <div className="proof-metric-grid">
-              {profile.stats.map((stat, index) => (
+              {profile.stats.map((stat) => (
                 <article key={stat.label} className="signal-card h-full">
-                  <div className="meta-stack">0{index + 1} / CAREER IMPACT</div>
-                  <p className="mt-4 metric-value">
+                  <p className="metric-value">
                     {formatMetric(stat.value, stat.prefix, stat.suffix)}
                   </p>
                   <h3 className="mt-3 font-['Sora'] text-[1.2rem] tracking-[-0.03em] text-[var(--foreground)]">

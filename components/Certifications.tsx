@@ -7,7 +7,7 @@ export function Certifications() {
     <section id="credentials" className="page-layer py-14 md:py-16 lg:py-12">
       <Container>
         <SectionReveal className="section-frame">
-          <div className="meta-stack">07 / CREDENTIALS</div>
+          <div className="meta-stack">Credentials</div>
           <div className="mt-4 grid gap-8 lg:grid-cols-[0.34fr_0.66fr] lg:items-start">
             <div>
               <h2 className="section-title">Credentials.</h2>

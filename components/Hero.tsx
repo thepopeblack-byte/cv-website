@@ -29,10 +29,9 @@ const heroActions: HeroAction[] = [
     variant: "button-secondary",
   },
   {
-    label: "Download CV",
-    href: profile.cvUrl,
+    label: "Read Blog",
+    href: "/blog",
     variant: "button-ghost",
-    download: true,
   },
   {
     label: "LinkedIn",
@@ -49,6 +48,12 @@ const quickFacts = [
   "500+ developers trained",
 ];
 
+const heroPillars = [
+  "Commercial Growth.",
+  "Web3 Partnerships.",
+  "Blockchain Intelligence.",
+];
+
 export function Hero() {
   return (
     <section id="home" className="page-layer pt-8">
@@ -62,7 +67,6 @@ export function Hero() {
           >
             <div className="space-y-8">
               <div className="meta-stack space-y-2">
-                <div>*</div>
                 <LiveClock />
                 <div>WEB3 / AI / PARTNERSHIPS / REVENUE</div>
                 <div>BLOCKCHAIN INTELLIGENCE / AML-CFT / OSINT</div>
@@ -87,22 +91,26 @@ export function Hero() {
             </div>
 
             <div>
-              <div className="meta-stack">01 / EXECUTIVE PROFILE</div>
+              <div className="meta-stack">Executive profile</div>
               <h1 className="mt-4 font-['Sora'] text-[4rem] leading-none text-[var(--foreground)] sm:text-[5rem] lg:text-[6rem]">
                 Kayode Popoola
               </h1>
-              <p className="mt-4 text-[1.05rem] uppercase tracking-[0.18em] text-[var(--muted)]">
-                {profile.headline}
-              </p>
-              <div className="mt-6 max-w-4xl space-y-6 text-[1.08rem] leading-9 text-[var(--muted-strong)]">
-                <p>{profile.subheadline}</p>
+              <div className="hero-pillar-stack mt-5">
+                {heroPillars.map((pillar) => (
+                  <p key={pillar}>{pillar}</p>
+                ))}
+              </div>
+              <div className="mt-6 max-w-4xl space-y-5 text-[1.08rem] leading-9 text-[var(--muted-strong)]">
+                <p>
+                  Building revenue, ecosystem growth, and trust infrastructure
+                  across Web3, AI, DeFi, and emerging markets.
+                </p>
                 <p>{profile.currentFocus}</p>
               </div>
 
               <div className="hero-quick-facts mt-10 grid gap-3 border-t border-[var(--line)] pt-6 md:grid-cols-2">
-                {quickFacts.map((fact, index) => (
+                {quickFacts.map((fact) => (
                   <div key={fact} className="flex gap-4">
-                    <span className="meta-stack">0{index + 1}</span>
                     <p className="text-[1rem] leading-8 text-[var(--foreground)]">
                       {fact}
                     </p>

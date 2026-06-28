@@ -17,6 +17,14 @@ const workspaceRoot = fs.existsSync(localNextPackage)
 const nextConfig: NextConfig = {
   output: "standalone",
   outputFileTracingRoot: workspaceRoot,
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "img.youtube.com",
+      },
+    ],
+  },
   turbopack: {
     root: workspaceRoot,
   },

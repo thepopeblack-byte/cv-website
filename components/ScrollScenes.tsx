@@ -12,6 +12,7 @@ const sceneLabels = [
   "Credentials",
   "Education",
   "Media",
+  "Writing",
   "Contact",
 ];
 
@@ -168,11 +169,9 @@ export function ScrollScenes() {
 
   return (
     <div className="scroll-story-progress" aria-hidden="true">
-      <span>{String(activeScene + 1).padStart(2, "0")}</span>
       <span className="scroll-story-progress-line">
         <span style={{ height: `${progress}%` }} />
       </span>
-      <span>{String(sceneCount).padStart(2, "0")}</span>
       <span className="scroll-story-progress-label">{label}</span>
     </div>
   );

@@ -68,6 +68,17 @@ export const portfolioItems: PortfolioItem[] = [
 
 export const speakingMediaItems: PortfolioItem[] = [
   {
+    title:
+      "Popeblack at Encryption Day in Argentina - Encryption Lab: FHE in Real Life",
+    category: "Conference Video",
+    description:
+      "Conference video from Encryption Day in Argentina covering FHE, encryption, privacy infrastructure, and real-world emerging technology adoption.",
+    image: "https://img.youtube.com/vi/pTdEnLmJA9Q/maxresdefault.jpg",
+    imageAlt:
+      "YouTube thumbnail for Popeblack at Encryption Day in Argentina - Encryption Lab: FHE in Real Life.",
+    videoWatchUrl: "https://www.youtube.com/watch?v=pTdEnLmJA9Q",
+  },
+  {
     title: "Tech Talk Episode 4: Web 3.0: The Future of the Internet",
     category: "Media Video",
     description:

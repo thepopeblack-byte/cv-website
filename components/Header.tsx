@@ -1,7 +1,8 @@
 "use client";
 
-import { Menu, X } from "lucide-react";
+import { Menu, Moon, Sun, X } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 import { Container } from "@/components/Container";
@@ -15,95 +16,191 @@ const desktopLinks = [
   { label: "Experience", href: "#experience" },
   { label: "Credentials", href: "#credentials" },
   { label: "Speaking", href: "#speaking" },
+  { label: "Blog", href: "/blog" },
   { label: "Contact", href: "#contact" },
 ];
 
 const mobileLinks = [
   { label: "Profile", href: "#home" },
   { label: "Proof", href: "#impact" },
-  { label: "Ecosystems", href: "#ecosystems" },
   { label: "Capabilities", href: "#skills" },
-  { label: "Work", href: "#portfolio" },
   { label: "Experience", href: "#experience" },
   { label: "Credentials", href: "#credentials" },
-  { label: "Media", href: "#speaking" },
+  { label: "Speaking", href: "#speaking" },
+  { label: "Blog", href: "/blog" },
   { label: "Contact", href: "#contact" },
 ];
 
-const observedLinks = Array.from(
-  new Map(
-    [...desktopLinks, ...mobileLinks].map((link) => [link.href, link]),
-  ).values(),
-);
+const homepageSpyTargets = [
+  { sectionId: "home", activeHref: "#home" },
+  { sectionId: "impact", activeHref: "#impact" },
+  { sectionId: "ecosystems", activeHref: "#impact" },
+  { sectionId: "portfolio", activeHref: "#impact" },
+  { sectionId: "skills", activeHref: "#skills" },
+  { sectionId: "experience", activeHref: "#experience" },
+  { sectionId: "credentials", activeHref: "#credentials" },
+  { sectionId: "education", activeHref: "#credentials" },
+  { sectionId: "speaking", activeHref: "#speaking" },
+  { sectionId: "writing", activeHref: "/blog" },
+  { sectionId: "contact", activeHref: "#contact" },
+];
 
 export function Header() {
   const [open, setOpen] = useState(false);
   const [activeHref, setActiveHref] = useState("#home");
   const activeHrefRef = useRef("#home");
+  const pathname = usePathname();
 
   const activateLink = (href: string) => {
-    activeHrefRef.current = href;
-    setActiveHref(href);
+    if (href.startsWith("#")) {
+      activeHrefRef.current = href;
+      setActiveHref(href);
+    }
     setOpen(false);
   };
 
-  useEffect(() => {
-    const sections = observedLinks
-      .map((link) => document.querySelector<HTMLElement>(link.href))
-      .filter(Boolean) as HTMLElement[];
+  const resolveHref = (href: string) => {
+    if (!href.startsWith("#")) {
+      return href;
+    }
 
-    if (
-      !sections.length ||
-      typeof window.IntersectionObserver === "undefined"
-    ) {
+    return pathname === "/" ? href : `/${href}`;
+  };
+
+  const isActiveLink = (href: string) => {
+    if (href === "/blog") {
+      return pathname === "/blog" || (pathname === "/" && activeHref === href);
+    }
+
+    return pathname === "/" && activeHref === href;
+  };
+
+  useEffect(() => {
+    const savedTheme =
+      window.localStorage.getItem("popeblack-theme") === "light"
+        ? "light"
+        : "dark";
+
+    document.documentElement.dataset.theme = savedTheme;
+    document.documentElement.style.colorScheme = savedTheme;
+  }, []);
+
+  useEffect(() => {
+    if (pathname !== "/") {
       return;
     }
 
-    const visibility = new Map<Element, number>();
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          visibility.set(
-            entry.target,
-            entry.isIntersecting ? entry.intersectionRatio : 0,
-          );
-        });
-
-        let nextActiveHref = activeHrefRef.current;
-        let bestScore = 0;
-
-        sections.forEach((section) => {
-          const score = visibility.get(section) ?? 0;
-
-          if (score > bestScore) {
-            bestScore = score;
-            nextActiveHref = `#${section.id}`;
-          }
-        });
-
-        if (bestScore > 0.12 && activeHrefRef.current !== nextActiveHref) {
-          activeHrefRef.current = nextActiveHref;
-          setActiveHref(nextActiveHref);
-        }
-      },
-      {
-        rootMargin: "-14% 0px -62% 0px",
-        threshold: [0.12, 0.28, 0.44, 0.6],
-      },
+    const sections = homepageSpyTargets
+      .map((target) => ({
+        ...target,
+        element: document.getElementById(target.sectionId),
+      }))
+      .filter((target) => target.element) as Array<
+      (typeof homepageSpyTargets)[number] & { element: HTMLElement }
+    >;
+    const orderedSections = [...sections].sort(
+      (a, b) => a.element.offsetTop - b.element.offsetTop,
     );
 
-    sections.forEach((section) => observer.observe(section));
+    if (!orderedSections.length) {
+      return;
+    }
 
-    return () => observer.disconnect();
-  }, []);
+    let frameId = 0;
+
+    const findActiveHref = () => {
+      const headerHeight =
+        parseFloat(
+          getComputedStyle(document.documentElement).getPropertyValue(
+            "--site-header-height",
+          ),
+        ) || 92;
+      const viewportHeight = window.innerHeight;
+      const scrollTop =
+        window.scrollY || document.documentElement.scrollTop || 0;
+      const pageHeight = Math.max(
+        document.body.scrollHeight,
+        document.documentElement.scrollHeight,
+      );
+
+      if (scrollTop + viewportHeight >= pageHeight - 24) {
+        return "#contact";
+      }
+
+      const anchorY = scrollTop + headerHeight + viewportHeight * 0.34;
+      let nextActiveHref = orderedSections[0]?.activeHref ?? "#home";
+
+      for (const target of orderedSections) {
+        if (target.element.offsetTop <= anchorY) {
+          nextActiveHref = target.activeHref;
+        } else {
+          break;
+        }
+      }
+
+      return nextActiveHref;
+    };
+
+    const updateActiveHref = () => {
+      frameId = 0;
+      const nextActiveHref = findActiveHref();
+
+      if (activeHrefRef.current !== nextActiveHref) {
+        activeHrefRef.current = nextActiveHref;
+        setActiveHref(nextActiveHref);
+      }
+    };
+
+    const requestUpdate = () => {
+      if (frameId) {
+        return;
+      }
+
+      frameId = window.requestAnimationFrame(updateActiveHref);
+    };
+
+    requestUpdate();
+
+    if (typeof window.IntersectionObserver !== "undefined") {
+      const observer = new IntersectionObserver(requestUpdate, {
+        rootMargin: "-18% 0px -42% 0px",
+        threshold: [0, 0.16, 0.32, 0.48, 0.64],
+      });
+
+      sections.forEach((target) => observer.observe(target.element));
+
+      window.addEventListener("scroll", requestUpdate, { passive: true });
+      window.addEventListener("resize", requestUpdate);
+      window.addEventListener("hashchange", requestUpdate);
+
+      return () => {
+        window.cancelAnimationFrame(frameId);
+        observer.disconnect();
+        window.removeEventListener("scroll", requestUpdate);
+        window.removeEventListener("resize", requestUpdate);
+        window.removeEventListener("hashchange", requestUpdate);
+      };
+    }
+
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate);
+    window.addEventListener("hashchange", requestUpdate);
+
+    return () => {
+      window.cancelAnimationFrame(frameId);
+      window.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("resize", requestUpdate);
+      window.removeEventListener("hashchange", requestUpdate);
+    };
+  }, [pathname]);
 
   return (
-    <header className="site-header page-layer sticky top-0 z-50 pt-4">
+    <header className="site-header page-layer sticky top-0 pt-4">
       <Container>
         <div className="site-header-panel relative rounded-[1rem] border border-[var(--line)] bg-[rgba(10,11,13,0.84)] px-4 py-4 backdrop-blur-xl">
           <div className="flex items-center justify-between gap-4">
             <Link
-              href="#home"
+              href={resolveHref("#home")}
               className="site-brand min-w-0"
               onClick={() => activateLink("#home")}
             >
@@ -120,11 +217,11 @@ export function Header() {
               {desktopLinks.map((link) => (
                 <Link
                   key={link.href}
-                  href={link.href}
-                  aria-current={activeHref === link.href ? "page" : undefined}
+                  href={resolveHref(link.href)}
+                  aria-current={isActiveLink(link.href) ? "page" : undefined}
                   className={cn(
                     "desktop-nav-link meta-stack transition hover:text-[var(--foreground)]",
-                    activeHref === link.href && "is-active",
+                    isActiveLink(link.href) && "is-active",
                   )}
                   onClick={() => activateLink(link.href)}
                 >
@@ -133,7 +230,7 @@ export function Header() {
               ))}
             </nav>
 
-            <div className="hidden lg:block">
+            <div className="nav-actions hidden items-center gap-2 lg:flex">
               <Link
                 href={profile.bookCallUrl}
                 target="_blank"
@@ -143,18 +240,46 @@ export function Header() {
               >
                 Book a Call
               </Link>
+              <button
+                type="button"
+                className="theme-toggle"
+                data-theme-toggle
+                aria-label="Toggle color theme"
+              >
+                <span className="theme-icon theme-icon-sun">
+                  <Sun size={15} />
+                </span>
+                <span className="theme-icon theme-icon-moon">
+                  <Moon size={15} />
+                </span>
+              </button>
             </div>
 
-            <button
-              type="button"
-              aria-expanded={open}
-              aria-controls="mobile-nav"
-              aria-label={open ? "Close navigation" : "Open navigation"}
-              className="mobile-menu-button inline-flex h-11 w-11 items-center justify-center rounded-full border border-[var(--line)] bg-white/[0.02] text-[var(--foreground)] lg:hidden"
-              onClick={() => setOpen((value) => !value)}
-            >
-              {open ? <X size={18} /> : <Menu size={18} />}
-            </button>
+            <div className="mobile-nav-actions flex items-center gap-2 lg:hidden">
+              <button
+                type="button"
+                className="theme-toggle"
+                data-theme-toggle
+                aria-label="Toggle color theme"
+              >
+                <span className="theme-icon theme-icon-sun">
+                  <Sun size={15} />
+                </span>
+                <span className="theme-icon theme-icon-moon">
+                  <Moon size={15} />
+                </span>
+              </button>
+              <button
+                type="button"
+                aria-expanded={open}
+                aria-controls="mobile-nav"
+                aria-label={open ? "Close navigation" : "Open navigation"}
+                className="mobile-menu-button inline-flex h-11 w-11 items-center justify-center rounded-full border border-[var(--line)] bg-white/[0.02] text-[var(--foreground)] lg:hidden"
+                onClick={() => setOpen((value) => !value)}
+              >
+                {open ? <X size={18} /> : <Menu size={18} />}
+              </button>
+            </div>
           </div>
 
           <div
@@ -171,11 +296,11 @@ export function Header() {
                 {mobileLinks.map((link) => (
                   <Link
                     key={link.href}
-                    href={link.href}
-                    aria-current={activeHref === link.href ? "page" : undefined}
+                    href={resolveHref(link.href)}
+                    aria-current={isActiveLink(link.href) ? "page" : undefined}
                     className={cn(
                       "mobile-nav-link meta-stack px-1 py-2 transition hover:text-[var(--foreground)]",
-                      activeHref === link.href && "is-active",
+                      isActiveLink(link.href) && "is-active",
                     )}
                     onClick={() => activateLink(link.href)}
                   >

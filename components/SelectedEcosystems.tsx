@@ -16,17 +16,15 @@ export function SelectedEcosystems() {
     <section id="ecosystems" className="page-layer py-14 md:py-16 lg:py-12">
       <Container>
         <SectionReveal className="section-frame">
-          <div className="meta-stack">03 / ECOSYSTEMS & PARTNERS</div>
+          <div className="meta-stack">Ecosystems & partners</div>
           <div className="mt-4 grid gap-8 lg:grid-cols-[0.34fr_0.66fr] lg:items-start">
             <div>
               <h2 className="section-title">
                 Selected Ecosystems, Partners & Projects
               </h2>
               <p className="section-copy">
-                A selection of ecosystems, projects, and organizations I have
-                contributed to through partnerships, business development,
-                ecosystem growth, advisory support, intelligence work, or
-                go-to-market execution.
+                Trusted across Web3, AI infrastructure, DeFi, blockchain
+                intelligence, and African ecosystem growth.
               </p>
             </div>
 
@@ -37,8 +35,8 @@ export function SelectedEcosystems() {
               <div className="logo-marquee-track">
                 {marqueeLogos.map((logo, index) => {
                   const isDuplicate = index >= logoItems.length;
-                  const logoCard = (
-                    <span className="logo-marquee-card">
+                  const logoMark = (
+                    <span className="logo-marquee-item">
                       <Image
                         src={logo.src}
                         alt={isDuplicate ? "" : `${logo.name} logo`}
@@ -59,7 +57,7 @@ export function SelectedEcosystems() {
                         key={`${logo.name}-${index}`}
                         aria-hidden={isDuplicate}
                       >
-                        {logoCard}
+                        {logoMark}
                       </span>
                     );
                   }
@@ -73,7 +71,7 @@ export function SelectedEcosystems() {
                       className="logo-marquee-link"
                       aria-label={`Visit ${logo.name}`}
                     >
-                      {logoCard}
+                      {logoMark}
                     </Link>
                   );
                 })}

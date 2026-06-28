@@ -108,7 +108,7 @@ export function ExperienceTimeline() {
     <section id="experience" className="page-layer py-14 md:py-16 lg:py-12">
       <Container>
         <SectionReveal className="section-frame">
-          <div className="meta-stack">06 / EXPERIENCE</div>
+          <div className="meta-stack">Experience</div>
           <div className="mt-4 grid gap-8 lg:grid-cols-[0.34fr_0.66fr] lg:items-start">
             <aside
               className="experience-sidebar"
@@ -133,10 +133,6 @@ export function ExperienceTimeline() {
                 <div className="meta-stack">Active company</div>
                 <h3>{activeEntry.company}</h3>
                 {activeRole ? <p>{activeRole.title}</p> : null}
-                <span>
-                  {String(activeIndex + 1).padStart(2, "0")} /{" "}
-                  {String(experience.length).padStart(2, "0")}
-                </span>
               </div>
 
               <div
@@ -173,9 +169,6 @@ export function ExperienceTimeline() {
                     }`}
                     aria-current={index === activeIndex ? "step" : undefined}
                   >
-                    <span className="experience-rail-index">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
                     <span>{entry.company}</span>
                   </div>
                 ))}
@@ -193,10 +186,7 @@ export function ExperienceTimeline() {
                   >
                     <div className="flex flex-wrap items-start justify-between gap-4">
                       <div>
-                        <div className="meta-stack">
-                          {String(index + 1).padStart(2, "0")} /{" "}
-                          {String(experience.length).padStart(2, "0")}
-                        </div>
+                        <div className="meta-stack">Operating role</div>
                         <h3 className="mt-3 font-['Sora'] text-[1.9rem] tracking-[-0.05em] text-[var(--foreground)]">
                           {entry.company}
                         </h3>

@@ -80,7 +80,7 @@ export function Skills() {
     <section id="skills" className="page-layer py-14 md:py-16 lg:py-12">
       <Container>
         <SectionReveal className="section-frame capability-section">
-          <div className="meta-stack">04 / CAPABILITIES</div>
+          <div className="meta-stack">Capabilities</div>
           <div className="mt-4 grid gap-8 lg:grid-cols-[0.34fr_0.66fr] lg:items-start">
             <aside
               className="capability-copy"
@@ -117,7 +117,6 @@ export function Skills() {
                     aria-current={index === activeIndex ? "step" : undefined}
                     onClick={() => selectCluster(index)}
                   >
-                    <span>{String(index + 1).padStart(2, "0")}</span>
                     <span>{group.title}</span>
                   </button>
                 ))}
@@ -141,9 +140,7 @@ export function Skills() {
                   style={{ "--cluster-index": index } as CSSProperties}
                 >
                   <div className="capability-cluster-header">
-                    <span className="meta-stack">
-                      {String(index + 1).padStart(2, "0")} / CLUSTER
-                    </span>
+                    <span className="meta-stack">Capability cluster</span>
                     <h3>{group.title}</h3>
                   </div>
                   <ul className="capability-chip-grid">

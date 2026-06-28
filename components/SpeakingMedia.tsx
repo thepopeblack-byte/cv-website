@@ -7,7 +7,6 @@ import { useState } from "react";
 
 import { Container } from "@/components/Container";
 import { SectionReveal } from "@/components/SectionReveal";
-import { profile } from "@/data/profile";
 import { speakingMediaItems, type PortfolioItem } from "@/data/portfolio";
 
 type ActiveMedia = Pick<PortfolioItem, "title" | "videoEmbedUrl"> | null;
@@ -23,13 +22,15 @@ export function SpeakingMedia() {
     <section id="speaking" className="page-layer py-14 md:py-16 lg:py-12">
       <Container>
         <SectionReveal className="section-frame media-stage">
-          <div className="meta-stack">09 / SPEAKING & MEDIA</div>
+          <div className="meta-stack">Speaking & media</div>
           <div className="mt-4 grid gap-8 lg:grid-cols-[0.34fr_0.66fr] lg:items-start">
             <div className="media-stage-copy">
-              <h2 className="section-title">
-                Speaking, media, and public credibility.
-              </h2>
-              <p className="section-copy">{profile.speakingIntro}</p>
+              <h2 className="section-title">Watch Kayode in Action</h2>
+              <p className="section-copy">
+                Selected talks, workshops, media appearances, and public proof
+                across Web3, blockchain privacy, ecosystem growth, and digital
+                assets.
+              </p>
             </div>
 
             <div className="media-card-stack">
@@ -45,9 +46,6 @@ export function SpeakingMedia() {
                         sizes="(min-width: 768px) 220px, 100vw"
                       />
                       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,11,13,0.08),rgba(10,11,13,0.82))]" />
-                      <div className="absolute left-4 top-4 meta-stack text-[0.68rem] text-[var(--muted-strong)]">
-                        0{index + 1}
-                      </div>
                     </div>
                     <div>
                       <div className="meta-stack">{item.category}</div>
@@ -76,10 +74,10 @@ export function SpeakingMedia() {
                           <Link
                             href={item.videoWatchUrl}
                             target="_blank"
-                            rel="noreferrer"
+                            rel="noopener noreferrer"
                             className="bracket-link inline-flex items-center gap-2"
                           >
-                            [SOURCE]
+                            [{item.videoEmbedUrl ? "SOURCE" : "PLAY"}]
                             <ArrowUpRight size={13} />
                           </Link>
                         ) : null}
@@ -87,7 +85,7 @@ export function SpeakingMedia() {
                           <Link
                             href={item.href}
                             target="_blank"
-                            rel="noreferrer"
+                            rel="noopener noreferrer"
                             className="bracket-link inline-flex items-center gap-2"
                           >
                             [{item.ctaLabel ?? "EVENT"}]
@@ -99,7 +97,7 @@ export function SpeakingMedia() {
                             key={link.href}
                             href={link.href}
                             target="_blank"
-                            rel="noreferrer"
+                            rel="noopener noreferrer"
                             className="bracket-link inline-flex items-center gap-2"
                           >
                             [{link.label}]
