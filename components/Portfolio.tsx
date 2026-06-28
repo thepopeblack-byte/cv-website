@@ -42,9 +42,17 @@ export function Portfolio() {
                       <div className="image-panel relative h-56 sm:h-64">
                         <Image
                           src={item.image}
-                          alt={item.title}
+                          alt={item.imageAlt ?? item.title}
                           fill
-                          className="object-cover transition duration-500 group-hover:scale-[1.03]"
+                          className={`transition duration-500 group-hover:scale-[1.03] ${
+                            item.imageFit === "contain"
+                              ? "object-contain"
+                              : "object-cover"
+                          }`}
+                          style={{
+                            objectPosition:
+                              item.imageObjectPosition ?? "center center",
+                          }}
                           sizes="(min-width: 768px) 42vw, 100vw"
                         />
                         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,11,13,0.04),rgba(10,11,13,0.85))]" />
