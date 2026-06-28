@@ -13,8 +13,8 @@ const desktopLinks = [
   { label: "Proof", href: "#impact" },
   { label: "Capabilities", href: "#skills" },
   { label: "Experience", href: "#experience" },
+  { label: "Credentials", href: "#credentials" },
   { label: "Speaking", href: "#speaking" },
-  { label: "Education", href: "#education" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -25,13 +25,15 @@ const mobileLinks = [
   { label: "Capabilities", href: "#skills" },
   { label: "Work", href: "#portfolio" },
   { label: "Experience", href: "#experience" },
-  { label: "Education", href: "#education" },
+  { label: "Credentials", href: "#credentials" },
   { label: "Media", href: "#speaking" },
   { label: "Contact", href: "#contact" },
 ];
 
 const observedLinks = Array.from(
-  new Map([...desktopLinks, ...mobileLinks].map((link) => [link.href, link])).values(),
+  new Map(
+    [...desktopLinks, ...mobileLinks].map((link) => [link.href, link]),
+  ).values(),
 );
 
 export function Header() {
@@ -50,7 +52,10 @@ export function Header() {
       .map((link) => document.querySelector<HTMLElement>(link.href))
       .filter(Boolean) as HTMLElement[];
 
-    if (!sections.length || typeof window.IntersectionObserver === "undefined") {
+    if (
+      !sections.length ||
+      typeof window.IntersectionObserver === "undefined"
+    ) {
       return;
     }
 
@@ -58,7 +63,10 @@ export function Header() {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          visibility.set(entry.target, entry.isIntersecting ? entry.intersectionRatio : 0);
+          visibility.set(
+            entry.target,
+            entry.isIntersecting ? entry.intersectionRatio : 0,
+          );
         });
 
         let nextActiveHref = activeHrefRef.current;
@@ -94,14 +102,21 @@ export function Header() {
       <Container>
         <div className="site-header-panel relative rounded-[1rem] border border-[var(--line)] bg-[rgba(10,11,13,0.84)] px-4 py-4 backdrop-blur-xl">
           <div className="flex items-center justify-between gap-4">
-            <Link href="#home" className="site-brand min-w-0" onClick={() => activateLink("#home")}>
+            <Link
+              href="#home"
+              className="site-brand min-w-0"
+              onClick={() => activateLink("#home")}
+            >
               <div className="meta-stack">Kayode Popoola / Popeblack</div>
               <div className="mt-1 truncate font-['Sora'] text-sm text-[var(--foreground)]">
                 {profile.headline}
               </div>
             </Link>
 
-            <nav className="desktop-nav hidden items-center lg:flex" aria-label="Primary navigation">
+            <nav
+              className="desktop-nav hidden items-center lg:flex"
+              aria-label="Primary navigation"
+            >
               {desktopLinks.map((link) => (
                 <Link
                   key={link.href}
@@ -146,7 +161,9 @@ export function Header() {
             id="mobile-nav"
             className={cn(
               "mobile-nav-panel grid overflow-hidden transition-all duration-300 lg:hidden",
-              open ? "mt-4 grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0",
+              open
+                ? "mt-4 grid-rows-[1fr] opacity-100"
+                : "grid-rows-[0fr] opacity-0",
             )}
           >
             <div className="min-h-0">

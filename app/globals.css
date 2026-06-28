@@ -945,12 +945,10 @@ main#main-content > section.page-layer {
 .logo-marquee {
   position: relative;
   overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: 1.15rem;
-  background:
-    linear-gradient(90deg, rgba(10, 11, 13, 0.88), transparent 14%),
-    linear-gradient(270deg, rgba(10, 11, 13, 0.88), transparent 14%),
-    rgba(255, 255, 255, 0.025);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding-block: 0.35rem;
 }
 
 .logo-marquee::before,
@@ -978,8 +976,9 @@ main#main-content > section.page-layer {
   display: flex;
   width: max-content;
   min-width: 100%;
-  gap: 0.9rem;
-  padding: 0.85rem;
+  align-items: center;
+  gap: clamp(2.25rem, 5vw, 4.5rem);
+  padding: 0.7rem 0;
   animation: logo-marquee 42s linear infinite;
 }
 
@@ -994,18 +993,15 @@ main#main-content > section.page-layer {
 
 .logo-marquee-card {
   display: inline-flex;
-  min-height: 4.75rem;
-  min-width: 11.5rem;
+  min-height: 3.5rem;
+  min-width: 8.5rem;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--line);
-  border-radius: 1rem;
-  background: rgba(255, 255, 255, 0.035);
-  padding: 0.9rem 1.25rem;
-  transition:
-    border-color 0.25s ease,
-    background-color 0.25s ease,
-    transform 0.25s ease;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 0;
+  transition: transform 0.25s ease;
 }
 
 .logo-marquee-image {
@@ -1023,8 +1019,6 @@ main#main-content > section.page-layer {
 .logo-marquee-link:hover .logo-marquee-card,
 .logo-marquee-link:focus-visible .logo-marquee-card,
 .logo-marquee-card:hover {
-  border-color: var(--line-strong);
-  background: rgba(255, 255, 255, 0.055);
   transform: translateY(-1px);
 }
 
@@ -1664,14 +1658,14 @@ main#main-content > section.page-layer {
   }
 
   .logo-marquee-track {
-    gap: 0.65rem;
-    padding: 0.7rem;
+    gap: 2rem;
+    padding: 0.55rem 0;
   }
 
   .logo-marquee-card {
-    min-height: 4.25rem;
-    min-width: 9.5rem;
-    padding: 0.8rem 1rem;
+    min-height: 3.25rem;
+    min-width: 7rem;
+    padding: 0;
   }
 
   .logo-marquee-image {
