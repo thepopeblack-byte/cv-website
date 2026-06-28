@@ -23,7 +23,7 @@ export function SpeakingMedia() {
     <section id="speaking" className="page-layer py-14 md:py-16 lg:py-12">
       <Container>
         <SectionReveal className="section-frame media-stage">
-          <div className="meta-stack">08 / SPEAKING & MEDIA</div>
+          <div className="meta-stack">09 / SPEAKING & MEDIA</div>
           <div className="mt-4 grid gap-8 lg:grid-cols-[0.34fr_0.66fr] lg:items-start">
             <div className="media-stage-copy">
               <h2 className="section-title">

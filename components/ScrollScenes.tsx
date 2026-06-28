@@ -10,6 +10,7 @@ const sceneLabels = [
   "Selected Work",
   "Experience",
   "Credentials",
+  "Education",
   "Media",
   "Contact",
 ];

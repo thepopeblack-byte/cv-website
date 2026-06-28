@@ -12,17 +12,16 @@ export function Education() {
             <div>
               <h2 className="section-title">Education.</h2>
               <p className="section-copy">
-                Business foundations reinforced by large-scale workshop,
-                community, and stakeholder leadership.
+                Business administration foundations supporting commercial
+                leadership, stakeholder management, and emerging-market
+                ecosystem work.
               </p>
             </div>
 
             <div className="education-card">
               <div>
                 <div className="meta-stack">{profile.education.school}</div>
-                <h3>
-                  {profile.education.degree}
-                </h3>
+                <h3>{profile.education.degree}</h3>
                 <p className="mt-3 text-[0.98rem] leading-8 text-[var(--muted)]">
                   {profile.education.course}
                 </p>

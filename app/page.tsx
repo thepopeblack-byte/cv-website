@@ -1,5 +1,6 @@
 import { Certifications } from "@/components/Certifications";
 import { Contact } from "@/components/Contact";
+import { Education } from "@/components/Education";
 import { ExperienceTimeline } from "@/components/ExperienceTimeline";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
@@ -24,6 +25,7 @@ export default function Page() {
         <Portfolio />
         <ExperienceTimeline />
         <Certifications />
+        <Education />
         <SpeakingMedia />
         <Contact />
       </main>

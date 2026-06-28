@@ -674,7 +674,7 @@ main#main-content > section.page-layer {
 .media-stage-copy,
 .media-card {
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .education-card {
@@ -1205,6 +1205,26 @@ main#main-content > section.page-layer {
     padding-block: 4.25rem;
   }
 
+  main#main-content > section.page-layer,
+  main#main-content > section.page-layer.scroll-scene,
+  main#main-content > section.page-layer.scene-active,
+  main#main-content > section.page-layer.scene-before,
+  main#main-content > section.page-layer.scene-after {
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+
+  main#main-content > section.page-layer .section-frame {
+    overflow: visible;
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
   .ambient {
     filter: blur(72px);
     opacity: 0.18;
@@ -1331,7 +1351,7 @@ main#main-content > section.page-layer {
   }
 
   .hero-quick-facts > div {
-    min-width: min(78vw, 18rem);
+    min-width: 100%;
     border: 1px solid var(--line);
     border-radius: 1rem;
     background: rgba(255, 255, 255, 0.022);
@@ -1387,10 +1407,7 @@ main#main-content > section.page-layer {
   }
 
   .proof-positioning-list,
-  .portfolio-card-grid,
-  .credential-stage,
-  .education-highlight-grid,
-  .media-card-stack {
+  .portfolio-card-grid {
     display: flex;
     gap: 1rem;
     max-width: 100%;
@@ -1402,19 +1419,16 @@ main#main-content > section.page-layer {
   }
 
   .proof-positioning-list .proof-positioning-card,
-  .credential-stage .credential-card,
-  .education-highlight-grid .education-highlight-card,
-  .media-card-stack > div,
   .portfolio-card-grid > div {
     scroll-snap-align: start;
   }
 
   .proof-positioning-list .proof-positioning-card {
-    min-width: min(78vw, 18rem);
+    min-width: 100%;
   }
 
   .portfolio-card-grid > div {
-    min-width: min(84vw, 22rem);
+    min-width: 100%;
   }
 
   .portfolio-card .image-panel {
@@ -1438,7 +1452,7 @@ main#main-content > section.page-layer {
   }
 
   .proof-metric-grid .signal-card {
-    min-width: min(82vw, 20.5rem);
+    min-width: 100%;
     scroll-snap-align: start;
   }
 
@@ -1584,7 +1598,11 @@ main#main-content > section.page-layer {
   }
 
   .media-card-stack {
-    gap: 1rem;
+    display: grid;
+    gap: 1.35rem;
+    overflow: visible;
+    padding-bottom: 0;
+    scroll-snap-type: none;
   }
 
   .media-image-panel {
@@ -1593,7 +1611,8 @@ main#main-content > section.page-layer {
 
   .media-card-stack > div,
   .media-card {
-    min-width: min(86vw, 22.5rem);
+    min-width: 0;
+    width: 100%;
   }
 
   .media-card h3 {
@@ -1606,18 +1625,30 @@ main#main-content > section.page-layer {
   }
 
   .credential-stage .credential-card {
-    min-width: min(78vw, 19rem);
+    min-width: 0;
+    width: 100%;
     border: 1px solid rgba(244, 239, 232, 0.065);
     border-radius: 1rem;
     background: rgba(255, 255, 255, 0.012);
     padding: 1rem;
   }
 
+  .credential-stage,
+  .education-highlight-grid {
+    display: grid;
+    gap: 1rem;
+    overflow: visible;
+    padding-bottom: 0;
+    scroll-snap-type: none;
+  }
+
   .education-highlight-grid .education-highlight-card {
-    min-width: min(75vw, 18rem);
-    border: 1px solid rgba(244, 239, 232, 0.065);
-    border-radius: 1rem;
-    padding: 0.95rem;
+    min-width: 0;
+    width: 100%;
+    border: 0;
+    border-top: 1px solid rgba(244, 239, 232, 0.075);
+    border-radius: 0;
+    padding: 0.95rem 0 0;
   }
 
   .contact-link-grid {
@@ -1644,12 +1675,6 @@ main#main-content > section.page-layer {
   select,
   textarea {
     min-height: 3.1rem;
-  }
-
-  main#main-content > section.page-layer {
-    transform: none;
-    opacity: 1;
-    filter: none;
   }
 
   .logo-marquee::before,
