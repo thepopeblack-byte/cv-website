@@ -1243,6 +1243,27 @@ main#main-content > section.page-layer {
     width: min(100% - 1.25rem, 1120px);
   }
 
+  main#main-content > section.page-layer .section-frame,
+  main#main-content > section.page-layer .section-frame > div,
+  main#main-content > section.page-layer .grid,
+  main#main-content > section.page-layer .grid > *,
+  .proof-brief,
+  .proof-positioning-list,
+  .proof-positioning-card,
+  .proof-metric-grid,
+  .signal-card,
+  .portfolio-card-grid,
+  .portfolio-card {
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  main#main-content > section.page-layer :where(h1, h2, h3, h4, p, li, a, span) {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+
   .dark-panel {
     border-radius: 1.25rem;
   }
@@ -1408,27 +1429,27 @@ main#main-content > section.page-layer {
 
   .proof-positioning-list,
   .portfolio-card-grid {
-    display: flex;
+    display: grid;
     gap: 1rem;
     max-width: 100%;
-    overflow-x: auto;
-    overscroll-behavior-inline: contain;
-    padding-bottom: 0.7rem;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
+    overflow: visible;
+    padding-bottom: 0;
+    scroll-snap-type: none;
   }
 
   .proof-positioning-list .proof-positioning-card,
   .portfolio-card-grid > div {
-    scroll-snap-align: start;
+    max-width: 100%;
+    min-width: 0;
+    width: 100%;
   }
 
   .proof-positioning-list .proof-positioning-card {
-    min-width: 100%;
+    min-width: 0;
   }
 
   .portfolio-card-grid > div {
-    min-width: 100%;
+    min-width: 0;
   }
 
   .portfolio-card .image-panel {
@@ -1440,7 +1461,6 @@ main#main-content > section.page-layer {
     gap: 1rem;
   }
 
-  .proof-metric-grid,
   .capability-cluster-stack {
     display: flex;
     max-width: 100%;
@@ -1451,9 +1471,18 @@ main#main-content > section.page-layer {
     scrollbar-width: none;
   }
 
+  .proof-metric-grid {
+    display: grid;
+    max-width: 100%;
+    overflow: visible;
+    padding-bottom: 0;
+    scroll-snap-type: none;
+  }
+
   .proof-metric-grid .signal-card {
-    min-width: 100%;
-    scroll-snap-align: start;
+    max-width: 100%;
+    min-width: 0;
+    width: 100%;
   }
 
   .proof-metric-grid .signal-card p:last-child {
