@@ -136,8 +136,8 @@ main#main-content > section.page-layer {
 
 .section-frame {
   position: relative;
-  border-top: 1px solid var(--line);
-  padding-top: 1.35rem;
+  border-top: 0;
+  padding-top: 0;
 }
 
 .section-kicker {
@@ -416,7 +416,14 @@ main#main-content > section.page-layer {
   box-shadow: none;
 }
 
-.proof-brief,
+.proof-brief {
+  position: relative;
+}
+
+.proof-brief-glow {
+  display: none;
+}
+
 .capability-copy {
   position: relative;
   overflow: hidden;
@@ -437,15 +444,6 @@ main#main-content > section.page-layer {
   pointer-events: none;
   position: absolute;
   border-radius: 999px;
-}
-
-.proof-brief-glow {
-  right: -5rem;
-  top: -5rem;
-  height: 12rem;
-  width: 12rem;
-  background: rgba(216, 209, 194, 0.075);
-  filter: blur(44px);
 }
 
 .proof-positioning-card,
@@ -583,42 +581,24 @@ main#main-content > section.page-layer {
 
 .capability-cluster {
   position: relative;
-  overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: 1.15rem;
-  background:
-    linear-gradient(135deg, rgba(244, 239, 232, 0.035), transparent 46%),
-    rgba(255, 255, 255, 0.023);
-  opacity: 0.76;
-  padding: 1.15rem;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  opacity: 0.68;
+  padding: 0.55rem 0 1.15rem;
   transition:
-    border-color 0.3s ease,
-    background-color 0.3s ease,
     opacity 0.22s ease,
     transform 0.24s ease;
 }
 
 .capability-cluster::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(90deg, rgba(244, 239, 232, 0.055), transparent 34%),
-    radial-gradient(
-      circle at 100% 0%,
-      rgba(244, 239, 232, 0.05),
-      transparent 24%
-    );
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
+  display: none;
 }
 
 .capability-cluster.is-active {
-  border-color: var(--line-strong);
-  background-color: rgba(255, 255, 255, 0.035);
   opacity: 1;
-  transform: translateX(-0.35rem) scale(1.01);
+  transform: translateX(-0.2rem);
 }
 
 .capability-cluster.is-active::before {
@@ -695,15 +675,16 @@ main#main-content > section.page-layer {
 .media-card {
   position: relative;
   overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: 1.15rem;
-  background:
-    linear-gradient(135deg, rgba(244, 239, 232, 0.04), transparent 48%),
-    rgba(255, 255, 255, 0.023);
 }
 
 .education-card {
-  padding: 1.2rem;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.education-card {
+  padding: 0;
 }
 
 .education-card h3 {
@@ -722,7 +703,7 @@ main#main-content > section.page-layer {
 }
 
 .education-highlight-card {
-  border-top: 1px solid var(--line);
+  border-top: 1px solid rgba(244, 239, 232, 0.07);
   padding-top: 0.9rem;
 }
 
@@ -734,7 +715,7 @@ main#main-content > section.page-layer {
 }
 
 .media-stage-copy {
-  padding: 1.2rem;
+  padding: 0;
 }
 
 .media-card-stack {
@@ -745,16 +726,14 @@ main#main-content > section.page-layer {
 .media-card {
   display: grid;
   gap: 1.1rem;
-  padding: 1rem;
-  transition:
-    border-color 0.22s ease,
-    background-color 0.22s ease,
-    transform 0.22s ease;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 0 0 1.25rem;
+  transition: transform 0.22s ease;
 }
 
 .media-card:hover {
-  border-color: var(--line-strong);
-  background-color: rgba(255, 255, 255, 0.035);
   transform: translate3d(0, -0.12rem, 0);
 }
 
@@ -765,7 +744,7 @@ main#main-content > section.page-layer {
 .experience-sidebar {
   position: relative;
   overflow: hidden;
-  border: 1px solid var(--line);
+  border: 1px solid rgba(244, 239, 232, 0.075);
   border-radius: 1.15rem;
   background:
     radial-gradient(
@@ -773,7 +752,7 @@ main#main-content > section.page-layer {
       rgba(244, 239, 232, 0.075),
       transparent 30%
     ),
-    rgba(255, 255, 255, 0.022);
+    rgba(255, 255, 255, 0.014);
   padding: 1.25rem;
 }
 
@@ -957,10 +936,10 @@ main#main-content > section.page-layer {
 }
 
 .experience-entry {
-  border: 1px solid var(--line);
-  border-radius: 1.15rem;
-  background: rgba(255, 255, 255, 0.023);
-  padding: 1.35rem;
+  border-top: 1px solid rgba(244, 239, 232, 0.08);
+  border-radius: 0;
+  background: transparent;
+  padding: 1.35rem 0 0;
 }
 
 .logo-marquee {
@@ -1219,8 +1198,13 @@ main#main-content > section.page-layer {
 }
 
 @media (max-width: 768px) {
+  body {
+    overflow-x: clip;
+  }
+
   .app-shell {
-    overflow: visible;
+    overflow-x: clip;
+    overflow-y: visible;
   }
 
   main#main-content > section.page-layer:not(#home) {
@@ -1576,7 +1560,7 @@ main#main-content > section.page-layer {
   }
 
   .experience-role {
-    border-top: 1px solid var(--line);
+    border-top: 1px solid rgba(244, 239, 232, 0.07);
     padding-top: 1rem;
   }
 
@@ -1629,15 +1613,15 @@ main#main-content > section.page-layer {
 
   .credential-stage .credential-card {
     min-width: min(78vw, 19rem);
-    border: 1px solid var(--line);
+    border: 1px solid rgba(244, 239, 232, 0.065);
     border-radius: 1rem;
-    background: rgba(255, 255, 255, 0.022);
+    background: rgba(255, 255, 255, 0.012);
     padding: 1rem;
   }
 
   .education-highlight-grid .education-highlight-card {
     min-width: min(75vw, 18rem);
-    border: 1px solid var(--line);
+    border: 1px solid rgba(244, 239, 232, 0.065);
     border-radius: 1rem;
     padding: 0.95rem;
   }
@@ -1790,19 +1774,25 @@ main#main-content > section.page-layer {
   main#main-content > section.page-layer.scroll-scene::before {
     content: "";
     position: absolute;
-    inset: clamp(1rem, 3vw, 2.5rem);
+    inset: -0.5rem 0;
     z-index: -1;
-    border-radius: 1.8rem;
+    border-radius: 0;
     background:
-      linear-gradient(135deg, rgba(244, 239, 232, 0.055), transparent 34%),
-      linear-gradient(rgba(255, 255, 255, 0.026) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.021) 1px, transparent 1px);
-    background-size:
-      auto,
-      3.8rem 3.8rem,
-      3.8rem 3.8rem;
+      radial-gradient(
+        circle at 16% 12%,
+        rgba(244, 239, 232, 0.06),
+        transparent 28%
+      ),
+      linear-gradient(135deg, rgba(244, 239, 232, 0.026), transparent 42%);
     opacity: 0;
     transform: translate3d(0, 0.4rem, -1px) scale(0.995);
+    mask-image: linear-gradient(
+      90deg,
+      transparent,
+      #000 8%,
+      #000 92%,
+      transparent
+    );
     transition:
       opacity 0.42s ease,
       transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
@@ -1810,7 +1800,7 @@ main#main-content > section.page-layer {
   }
 
   main#main-content > section.page-layer.scene-active::before {
-    opacity: 0.42;
+    opacity: 0.34;
   }
 
   main#main-content > section.page-layer.scene-active {
@@ -1827,10 +1817,6 @@ main#main-content > section.page-layer {
   main#main-content > section.page-layer.scene-after {
     opacity: 0.84;
     transform: translate3d(0, 0.9rem, 0) scale(0.992);
-  }
-
-  main#main-content > section.page-layer.scene-active .section-frame {
-    border-color: var(--line-strong);
   }
 
   main#main-content > section.page-layer.scene-active .section-frame {
