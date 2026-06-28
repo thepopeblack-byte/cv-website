@@ -1243,27 +1243,6 @@ main#main-content > section.page-layer {
     width: min(100% - 1.25rem, 1120px);
   }
 
-  main#main-content > section.page-layer .section-frame,
-  main#main-content > section.page-layer .section-frame > div,
-  main#main-content > section.page-layer .grid,
-  main#main-content > section.page-layer .grid > *,
-  .proof-brief,
-  .proof-positioning-list,
-  .proof-positioning-card,
-  .proof-metric-grid,
-  .signal-card,
-  .portfolio-card-grid,
-  .portfolio-card {
-    max-width: 100%;
-    min-width: 0;
-  }
-
-  main#main-content > section.page-layer :where(h1, h2, h3, h4, p, li, a, span) {
-    max-width: 100%;
-    overflow-wrap: anywhere;
-    word-break: normal;
-  }
-
   .dark-panel {
     border-radius: 1.25rem;
   }
@@ -1427,29 +1406,51 @@ main#main-content > section.page-layer {
     padding: 1.2rem;
   }
 
+  #impact .section-frame > div,
+  #impact .section-frame > div > div:first-child,
+  #impact .proof-brief,
+  #impact .section-title,
+  #impact .section-copy,
+  #impact .proof-brief p,
+  #portfolio .section-frame > div,
+  #portfolio .section-frame > div > div:first-child,
+  #portfolio .section-title,
+  #portfolio .section-copy {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  #impact .section-title,
+  #impact .proof-brief p,
+  #portfolio .section-title,
+  #portfolio .section-copy {
+    overflow-wrap: break-word;
+  }
+
   .proof-positioning-list,
   .portfolio-card-grid {
-    display: grid;
+    display: flex;
     gap: 1rem;
     max-width: 100%;
-    overflow: visible;
-    padding-bottom: 0;
-    scroll-snap-type: none;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    padding-bottom: 0.7rem;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
   }
 
   .proof-positioning-list .proof-positioning-card,
   .portfolio-card-grid > div {
-    max-width: 100%;
-    min-width: 0;
-    width: 100%;
+    scroll-snap-align: start;
   }
 
   .proof-positioning-list .proof-positioning-card {
-    min-width: 0;
+    min-width: 100%;
   }
 
   .portfolio-card-grid > div {
-    min-width: 0;
+    min-width: 100%;
   }
 
   .portfolio-card .image-panel {
@@ -1461,6 +1462,7 @@ main#main-content > section.page-layer {
     gap: 1rem;
   }
 
+  .proof-metric-grid,
   .capability-cluster-stack {
     display: flex;
     max-width: 100%;
@@ -1471,18 +1473,9 @@ main#main-content > section.page-layer {
     scrollbar-width: none;
   }
 
-  .proof-metric-grid {
-    display: grid;
-    max-width: 100%;
-    overflow: visible;
-    padding-bottom: 0;
-    scroll-snap-type: none;
-  }
-
   .proof-metric-grid .signal-card {
-    max-width: 100%;
-    min-width: 0;
-    width: 100%;
+    min-width: 100%;
+    scroll-snap-align: start;
   }
 
   .proof-metric-grid .signal-card p:last-child {
