@@ -12,7 +12,7 @@ import { profile } from "@/data/profile";
 
 const siteUrl = "https://popeblack.com";
 const metadataTitle =
-  "Kayode Popoola | Web3 Partnerships & Revenue Growth Leader";
+  "Kayode Popoola";
 const metadataDescription =
   "Kayode Popoola is a Web3 business development and strategic partnerships leader driving revenue growth, ecosystem expansion, blockchain infrastructure adoption, and emerging market partnerships.";
 
