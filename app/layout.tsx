@@ -9,12 +9,11 @@ import "@fontsource/sora/700.css";
 import "./globals.css";
 
 import { profile } from "@/data/profile";
+import { siteDescription, siteName, siteUrl } from "@/data/site";
 
-const siteUrl = "https://popeblack.com";
 const metadataTitle =
-  "Kayode Popoola";
-const metadataDescription =
-  "Kayode Popoola is a Web3 business development and strategic partnerships leader driving revenue growth, ecosystem expansion, blockchain infrastructure adoption, and emerging market partnerships.";
+  "Kayode Popoola | Web3 Partnerships & Revenue Growth Leader";
+const metadataDescription = siteDescription;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -44,12 +43,16 @@ export const metadata: Metadata = {
     "OSINT",
     "Africa Web3 Ecosystem",
     "Emerging Markets Growth",
+    "Public-Sector Programmes",
+    "Capacity Building",
+    "Transaction Monitoring",
+    "Digital-Asset Risk",
   ],
   openGraph: {
     title: metadataTitle,
     description: metadataDescription,
     url: siteUrl,
-    siteName: "Kayode Popoola | Popeblack",
+    siteName,
     images: [
       {
         url: "/opengraph-image",
@@ -100,7 +103,7 @@ export default function RootLayout({
           suppressHydrationWarning
           dangerouslySetInnerHTML={{
             __html:
-              "(()=>{function a(t){document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t;try{localStorage.setItem('popeblack-theme',t)}catch(e){}}try{a(localStorage.getItem('popeblack-theme')==='light'?'light':'dark')}catch(e){a('dark')}document.addEventListener('click',function(e){var b=e.target&&e.target.closest?e.target.closest('[data-theme-toggle]'):null;if(!b)return;e.preventDefault();a(document.documentElement.dataset.theme==='light'?'dark':'light')})})();",
+              "(()=>{function a(t){document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}try{a(localStorage.getItem('popeblack-theme')==='light'?'light':'dark')}catch(e){a('dark')}})();",
           }}
         />
         <a className="skip-link" href="#main-content">
@@ -129,10 +132,16 @@ export default function RootLayout({
                   jobTitle: profile.headline,
                   description: `${profile.executiveSummary} ${profile.currentFocus}`,
                   sameAs: [profile.linkedin, profile.twitter, profile.telegram],
-                  worksFor: {
-                    "@type": "Organization",
-                    name: "Secret Network Foundation",
-                  },
+                  worksFor: [
+                    {
+                      "@type": "Organization",
+                      name: "Secret Network Foundation",
+                    },
+                    {
+                      "@type": "Organization",
+                      name: "CipherOwl Inc.",
+                    },
+                  ],
                   knowsAbout: [
                     "Web3 Business Development",
                     "Strategic Partnerships",
@@ -152,6 +161,16 @@ export default function RootLayout({
                     "Africa Web3 Ecosystem",
                     "Emerging Markets Growth",
                   ],
+                },
+                {
+                  "@type": "WebSite",
+                  "@id": `${siteUrl}/#website`,
+                  url: siteUrl,
+                  name: siteName,
+                  description: metadataDescription,
+                  publisher: {
+                    "@id": `${siteUrl}/#person`,
+                  },
                 },
                 {
                   "@type": "ProfilePage",

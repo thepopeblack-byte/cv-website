@@ -2,6 +2,7 @@ import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 
 import { Container } from "@/components/Container";
+import { MobileSwipeRegion } from "@/components/MobileSwipeRegion";
 import { SectionReveal } from "@/components/SectionReveal";
 import { getBlogPosts } from "@/lib/sanity";
 
@@ -22,7 +23,11 @@ export async function LatestWriting() {
   }
 
   return (
-    <section id="writing" className="page-layer py-14 md:py-16 lg:py-12">
+    <section
+      id="writing"
+      data-scene-label="Writing"
+      className="page-layer py-14 md:py-16 lg:py-12"
+    >
       <Container>
         <SectionReveal className="section-frame writing-preview">
           <div className="meta-stack">Writing</div>
@@ -43,7 +48,10 @@ export async function LatestWriting() {
               </Link>
             </div>
 
-            <div className="writing-preview-list">
+            <MobileSwipeRegion
+              className="writing-preview-list"
+              label="Latest writing and featured coverage"
+            >
               {featuredPosts.map((post) => (
                 <article key={post.slug} className="writing-preview-item">
                   <div className="article-eyebrow">
@@ -75,7 +83,7 @@ export async function LatestWriting() {
                   </div>
                 </article>
               ))}
-            </div>
+            </MobileSwipeRegion>
           </div>
         </SectionReveal>
       </Container>

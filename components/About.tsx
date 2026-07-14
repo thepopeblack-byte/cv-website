@@ -4,10 +4,15 @@ import { profile } from "@/data/profile";
 
 export function About() {
   return (
-    <section id="about" className="page-layer py-12">
+    <section
+      id="about"
+      data-nav-group="profile"
+      data-scene-label="Executive Profile"
+      className="page-layer py-12"
+    >
       <Container>
         <SectionReveal className="section-frame">
-          <div className="meta-stack">Positioning</div>
+          <div className="meta-stack">Executive profile</div>
           <div className="mt-4 grid gap-8 lg:grid-cols-[0.35fr_0.65fr] lg:items-start">
             <div>
               <h2 className="section-title">{profile.aboutTitle}</h2>
@@ -19,6 +24,13 @@ export function About() {
               </p>
               <p className="mt-5 text-[1rem] leading-8 text-[var(--muted)]">
                 {profile.aboutBodyExtended}
+              </p>
+              <p className="mt-5 text-[1rem] leading-8 text-[var(--muted)]">
+                The work supports enterprises, public-sector institutions,
+                development organisations, universities, technology companies,
+                digital-asset businesses, regulated organisations, investors,
+                and strategic partners navigating growth, market entry,
+                capacity building, and digital-asset risk.
               </p>
 
               <div className="mt-8 grid gap-4 md:grid-cols-3">

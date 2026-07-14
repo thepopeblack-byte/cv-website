@@ -12,6 +12,7 @@ import { SelectedEcosystems } from "@/components/SelectedEcosystems";
 import { Skills } from "@/components/Skills";
 import { SpeakingMedia } from "@/components/SpeakingMedia";
 import { ScrollScenes } from "@/components/ScrollScenes";
+import { SelectedOutcomes } from "@/components/SelectedOutcomes";
 
 export default function Page() {
   return (
@@ -20,14 +21,16 @@ export default function Page() {
       <ScrollScenes />
       <main id="main-content" className="page-layer pb-6">
         <Hero />
+        <About />
         <ImpactStats />
         <SelectedEcosystems />
-        <Skills />
+        <SelectedOutcomes />
         <Portfolio />
-        <ExperienceTimeline />
+        <Skills />
         <Certifications />
         <Education />
         <SpeakingMedia />
+        <ExperienceTimeline />
         <LatestWriting />
         <Contact />
       </main>
@@ -35,3 +38,4 @@ export default function Page() {
     </>
   );
 }
+import { About } from "@/components/About";

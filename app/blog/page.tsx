@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Container } from "@/components/Container";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { siteDescription, siteUrl } from "@/data/site";
 import { getBlogPosts } from "@/lib/sanity";
 
 export const metadata: Metadata = {
@@ -12,7 +13,18 @@ export const metadata: Metadata = {
   description:
     "Ideas, field notes, and featured coverage from Kayode Popoola across Web3 growth, blockchain intelligence, partnerships, and emerging markets.",
   alternates: {
-    canonical: "https://popeblack.com/blog",
+    canonical: `${siteUrl}/blog`,
+  },
+  openGraph: {
+    title: "From the Desk of Kayode Popoola",
+    description: siteDescription,
+    url: `${siteUrl}/blog`,
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "From the Desk of Kayode Popoola",
+    description: siteDescription,
   },
 };
 
@@ -59,8 +71,14 @@ export default async function BlogPage() {
                 <div>
                   <div className="article-eyebrow">
                     <span>{featuredArticle.type}</span>
+                    <span>By {featuredArticle.author}</span>
                     <span>{formatDate(featuredArticle.date)}</span>
                     <span>{featuredArticle.readingTime}</span>
+                    {featuredArticle.externalUrl ? (
+                      <span>Externally published</span>
+                    ) : (
+                      <span>Original</span>
+                    )}
                   </div>
                   <h2>{featuredArticle.title}</h2>
                   <p>{featuredArticle.excerpt}</p>
@@ -107,7 +125,14 @@ export default async function BlogPage() {
                   <article key={article.slug} className="article-card">
                     <div className="article-eyebrow">
                       <span>{article.type}</span>
+                      <span>By {article.author}</span>
                       <span>{formatDate(article.date)}</span>
+                      <span>{article.readingTime}</span>
+                      {article.externalUrl ? (
+                        <span>Externally published</span>
+                      ) : (
+                        <span>Original</span>
+                      )}
                     </div>
                     <h2>{article.title}</h2>
                     <p>{article.excerpt}</p>

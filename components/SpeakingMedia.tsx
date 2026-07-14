@@ -3,9 +3,10 @@
 import { ArrowUpRight, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { Container } from "@/components/Container";
+import { MobileSwipeRegion } from "@/components/MobileSwipeRegion";
 import { SectionReveal } from "@/components/SectionReveal";
 import { speakingMediaItems, type PortfolioItem } from "@/data/portfolio";
 
@@ -17,9 +18,38 @@ function withAutoplay(url: string) {
 
 export function SpeakingMedia() {
   const [activeMedia, setActiveMedia] = useState<ActiveMedia>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!activeMedia) {
+      return;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    closeButtonRef.current?.focus();
+
+    const closeOnEscape = (event: globalThis.KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setActiveMedia(null);
+      }
+    };
+
+    document.addEventListener("keydown", closeOnEscape);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [activeMedia]);
 
   return (
-    <section id="speaking" className="page-layer py-14 md:py-16 lg:py-12">
+    <section
+      id="speaking"
+      data-nav-group="expertise"
+      data-scene-label="Speaking & Media"
+      className="page-layer py-14 md:py-16 lg:py-12"
+    >
       <Container>
         <SectionReveal className="section-frame media-stage">
           <div className="meta-stack">Speaking & media</div>
@@ -33,14 +63,17 @@ export function SpeakingMedia() {
               </p>
             </div>
 
-            <div className="media-card-stack">
+            <MobileSwipeRegion
+              className="media-card-stack"
+              label="Speaking and media appearances"
+            >
               {speakingMediaItems.map((item, index) => (
                 <SectionReveal key={item.title} delay={0.03 + index * 0.025}>
                   <article className="media-card">
                     <div className="image-panel media-image-panel relative min-h-[200px]">
                       <Image
                         src={item.image}
-                        alt={item.title}
+                        alt={item.imageAlt ?? item.title}
                         fill
                         className="object-cover"
                         sizes="(min-width: 768px) 220px, 100vw"
@@ -109,23 +142,32 @@ export function SpeakingMedia() {
                   </article>
                 </SectionReveal>
               ))}
-            </div>
+            </MobileSwipeRegion>
           </div>
         </SectionReveal>
       </Container>
 
       {activeMedia?.videoEmbedUrl ? (
-        <div className="fixed inset-0 z-[90] bg-[rgba(8,10,12,0.86)] p-4 backdrop-blur-sm">
+        <div
+          className="fixed inset-0 z-[130] bg-[rgba(8,10,12,0.86)] p-4 backdrop-blur-sm"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="media-dialog-title"
+        >
           <div className="mx-auto flex h-full max-w-5xl items-center justify-center">
             <div className="w-full rounded-[1.2rem] border border-[var(--line)] bg-[rgba(11,12,16,0.98)] p-4 shadow-[0_28px_80px_rgba(0,0,0,0.45)]">
               <div className="mb-4 flex items-center justify-between gap-4">
                 <div>
                   <div className="meta-stack">Speaking clip</div>
-                  <h3 className="mt-2 font-['Sora'] text-xl text-[var(--foreground)]">
+                  <h3
+                    id="media-dialog-title"
+                    className="mt-2 font-['Sora'] text-xl text-[var(--foreground)]"
+                  >
                     {activeMedia.title}
                   </h3>
                 </div>
                 <button
+                  ref={closeButtonRef}
                   type="button"
                   onClick={() => setActiveMedia(null)}
                   className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[var(--line)] bg-white/[0.02] text-[var(--foreground)]"

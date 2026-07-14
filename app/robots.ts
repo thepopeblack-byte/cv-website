@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://popeblack.com/sitemap.xml",
+    sitemap: "https://www.popeblack.com/sitemap.xml",
   };
 }

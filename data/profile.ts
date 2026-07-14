@@ -1,10 +1,4 @@
-export type Stat = {
-  label: string;
-  value: number;
-  prefix?: string;
-  suffix?: string;
-  description: string;
-};
+import { achievementSummary, impactStats } from "@/data/achievements";
 
 export const profile = {
   name: "Kayode Popoola",
@@ -25,8 +19,7 @@ export const profile = {
     "Web3 Business Development Leader and Strategic Partnerships Leader with 10+ years of experience across revenue growth, enterprise sales, blockchain partnerships, Web3 partnerships, go-to-market strategy, blockchain infrastructure, financial technology, digital commerce, and emerging markets growth.",
   currentFocus:
     "Currently Head of Sales & Business Development at Secret Network Foundation, where I lead global revenue growth, enterprise partnerships, and ecosystem adoption for privacy-first blockchain and confidential computing infrastructure.",
-  proofLine:
-    "Generated over $300,000 in revenue within the first 90 days, closed 50+ strategic deals, helped launch 15+ products on mainnet, and trained 500+ developers through ecosystem programs.",
+  proofLine: achievementSummary,
   aboutTitle:
     "Web3 partnerships, revenue growth, and emerging markets execution.",
   aboutBody:
@@ -36,7 +29,7 @@ export const profile = {
   speakingIntro:
     "Selected appearances across Web3 business development, blockchain privacy, DeFi, digital assets, ecosystem growth, blockchain intelligence, and emerging technology adoption.",
   audienceLabel:
-    "Built for recruiters, founders, investors, international organizations, and strategic partners evaluating senior commercial leadership.",
+    "Built for enterprises, public-sector institutions, development organisations, technology companies and strategic partners evaluating commercial leadership, ecosystem growth, digital-asset intelligence and emerging-market execution.",
   heroHighlights: [
     "Global commercial leadership for privacy-first Web3 and confidential computing ecosystems",
     "Enterprise sales, blockchain partnerships, GTM design, and revenue operations",
@@ -56,89 +49,29 @@ export const profile = {
       text: "Activating markets, communities, developer networks, and launch pathways that compound adoption across regions and verticals.",
     },
   ],
-  stats: [
-    {
-      label: "Revenue Generated in 90 Days",
-      value: 300,
-      prefix: "$",
-      suffix: "K+",
-      description:
-        "Commercial impact delivered shortly after stepping into senior sales leadership.",
-    },
-    {
-      label: "Strategic Deals Closed",
-      value: 50,
-      suffix: "+",
-      description:
-        "Partnerships and commercial agreements across Web3, AI, infrastructure, and emerging technology.",
-    },
-    {
-      label: "EVM & Layer-2 Partnerships",
-      value: 20,
-      suffix: "+",
-      description:
-        "Collaborations established with leading blockchain ecosystems and ecosystem stakeholders.",
-    },
-    {
-      label: "Mainnet Launches Supported",
-      value: 15,
-      suffix: "+",
-      description:
-        "Products guided through onboarding, ecosystem alignment, integration support, and successful mainnet launch.",
-    },
-    {
-      label: "Ecosystem TVL Growth",
-      value: 3,
-      suffix: "x",
-      description:
-        "Growth contribution driven through partner activation, liquidity coordination, and GTM execution.",
-    },
-    {
-      label: "Ambassadors Onboarded",
-      value: 2000,
-      suffix: "+",
-      description:
-        "Regional ecosystem expansion across Secret Network's African community footprint.",
-    },
-    {
-      label: "Events Hosted",
-      value: 50,
-      suffix: "+",
-      description:
-        "Virtual and in-person programming supporting ecosystem education, activation, and visibility.",
-    },
-    {
-      label: "Developers Trained",
-      value: 500,
-      suffix: "+",
-      description:
-        "Developer education and onboarding through structured Web3 learning programs.",
-    },
-    {
-      label: "Years of Commercial Experience",
-      value: 10,
-      suffix: "+",
-      description:
-        "Leadership across sales, partnerships, ecosystem growth, and business development functions.",
-    },
-  ] satisfies Stat[],
+  stats: impactStats,
   opportunityTypes: [
-    "Business Development Role",
-    "Partnership Opportunity",
-    "AI Infrastructure Partnerships",
-    "Speaking Engagement",
-    "Advisory / Consulting",
-    "Blockchain Intelligence / AML",
+    "Institutional Partnership",
+    "Enterprise Partnership",
+    "Public-Sector or Development Programme",
+    "Market Entry and Ecosystem Strategy",
+    "Blockchain Intelligence and Financial Crime",
+    "Training and Capacity Building",
+    "Speaking and Stakeholder Engagement",
+    "Advisory or Consulting",
+    "Executive or Commercial Leadership Opportunity",
     "Other",
   ],
   education: {
     school: "Bayero University, Kano",
     degree: "Bachelor of Business Administration",
     course: "Business Administration and Management",
-    highlights: [
-      "Organized workshops, meetups, events, and educational programs with over 10,000 participants.",
-      "Featured in Bayero University Weekly Bulletin.",
-      "Certified Business Developer by the Federal Government of Nigeria through the National Youth Investment Fund.",
+    universityLeadership: [
+      "Organised workshops, meetups, events and educational programmes reaching more than 10,000 participants.",
+      "Received recognition in the Bayero University Weekly Bulletin.",
+    ],
+    professionalDevelopment: [
+      "Business-development certification through the Federal Government of Nigeria's National Youth Investment Fund.",
     ],
   },
 };

@@ -1,212 +1,237 @@
 "use client";
 
-import { Menu, Moon, Sun, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 
 import { Container } from "@/components/Container";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import {
+  homepageNavigationTargets,
+  primaryNavigation,
+  type PrimaryNavigationItem,
+} from "@/data/navigation";
 import { profile } from "@/data/profile";
 import { cn } from "@/lib/utils";
 
-const desktopLinks = [
-  { label: "Profile", href: "#home" },
-  { label: "Proof", href: "#impact" },
-  { label: "Capabilities", href: "#skills" },
-  { label: "Experience", href: "#experience" },
-  { label: "Credentials", href: "#credentials" },
-  { label: "Speaking", href: "#speaking" },
-  { label: "Blog", href: "/blog" },
-  { label: "Contact", href: "#contact" },
-];
-
-const mobileLinks = [
-  { label: "Profile", href: "#home" },
-  { label: "Proof", href: "#impact" },
-  { label: "Capabilities", href: "#skills" },
-  { label: "Experience", href: "#experience" },
-  { label: "Credentials", href: "#credentials" },
-  { label: "Speaking", href: "#speaking" },
-  { label: "Blog", href: "/blog" },
-  { label: "Contact", href: "#contact" },
-];
-
-const homepageSpyTargets = [
-  { sectionId: "home", activeHref: "#home" },
-  { sectionId: "impact", activeHref: "#impact" },
-  { sectionId: "ecosystems", activeHref: "#impact" },
-  { sectionId: "portfolio", activeHref: "#impact" },
-  { sectionId: "skills", activeHref: "#skills" },
-  { sectionId: "experience", activeHref: "#experience" },
-  { sectionId: "credentials", activeHref: "#credentials" },
-  { sectionId: "education", activeHref: "#credentials" },
-  { sectionId: "speaking", activeHref: "#speaking" },
-  { sectionId: "writing", activeHref: "/blog" },
-  { sectionId: "contact", activeHref: "#contact" },
-];
+type NavigationId = PrimaryNavigationItem["id"];
 
 export function Header() {
   const [open, setOpen] = useState(false);
-  const [activeHref, setActiveHref] = useState("#home");
-  const activeHrefRef = useRef("#home");
+  const [activeId, setActiveId] = useState<NavigationId>("profile");
+  const activeIdRef = useRef<NavigationId>("profile");
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const mobileMenuRef = useRef<HTMLElement>(null);
+  const firstMobileLinkRef = useRef<HTMLAnchorElement>(null);
   const pathname = usePathname();
 
-  const activateLink = (href: string) => {
-    if (href.startsWith("#")) {
-      activeHrefRef.current = href;
-      setActiveHref(href);
-    }
-    setOpen(false);
-  };
+  const resolveHomepageHref = (href: string) =>
+    pathname === "/" ? href : `/${href}`;
 
-  const resolveHref = (href: string) => {
-    if (!href.startsWith("#")) {
-      return href;
-    }
+  const isActive = (id: NavigationId) =>
+    pathname === "/" && activeId === id;
 
-    return pathname === "/" ? href : `/${href}`;
-  };
-
-  const isActiveLink = (href: string) => {
-    if (href === "/blog") {
-      return pathname === "/blog" || (pathname === "/" && activeHref === href);
-    }
-
-    return pathname === "/" && activeHref === href;
-  };
+  const closeMenu = () => setOpen(false);
 
   useEffect(() => {
-    const savedTheme =
-      window.localStorage.getItem("popeblack-theme") === "light"
-        ? "light"
-        : "dark";
+    if (!open) {
+      return;
+    }
 
-    document.documentElement.dataset.theme = savedTheme;
-    document.documentElement.style.colorScheme = savedTheme;
-  }, []);
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    firstMobileLinkRef.current?.focus();
+
+    const handleKeyDown = (event: globalThis.KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setOpen(false);
+        menuButtonRef.current?.focus();
+        return;
+      }
+
+      if (event.key !== "Tab" || !mobileMenuRef.current) {
+        return;
+      }
+
+      const focusable = Array.from(
+        mobileMenuRef.current.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ),
+      ).filter((element) => !element.hasAttribute("hidden"));
+
+      if (!focusable.length) {
+        return;
+      }
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [open]);
 
   useEffect(() => {
     if (pathname !== "/") {
       return;
     }
 
-    const sections = homepageSpyTargets
+    const targets = homepageNavigationTargets
       .map((target) => ({
         ...target,
         element: document.getElementById(target.sectionId),
       }))
       .filter((target) => target.element) as Array<
-      (typeof homepageSpyTargets)[number] & { element: HTMLElement }
+      (typeof homepageNavigationTargets)[number] & { element: HTMLElement }
     >;
-    const orderedSections = [...sections].sort(
-      (a, b) => a.element.offsetTop - b.element.offsetTop,
-    );
 
-    if (!orderedSections.length) {
+    if (!targets.length) {
       return;
     }
 
     let frameId = 0;
 
-    const findActiveHref = () => {
+    const updateActiveNavigation = () => {
+      frameId = 0;
       const headerHeight =
         parseFloat(
           getComputedStyle(document.documentElement).getPropertyValue(
             "--site-header-height",
           ),
-        ) || 92;
-      const viewportHeight = window.innerHeight;
-      const scrollTop =
-        window.scrollY || document.documentElement.scrollTop || 0;
-      const pageHeight = Math.max(
-        document.body.scrollHeight,
-        document.documentElement.scrollHeight,
-      );
+        ) || 88;
+      const viewportCentre =
+        headerHeight + (window.innerHeight - headerHeight) * 0.5;
+      let candidate: (typeof targets)[number] | null = null;
+      let candidateDistance = Number.POSITIVE_INFINITY;
 
-      if (scrollTop + viewportHeight >= pageHeight - 24) {
-        return "#contact";
-      }
+      targets.forEach((target) => {
+        const rect = target.element.getBoundingClientRect();
+        const isVisible = rect.bottom > headerHeight && rect.top < window.innerHeight;
 
-      const anchorY = scrollTop + headerHeight + viewportHeight * 0.34;
-      let nextActiveHref = orderedSections[0]?.activeHref ?? "#home";
-
-      for (const target of orderedSections) {
-        if (target.element.offsetTop <= anchorY) {
-          nextActiveHref = target.activeHref;
-        } else {
-          break;
+        if (!isVisible) {
+          return;
         }
+
+        const distance =
+          rect.top <= viewportCentre && rect.bottom >= viewportCentre
+            ? 0
+            : Math.min(
+                Math.abs(rect.top - viewportCentre),
+                Math.abs(rect.bottom - viewportCentre),
+              );
+
+        if (distance < candidateDistance) {
+          candidate = target;
+          candidateDistance = distance;
+        }
+      });
+
+      if (!candidate && window.scrollY < headerHeight) {
+        candidate = targets[0];
       }
 
-      return nextActiveHref;
-    };
+      if (candidate) {
+        const nextId = candidate.navigationId;
 
-    const updateActiveHref = () => {
-      frameId = 0;
-      const nextActiveHref = findActiveHref();
-
-      if (activeHrefRef.current !== nextActiveHref) {
-        activeHrefRef.current = nextActiveHref;
-        setActiveHref(nextActiveHref);
+        if (activeIdRef.current !== nextId) {
+          activeIdRef.current = nextId;
+          setActiveId(nextId);
+        }
       }
     };
 
     const requestUpdate = () => {
-      if (frameId) {
-        return;
+      if (!frameId) {
+        frameId = window.requestAnimationFrame(updateActiveNavigation);
       }
-
-      frameId = window.requestAnimationFrame(updateActiveHref);
     };
 
-    requestUpdate();
+    const observer = new IntersectionObserver(requestUpdate, {
+      rootMargin: "-20% 0px -38% 0px",
+      threshold: [0, 0.2, 0.4, 0.6, 0.8],
+    });
 
-    if (typeof window.IntersectionObserver !== "undefined") {
-      const observer = new IntersectionObserver(requestUpdate, {
-        rootMargin: "-18% 0px -42% 0px",
-        threshold: [0, 0.16, 0.32, 0.48, 0.64],
-      });
-
-      sections.forEach((target) => observer.observe(target.element));
-
-      window.addEventListener("scroll", requestUpdate, { passive: true });
-      window.addEventListener("resize", requestUpdate);
-      window.addEventListener("hashchange", requestUpdate);
-
-      return () => {
-        window.cancelAnimationFrame(frameId);
-        observer.disconnect();
-        window.removeEventListener("scroll", requestUpdate);
-        window.removeEventListener("resize", requestUpdate);
-        window.removeEventListener("hashchange", requestUpdate);
-      };
-    }
-
+    targets.forEach((target) => observer.observe(target.element));
     window.addEventListener("scroll", requestUpdate, { passive: true });
     window.addEventListener("resize", requestUpdate);
     window.addEventListener("hashchange", requestUpdate);
+    requestUpdate();
 
     return () => {
       window.cancelAnimationFrame(frameId);
+      observer.disconnect();
       window.removeEventListener("scroll", requestUpdate);
       window.removeEventListener("resize", requestUpdate);
       window.removeEventListener("hashchange", requestUpdate);
     };
   }, [pathname]);
 
+  const activateLink = (id: NavigationId) => {
+    activeIdRef.current = id;
+    setActiveId(id);
+    closeMenu();
+  };
+
+  const navigateToSection = (
+    event: MouseEvent<HTMLAnchorElement>,
+    href: string,
+    navigationId?: NavigationId,
+  ) => {
+    if (pathname === "/" && href.startsWith("#")) {
+      const target = document.getElementById(href.slice(1));
+
+      if (target) {
+        event.preventDefault();
+        const reducedMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        ).matches;
+        const headerHeight =
+          parseFloat(
+            getComputedStyle(document.documentElement).getPropertyValue(
+              "--site-header-height",
+            ),
+          ) || 88;
+        const targetTop =
+          target.getBoundingClientRect().top + window.scrollY - headerHeight - 16;
+
+        window.history.pushState(null, "", href);
+        window.scrollTo({
+          top: Math.max(0, targetTop),
+          behavior: reducedMotion ? "auto" : "smooth",
+        });
+      }
+    }
+
+    if (navigationId) {
+      activateLink(navigationId);
+    } else {
+      closeMenu();
+    }
+  };
+
   return (
     <header className="site-header page-layer sticky top-0 pt-4">
       <Container>
         <div className="site-header-panel relative rounded-[1rem] border border-[var(--line)] bg-[rgba(10,11,13,0.84)] px-4 py-4 backdrop-blur-xl">
           <div className="flex items-center justify-between gap-4">
-            <Link
-              href={resolveHref("#home")}
-              className="site-brand min-w-0"
-              onClick={() => activateLink("#home")}
-            >
-              <div className="meta-stack">Kayode Popoola / Popeblack</div>
-              <div className="mt-1 truncate font-['Sora'] text-sm text-[var(--foreground)]">
-                {profile.headline}
+            <Link href="/" className="site-brand min-w-0" onClick={closeMenu}>
+              <div className="meta-stack">Kayode Popoola</div>
+              <div className="site-brand-subtitle mt-1 truncate font-['Sora'] text-sm text-[var(--foreground)]">
+                Popeblack · Web3 Growth & Intelligence
               </div>
             </Link>
 
@@ -214,16 +239,18 @@ export function Header() {
               className="desktop-nav hidden items-center lg:flex"
               aria-label="Primary navigation"
             >
-              {desktopLinks.map((link) => (
+              {primaryNavigation.map((link) => (
                 <Link
-                  key={link.href}
-                  href={resolveHref(link.href)}
-                  aria-current={isActiveLink(link.href) ? "page" : undefined}
+                  key={link.id}
+                  href={resolveHomepageHref(link.href)}
+                  aria-current={isActive(link.id) ? "location" : undefined}
                   className={cn(
                     "desktop-nav-link meta-stack transition hover:text-[var(--foreground)]",
-                    isActiveLink(link.href) && "is-active",
+                    isActive(link.id) && "is-active",
                   )}
-                  onClick={() => activateLink(link.href)}
+                  onClick={(event) =>
+                    navigateToSection(event, link.href, link.id)
+                  }
                 >
                   {link.label}
                 </Link>
@@ -236,40 +263,16 @@ export function Header() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="desktop-nav-cta meta-stack"
-                onClick={() => setOpen(false)}
               >
                 Book a Call
               </Link>
-              <button
-                type="button"
-                className="theme-toggle"
-                data-theme-toggle
-                aria-label="Toggle color theme"
-              >
-                <span className="theme-icon theme-icon-sun">
-                  <Sun size={15} />
-                </span>
-                <span className="theme-icon theme-icon-moon">
-                  <Moon size={15} />
-                </span>
-              </button>
+              <ThemeToggle />
             </div>
 
             <div className="mobile-nav-actions flex items-center gap-2 lg:hidden">
+              <ThemeToggle />
               <button
-                type="button"
-                className="theme-toggle"
-                data-theme-toggle
-                aria-label="Toggle color theme"
-              >
-                <span className="theme-icon theme-icon-sun">
-                  <Sun size={15} />
-                </span>
-                <span className="theme-icon theme-icon-moon">
-                  <Moon size={15} />
-                </span>
-              </button>
-              <button
+                ref={menuButtonRef}
                 type="button"
                 aria-expanded={open}
                 aria-controls="mobile-nav"
@@ -282,34 +285,66 @@ export function Header() {
             </div>
           </div>
 
-          <div
+          <nav
+            ref={mobileMenuRef}
             id="mobile-nav"
-            className={cn(
-              "mobile-nav-panel grid overflow-hidden transition-all duration-300 lg:hidden",
-              open
-                ? "mt-4 grid-rows-[1fr] opacity-100"
-                : "grid-rows-[0fr] opacity-0",
-            )}
+            className="mobile-nav-panel mt-4 lg:hidden"
+            aria-label="Mobile navigation"
+            hidden={!open}
           >
-            <div className="min-h-0">
-              <div className="mobile-nav-links flex flex-col gap-3 border-t border-[var(--line)] pt-4">
-                {mobileLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={resolveHref(link.href)}
-                    aria-current={isActiveLink(link.href) ? "page" : undefined}
-                    className={cn(
-                      "mobile-nav-link meta-stack px-1 py-2 transition hover:text-[var(--foreground)]",
-                      isActiveLink(link.href) && "is-active",
-                    )}
-                    onClick={() => activateLink(link.href)}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
+              <div className="mobile-nav-group border-t border-[var(--line)] pt-4">
+                <div className="meta-stack mb-3">Primary</div>
+                <div className="mobile-nav-links">
+                  {primaryNavigation.map((link, index) => (
+                    <Link
+                      ref={index === 0 ? firstMobileLinkRef : undefined}
+                      key={link.id}
+                      href={resolveHomepageHref(link.href)}
+                      aria-current={isActive(link.id) ? "location" : undefined}
+                      className={cn(
+                        "mobile-nav-link meta-stack transition hover:text-[var(--foreground)]",
+                        isActive(link.id) && "is-active",
+                      )}
+                      onClick={(event) =>
+                        navigateToSection(event, link.href, link.id)
+                      }
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
               </div>
-            </div>
-          </div>
+
+              <div className="mobile-nav-group mt-4 border-t border-[var(--line)] pt-4">
+                <div className="meta-stack mb-3">More</div>
+                <div className="mobile-nav-secondary">
+                  <Link href="/blog" className="mobile-nav-link meta-stack" onClick={closeMenu}>
+                    Blog
+                  </Link>
+                  <Link
+                    href={resolveHomepageHref("#contact")}
+                    className="mobile-nav-link meta-stack"
+                    onClick={(event) =>
+                      navigateToSection(event, "#contact")
+                    }
+                  >
+                    Contact
+                  </Link>
+                  <Link href="/privacy" className="mobile-nav-link meta-stack" onClick={closeMenu}>
+                    Privacy
+                  </Link>
+                  <Link
+                    href={profile.bookCallUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mobile-nav-link meta-stack"
+                    onClick={closeMenu}
+                  >
+                    Book a Call
+                  </Link>
+                </div>
+              </div>
+          </nav>
         </div>
       </Container>
     </header>

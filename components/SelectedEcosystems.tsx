@@ -13,24 +13,35 @@ export function SelectedEcosystems() {
   }
 
   return (
-    <section id="ecosystems" className="page-layer py-14 md:py-16 lg:py-12">
+    <section
+      id="ecosystems"
+      data-nav-group="impact"
+      data-scene-label="Organisations"
+      className="page-layer py-14 md:py-16 lg:py-12"
+    >
       <Container>
         <SectionReveal className="section-frame">
           <div className="meta-stack">Ecosystems & partners</div>
           <div className="mt-4 grid gap-8 lg:grid-cols-[0.34fr_0.66fr] lg:items-start">
             <div>
               <h2 className="section-title">
-                Selected Ecosystems, Partners & Projects
+                Selected organisations, ecosystems and projects I have worked
+                with, supported or contributed to.
               </h2>
               <p className="section-copy">
-                Trusted across Web3, AI infrastructure, DeFi, blockchain
-                intelligence, and African ecosystem growth.
+                Professional context spanning Web3 infrastructure, digital
+                assets, ecosystem development, commercial growth, and emerging
+                technology.
+              </p>
+              <p className="ecosystem-disclaimer">
+                Logos are shown for professional context and do not necessarily
+                imply organisational endorsement.
               </p>
             </div>
 
             <div
               className="logo-marquee"
-              aria-label="Selected ecosystems, partners, and projects"
+              aria-label="Selected organisations, ecosystems, and projects"
             >
               <div className="logo-marquee-track">
                 {marqueeLogos.map((logo, index) => {

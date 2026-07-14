@@ -1,7 +1,10 @@
+import { achievements } from "@/data/achievements";
+
 export type Role = {
   title: string;
   period: string;
   location: string;
+  engagementType?: "Part-time" | "Contract" | "Consulting" | "Advisory" | "Full-time";
   bullets: string[];
 };
 
@@ -22,11 +25,11 @@ export const experience: ExperienceEntry[] = [
         location: "Remote",
         bullets: [
           "Lead global sales strategy, revenue growth, strategic partnerships, and enterprise engagement for Secret Network Foundation.",
-          "Generated over $300,000 in revenue within the first 90 days of appointment.",
-          "Closed and negotiated 50+ strategic partnerships and commercial deals across Web3, AI, blockchain infrastructure, DeFi, and emerging technology sectors.",
-          "Established collaborations with 20+ leading EVM and Layer-2 ecosystems.",
-          "Supported 15+ new teams/products through onboarding, ecosystem alignment, integration support, and successful mainnet launch.",
-          "Contributed to 3x ecosystem TVL growth through partner activation, liquidity initiatives, and growth strategies.",
+          achievements.revenue.claim,
+          achievements.deals.claim,
+          achievements.evmPartnerships.claim,
+          achievements.mainnetLaunches.claim,
+          achievements.tvlGrowth.claim,
           "Build relationships with founders, investors, enterprises, developers, infrastructure teams, and ecosystem partners.",
           "Represent Secret Network in executive meetings, global conferences, partner negotiations, and industry engagements.",
         ],
@@ -55,12 +58,13 @@ export const experience: ExperienceEntry[] = [
       {
         title: "Secret Network Africa Lead",
         period: "Feb 2022 - Dec 2024",
-        location: "Remote / Part-Time",
+        location: "Remote",
+        engagementType: "Part-time",
         bullets: [
           "Built and scaled Secret Network's African ecosystem presence across Nigeria, Kenya, Ghana, Rwanda, and South Africa.",
-          "Hosted and supported 50+ physical and virtual events.",
-          "Onboarded 2,000+ ambassadors into the Secret Network ecosystem.",
-          "Designed and launched a developer education program that trained 500+ developers.",
+          achievements.events.claim,
+          achievements.ambassadors.claim,
+          achievements.developers.claim,
           "Built partnerships with universities, technology hubs, developer communities, and local Web3 organizations.",
           "Supported African developers in hackathons, grants, GTM support, and ecosystem visibility.",
           "Contributed to Secret Network Africa winning Best Blockchain-Based Solution at the 2023 Africa Fintech & AI Awards.",
@@ -112,7 +116,8 @@ export const experience: ExperienceEntry[] = [
       {
         title: "Graphics Editor / Creative Production Lead",
         period: "Jan 2016 - Jan 2022",
-        location: "Part-Time",
+        location: "Nigeria",
+        engagementType: "Part-time",
         bullets: [
           "Led creative production of scrapbooks, photo booklets, yearbooks, and plaques for 20,000+ students across Nigeria.",
           "Managed photography, digital organization, design templates, and production coordination.",

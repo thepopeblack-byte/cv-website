@@ -78,7 +78,11 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="page-layer py-14 md:py-16 lg:py-12">
+    <section
+      id="contact"
+      data-scene-label="Contact"
+      className="page-layer py-14 md:py-16 lg:py-12"
+    >
       <Container>
         <SectionReveal className="section-frame">
           <div className="meta-stack">Contact</div>
@@ -86,6 +90,22 @@ export function Contact() {
             <div>
               <h2 className="section-title">Contact.</h2>
               <p className="section-copy">{profile.audienceLabel}</p>
+              <div className="contact-primary-actions mt-7 flex flex-wrap gap-3">
+                <Link
+                  href={profile.bookCallUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="button-primary"
+                >
+                  Book a Call
+                </Link>
+                <Link
+                  href={`mailto:${profile.email}`}
+                  className="button-secondary"
+                >
+                  Email Kayode
+                </Link>
+              </div>
               <div className="contact-link-grid mt-8 space-y-3">
                 <div>
                   <Link
@@ -99,7 +119,7 @@ export function Contact() {
                   <Link
                     href={profile.linkedin}
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     className="bracket-link"
                   >
                     [LINKEDIN]
@@ -109,7 +129,7 @@ export function Contact() {
                   <Link
                     href={profile.twitter}
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     className="bracket-link"
                   >
                     [X]
@@ -119,10 +139,15 @@ export function Contact() {
                   <Link
                     href={profile.telegram}
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     className="bracket-link"
                   >
                     [TELEGRAM]
+                  </Link>
+                </div>
+                <div>
+                  <Link href="/privacy" className="bracket-link">
+                    [PRIVACY]
                   </Link>
                 </div>
               </div>
@@ -186,6 +211,12 @@ export function Contact() {
                 />
               </label>
 
+              <p className="contact-privacy-note">
+                By submitting this form, you agree that the information
+                provided may be used to respond to your enquiry. Read the{" "}
+                <Link href="/privacy">privacy notice</Link>.
+              </p>
+
               <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
                 <div className="flex flex-col gap-3 sm:flex-row">
                   <button
@@ -205,6 +236,8 @@ export function Contact() {
                 </div>
                 {status.message ? (
                   <p
+                    role={status.type === "error" ? "alert" : "status"}
+                    aria-live={status.type === "error" ? "assertive" : "polite"}
                     className={`max-w-xl text-sm leading-7 ${
                       status.type === "error"
                         ? "text-[#e0a7a0]"

@@ -1,5 +1,7 @@
 import { ImageResponse } from "next/og";
 
+import { socialProofChips } from "@/data/achievements";
+
 export const alt = "Kayode Popoola executive profile card";
 export const size = {
   width: 1200,
@@ -18,9 +20,9 @@ export default function OpenGraphImage() {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "56px",
-          color: "#f8fafc",
+          color: "#f4efe8",
           background:
-            "radial-gradient(circle at top left, rgba(94, 231, 255, 0.22), transparent 28%), radial-gradient(circle at right, rgba(243, 195, 108, 0.18), transparent 22%), linear-gradient(180deg, #08111f 0%, #0c1730 100%)",
+            "radial-gradient(circle at top left, rgba(244, 239, 232, 0.12), transparent 28%), linear-gradient(180deg, #0a0b0d 0%, #111317 100%)",
         }}
       >
         <div
@@ -31,7 +33,7 @@ export default function OpenGraphImage() {
             fontSize: 24,
             letterSpacing: "0.28em",
             textTransform: "uppercase",
-            color: "#9fb0ca",
+            color: "#9a968d",
           }}
         >
           <span>Popeblack</span>
@@ -52,7 +54,7 @@ export default function OpenGraphImage() {
             style={{
               maxWidth: "860px",
               fontSize: 34,
-              color: "#d6e2f4",
+              color: "#cbc6bb",
               lineHeight: 1.3,
             }}
           >
@@ -61,17 +63,17 @@ export default function OpenGraphImage() {
           </div>
         </div>
         <div style={{ display: "flex", gap: "18px" }}>
-          {["$300K+ revenue", "50+ deals", "20+ ecosystem partners", "3x TVL growth"].map(
+          {socialProofChips.map(
             (item) => (
               <div
                 key={item}
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  border: "1px solid rgba(159, 176, 202, 0.2)",
+                  border: "1px solid rgba(244, 239, 232, 0.15)",
                   borderRadius: 999,
                   padding: "16px 22px",
-                  background: "rgba(11, 22, 40, 0.72)",
+                  background: "rgba(244, 239, 232, 0.04)",
                   fontSize: 24,
                 }}
               >

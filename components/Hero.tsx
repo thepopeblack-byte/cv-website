@@ -6,6 +6,8 @@ import Link from "next/link";
 
 import { Container } from "@/components/Container";
 import { LiveClock } from "@/components/LiveClock";
+import { MobileSwipeRegion } from "@/components/MobileSwipeRegion";
+import { heroQuickFacts } from "@/data/achievements";
 import { profile } from "@/data/profile";
 
 type HeroAction = {
@@ -41,13 +43,6 @@ const heroActions: HeroAction[] = [
   },
 ];
 
-const quickFacts = [
-  "$300K+ revenue in 90 days",
-  "50+ strategic deals closed",
-  "15+ products launched on mainnet",
-  "500+ developers trained",
-];
-
 const heroPillars = [
   "Commercial Growth.",
   "Web3 Partnerships.",
@@ -56,7 +51,13 @@ const heroPillars = [
 
 export function Hero() {
   return (
-    <section id="home" className="page-layer pt-8">
+    <section
+      id="profile"
+      data-nav-group="profile"
+      data-scene-label="Profile"
+      className="page-layer pt-8"
+    >
+      <span id="home" className="anchor-alias" aria-hidden="true" />
       <Container>
         <div className="section-frame">
           <motion.div
@@ -108,15 +109,18 @@ export function Hero() {
                 <p>{profile.currentFocus}</p>
               </div>
 
-              <div className="hero-quick-facts mt-10 grid gap-3 border-t border-[var(--line)] pt-6 md:grid-cols-2">
-                {quickFacts.map((fact) => (
+              <MobileSwipeRegion
+                className="hero-quick-facts mt-10 grid gap-3 border-t border-[var(--line)] pt-6 md:grid-cols-2"
+                label="Selected commercial highlights"
+              >
+                {heroQuickFacts.map((fact) => (
                   <div key={fact} className="flex gap-4">
                     <p className="text-[1rem] leading-8 text-[var(--foreground)]">
                       {fact}
                     </p>
                   </div>
                 ))}
-              </div>
+              </MobileSwipeRegion>
             </div>
           </motion.div>
         </div>

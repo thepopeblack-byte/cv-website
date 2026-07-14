@@ -1,5 +1,7 @@
 import { Container } from "@/components/Container";
+import { MobileSwipeRegion } from "@/components/MobileSwipeRegion";
 import { SectionReveal } from "@/components/SectionReveal";
+import { confidentialityNote } from "@/data/achievements";
 import { profile } from "@/data/profile";
 
 function formatMetric(value: number, prefix = "", suffix = "") {
@@ -10,35 +12,39 @@ function formatMetric(value: number, prefix = "", suffix = "") {
 
 export function ImpactStats() {
   return (
-    <section id="impact" className="page-layer py-14 md:py-16 lg:py-12">
+    <section
+      id="impact"
+      data-nav-group="impact"
+      data-scene-label="Impact"
+      className="page-layer py-14 md:py-16 lg:py-12"
+    >
       <Container>
         <SectionReveal className="section-frame proof-stage">
-          <div className="meta-stack">Commercial proof</div>
+          <div className="meta-stack">Impact</div>
           <div className="mt-4 grid gap-8 lg:grid-cols-[0.38fr_0.62fr] lg:items-start">
             <div className="proof-brief">
               <div className="proof-brief-glow" aria-hidden="true" />
-              <h2 className="section-title">{profile.aboutTitle}</h2>
+              <h2 className="section-title">
+                Commercial proof across growth, partnerships, and ecosystem
+                execution.
+              </h2>
               <p className="section-copy text-[var(--muted-strong)]">
-                {profile.aboutBody}
+                Selected outcomes across revenue growth, enterprise and
+                ecosystem partnerships, market activation, developer capacity,
+                and blockchain infrastructure adoption.
               </p>
-              <p className="mt-5 text-[1rem] leading-8 text-[var(--muted)]">
-                {profile.aboutBodyExtended}
-              </p>
-              <p className="mt-6 border-t border-[var(--line)] pt-5 text-[1rem] leading-8 text-[var(--muted-strong)]">
+              <p className="mt-6 text-[1rem] leading-8 text-[var(--muted-strong)]">
                 {profile.proofLine}
               </p>
-
-              <div className="proof-positioning-list mt-6 grid gap-3">
-                {profile.aboutCards.map((card) => (
-                  <article key={card.title} className="proof-positioning-card">
-                    <h3>{card.title}</h3>
-                    <p>{card.text}</p>
-                  </article>
-                ))}
-              </div>
+              <p className="impact-confidentiality-note">
+                {confidentialityNote}
+              </p>
             </div>
 
-            <div className="proof-metric-grid">
+            <MobileSwipeRegion
+              className="proof-metric-grid"
+              label="Commercial and ecosystem impact statistics"
+            >
               {profile.stats.map((stat) => (
                 <article key={stat.label} className="signal-card h-full">
                   <p className="metric-value">
@@ -52,7 +58,7 @@ export function ImpactStats() {
                   </p>
                 </article>
               ))}
-            </div>
+            </MobileSwipeRegion>
           </div>
         </SectionReveal>
       </Container>

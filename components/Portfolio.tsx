@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Container } from "@/components/Container";
+import { MobileSwipeRegion } from "@/components/MobileSwipeRegion";
 import { SectionReveal } from "@/components/SectionReveal";
 import { portfolioItems } from "@/data/portfolio";
 
@@ -12,7 +13,12 @@ function isExternalHref(href: string) {
 
 export function Portfolio() {
   return (
-    <section id="portfolio" className="page-layer py-14 md:py-16 lg:py-12">
+    <section
+      id="portfolio"
+      data-nav-group="impact"
+      data-scene-label="Selected Work"
+      className="page-layer py-14 md:py-16 lg:py-12"
+    >
       <Container>
         <SectionReveal className="section-frame">
           <div className="meta-stack">Selected work</div>
@@ -30,7 +36,10 @@ export function Portfolio() {
               </p>
             </div>
 
-            <div className="portfolio-card-grid grid gap-5 md:grid-cols-2">
+            <MobileSwipeRegion
+              className="portfolio-card-grid grid gap-5 md:grid-cols-2"
+              label="Selected work and professional proof"
+            >
               {portfolioItems.map((item, index) => {
                 const hrefIsExternal = item.href
                   ? isExternalHref(item.href)
@@ -75,7 +84,11 @@ export function Portfolio() {
                           <Link
                             href={item.href}
                             target={hrefIsExternal ? "_blank" : undefined}
-                            rel={hrefIsExternal ? "noreferrer" : undefined}
+                            rel={
+                              hrefIsExternal
+                                ? "noopener noreferrer"
+                                : undefined
+                            }
                             className="bracket-link inline-flex items-center gap-2"
                           >
                             [{item.ctaLabel ?? "View"}]
@@ -87,7 +100,7 @@ export function Portfolio() {
                   </SectionReveal>
                 );
               })}
-            </div>
+            </MobileSwipeRegion>
           </div>
         </SectionReveal>
       </Container>

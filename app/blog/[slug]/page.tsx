@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { Container } from "@/components/Container";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { siteName, siteUrl } from "@/data/site";
 import {
   getBlogPostBySlug,
   getLocalBlogPostSlugs,
@@ -45,7 +46,23 @@ export async function generateMetadata({
     title: `${post.title} | Kayode Popoola`,
     description: post.excerpt,
     alternates: {
-      canonical: `https://popeblack.com/blog/${post.slug}`,
+      canonical: `${siteUrl}/blog/${post.slug}`,
+    },
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      url: `${siteUrl}/blog/${post.slug}`,
+      type: "article",
+      publishedTime: post.date,
+      authors: [post.author],
+      tags: post.tags,
+      images: [post.coverImage ?? "/opengraph-image"],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
+      images: [post.coverImage ?? "/opengraph-image"],
     },
   };
 }
@@ -57,6 +74,33 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   if (!post) {
     notFound();
   }
+
+  const articleJsonLd = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.excerpt,
+    datePublished: post.date,
+    author: {
+      "@type": "Person",
+      name: post.author,
+      url: siteUrl,
+    },
+    publisher: {
+      "@type": "Person",
+      name: "Kayode Popoola",
+      url: siteUrl,
+    },
+    mainEntityOfPage: `${siteUrl}/blog/${post.slug}`,
+    isPartOf: {
+      "@type": "WebSite",
+      name: siteName,
+      url: siteUrl,
+    },
+    image: post.coverImage ?? `${siteUrl}/opengraph-image`,
+    keywords: post.tags.join(", "),
+    ...(post.externalUrl ? { isBasedOn: post.externalUrl } : {}),
+  }).replace(/</g, "\\u003c");
 
   return (
     <>
@@ -72,9 +116,15 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
               <div className="article-eyebrow mt-8">
                 <span>{post.type}</span>
+                <span>By {post.author}</span>
                 <span>{formatDate(post.date)}</span>
                 <span>{post.readingTime}</span>
                 {post.source ? <span>{post.source}</span> : null}
+                {post.externalUrl ? (
+                  <span>Externally published</span>
+                ) : (
+                  <span>Original</span>
+                )}
               </div>
 
               <h1>{post.title}</h1>
@@ -128,6 +178,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </Container>
         </article>
       </main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: articleJsonLd }}
+      />
       <Footer />
     </>
   );

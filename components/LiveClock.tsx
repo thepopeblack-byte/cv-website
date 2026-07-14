@@ -15,7 +15,7 @@ function getLagosTime() {
 }
 
 export function LiveClock() {
-  const [time, setTime] = useState("--:--:--");
+  const [time, setTime] = useState<string | null>(null);
 
   useEffect(() => {
     const tick = () => setTime(getLagosTime());
@@ -29,13 +29,17 @@ export function LiveClock() {
   return (
     <div
       className="live-clock"
-      aria-label={`Remote Lagos time: ${time}`}
+      aria-label={
+        time ? `Remote Lagos time: ${time}` : "Remote work timezone: UTC+1"
+      }
     >
       <span className="live-clock-dot" aria-hidden="true" />
       <span>Remote (UTC+1)</span>
-      <time className="live-clock-time" suppressHydrationWarning>
-        {time}
-      </time>
+      {time ? (
+        <time className="live-clock-time" suppressHydrationWarning>
+          {time}
+        </time>
+      ) : null}
     </div>
   );
 }

@@ -35,7 +35,7 @@ export const portfolioItems: PortfolioItem[] = [
     title: "Secret Network Africa Ecosystem Growth",
     category: "Africa Web3 Ecosystem",
     description:
-      "Ecosystem growth work across Nigeria, Kenya, Ghana, Rwanda, and South Africa, including 2,000+ ambassadors onboarded, 50+ events supported, 500+ developers trained, and regional partnerships with universities, hubs, and Web3 communities.",
+      `Ecosystem growth work across Nigeria, Kenya, Ghana, Rwanda, and South Africa. ${achievements.ambassadors.claim} ${achievements.events.claim} ${achievements.developers.claim} The work included regional partnerships with universities, hubs, and Web3 communities.`,
     image: "/images/popeblack/proof/ecosystem-growth-africa.jpg",
     imageAlt:
       "Kayode Popoola speaking on a DeFi panel in front of an African Web3 conference audience.",
@@ -137,3 +137,4 @@ export const speakingMediaItems: PortfolioItem[] = [
     videoWatchUrl: "https://www.youtube.com/watch?v=ktdhwuTZcb0&t=7s",
   },
 ];
+import { achievements } from "@/data/achievements";

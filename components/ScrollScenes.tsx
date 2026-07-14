@@ -3,15 +3,17 @@
 import { useEffect, useRef, useState } from "react";
 
 const sceneLabels = [
-  "Hero",
-  "Commercial Proof",
-  "Ecosystems",
-  "Capabilities",
+  "Profile",
+  "Executive Profile",
+  "Impact",
+  "Organisations",
+  "Selected Outcomes",
   "Selected Work",
-  "Experience",
+  "Expertise",
   "Credentials",
   "Education",
-  "Media",
+  "Speaking & Media",
+  "Experience",
   "Writing",
   "Contact",
 ];
