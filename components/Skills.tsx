@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { Container } from "@/components/Container";
 import { MobileSwipeRegion } from "@/components/MobileSwipeRegion";
@@ -20,18 +20,8 @@ export function Skills() {
       return;
     }
 
-    const clusters = Array.from(
-      section.querySelectorAll<HTMLElement>(".capability-cluster"),
-    );
-
-    if (!clusters.length) {
-      return;
-    }
-
     const desktopQuery = window.matchMedia("(min-width: 769px)");
     let frameId = 0;
-    let monitorId = 0;
-    let isMonitoring = false;
 
     const activateCluster = (nextActiveIndex: number) => {
       if (activeIndexRef.current !== nextActiveIndex) {
@@ -47,31 +37,45 @@ export function Skills() {
         return;
       }
 
+      const clusters = Array.from(
+        section.querySelectorAll<HTMLElement>(".capability-cluster"),
+      );
+
+      if (!clusters.length) {
+        return;
+      }
+
       const headerHeight =
-        parseFloat(
-          getComputedStyle(document.documentElement).getPropertyValue(
-            "--site-header-height",
-          ),
-        ) || 88;
+        document.querySelector<HTMLElement>(".site-header")?.getBoundingClientRect()
+          .bottom ?? 88;
       const viewportCentre =
         headerHeight + (window.innerHeight - headerHeight) * 0.5;
       let nextIndex = activeIndexRef.current;
       let bestDistance = Number.POSITIVE_INFINITY;
-
-      clusters.forEach((cluster, index) => {
+      let currentDistance = Number.POSITIVE_INFINITY;
+      // Derive the visible candidates from current geometry so an observer entry
+      // delivered just before a fast scroll cannot leave a stale highlight behind.
+      const candidates = clusters.filter((cluster) => {
         const rect = cluster.getBoundingClientRect();
+        return rect.bottom > headerHeight && rect.top < window.innerHeight;
+      });
 
-        if (rect.bottom <= headerHeight || rect.top >= window.innerHeight) {
+      candidates.forEach((cluster) => {
+        const index = clusters.indexOf(cluster);
+
+        if (index < 0) {
           return;
         }
 
-        const distance =
-          rect.top <= viewportCentre && rect.bottom >= viewportCentre
-            ? 0
-            : Math.min(
-                Math.abs(rect.top - viewportCentre),
-                Math.abs(rect.bottom - viewportCentre),
-              );
+        const rect = cluster.getBoundingClientRect();
+
+        const distance = Math.abs(
+          rect.top + rect.height * 0.5 - viewportCentre,
+        );
+
+        if (index === activeIndexRef.current) {
+          currentDistance = distance;
+        }
 
         if (distance < bestDistance) {
           bestDistance = distance;
@@ -79,7 +83,14 @@ export function Skills() {
         }
       });
 
-      activateCluster(nextIndex);
+      const shouldSwitch =
+        nextIndex === activeIndexRef.current ||
+        !Number.isFinite(currentDistance) ||
+        bestDistance + 24 < currentDistance;
+
+      if (shouldSwitch) {
+        activateCluster(nextIndex);
+      }
     };
 
     const requestUpdate = () => {
@@ -88,45 +99,39 @@ export function Skills() {
       }
     };
 
-    const monitorVisibleSection = () => {
-      window.clearTimeout(monitorId);
+    const observer = new IntersectionObserver(
+      () => {
+        requestUpdate();
+      },
+      {
+        rootMargin: "-8% 0px -8% 0px",
+        threshold: [0, 0.1, 0.25, 0.5, 0.75, 1],
+      },
+    );
+    const resizeObserver =
+      typeof ResizeObserver === "undefined"
+        ? null
+        : new ResizeObserver(requestUpdate);
 
-      if (!isMonitoring) {
-        return;
-      }
-
-      updateFromViewport();
-      monitorId = window.setTimeout(monitorVisibleSection, 120);
-    };
-
-    const observer = new IntersectionObserver(requestUpdate, {
-      rootMargin: "-18% 0px -34% 0px",
-      threshold: [0, 0.2, 0.4, 0.6, 0.8],
+    Array.from(
+      section.querySelectorAll<HTMLElement>(".capability-cluster"),
+    ).forEach((cluster) => {
+      observer.observe(cluster);
+      resizeObserver?.observe(cluster);
     });
-    const sectionObserver = new IntersectionObserver(([entry]) => {
-      isMonitoring = Boolean(entry?.isIntersecting && desktopQuery.matches);
-
-      if (isMonitoring) {
-        monitorVisibleSection();
-      } else {
-        window.clearTimeout(monitorId);
-      }
-    });
-
-    clusters.forEach((cluster) => observer.observe(cluster));
-    sectionObserver.observe(section);
     window.addEventListener("scroll", requestUpdate, { passive: true });
     window.addEventListener("resize", requestUpdate);
+    window.addEventListener("orientationchange", requestUpdate);
     desktopQuery.addEventListener("change", requestUpdate);
-    requestUpdate();
+    frameId = window.requestAnimationFrame(updateFromViewport);
 
     return () => {
       window.cancelAnimationFrame(frameId);
-      window.clearTimeout(monitorId);
       observer.disconnect();
-      sectionObserver.disconnect();
+      resizeObserver?.disconnect();
       window.removeEventListener("scroll", requestUpdate);
       window.removeEventListener("resize", requestUpdate);
+      window.removeEventListener("orientationchange", requestUpdate);
       desktopQuery.removeEventListener("change", requestUpdate);
     };
   }, []);
@@ -141,7 +146,6 @@ export function Skills() {
   };
 
   const selectCluster = (nextActiveIndex: number) => {
-    activateCluster(nextActiveIndex);
     const target = clusterRefs.current[nextActiveIndex];
 
     if (target) {
@@ -158,8 +162,6 @@ export function Skills() {
   };
 
   const activeGroup = skillGroups[activeIndex] ?? skillGroups[0];
-  const capabilityProgress =
-    skillGroups.length > 1 ? (activeIndex / (skillGroups.length - 1)) * 100 : 0;
 
   return (
     <section
@@ -174,14 +176,7 @@ export function Skills() {
         <SectionReveal className="section-frame capability-section">
           <div className="meta-stack">Expertise</div>
           <div className="mt-4 grid gap-8 lg:grid-cols-[0.34fr_0.66fr] lg:items-start">
-            <aside
-              className="capability-copy"
-              style={
-                {
-                  "--capability-progress": `${capabilityProgress}%`,
-                } as CSSProperties
-              }
-            >
+            <aside className="capability-copy">
               <div className="capability-orbit" aria-hidden="true" />
               <h2 className="section-title">Capabilities.</h2>
               <p className="section-copy">
@@ -193,10 +188,6 @@ export function Skills() {
               <div className="capability-active-card" aria-live="polite">
                 <div className="meta-stack">Active cluster</div>
                 <h3>{activeGroup.title}</h3>
-                <p>
-                  {String(activeIndex + 1).padStart(2, "0")} /{" "}
-                  {String(skillGroups.length).padStart(2, "0")}
-                </p>
               </div>
 
               <div className="capability-rail" aria-label="Capability clusters">
@@ -210,9 +201,6 @@ export function Skills() {
                     aria-current={index === activeIndex ? "step" : undefined}
                     onClick={() => selectCluster(index)}
                   >
-                    <span className="capability-rail-index">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
                     <span>{group.title}</span>
                   </button>
                 ))}
@@ -239,7 +227,6 @@ export function Skills() {
                   className={`capability-cluster ${
                     index === activeIndex ? "is-active" : ""
                   }`}
-                  style={{ "--cluster-index": index } as CSSProperties}
                 >
                   <div className="capability-cluster-header">
                     <span className="meta-stack">Capability cluster</span>

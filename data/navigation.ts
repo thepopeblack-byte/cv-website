@@ -1,5 +1,5 @@
 export type PrimaryNavigationItem = {
-  id: "profile" | "impact" | "expertise" | "experience";
+  id: "profile" | "impact" | "expertise" | "experience" | "blog" | "contact";
   label: string;
   href: string;
 };
@@ -9,6 +9,8 @@ export const primaryNavigation: PrimaryNavigationItem[] = [
   { id: "impact", label: "Impact", href: "#impact" },
   { id: "expertise", label: "Expertise", href: "#expertise" },
   { id: "experience", label: "Experience", href: "#experience" },
+  { id: "blog", label: "Blog", href: "/blog" },
+  { id: "contact", label: "Contact", href: "#contact" },
 ];
 
 export const homepageNavigationTargets = [
@@ -23,6 +25,7 @@ export const homepageNavigationTargets = [
   { sectionId: "education", navigationId: "expertise" },
   { sectionId: "speaking", navigationId: "expertise" },
   { sectionId: "experience", navigationId: "experience" },
+  { sectionId: "contact", navigationId: "contact" },
 ] satisfies Array<{
   sectionId: string;
   navigationId: PrimaryNavigationItem["id"];

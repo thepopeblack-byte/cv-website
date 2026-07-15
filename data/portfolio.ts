@@ -1,3 +1,5 @@
+import { achievements } from "@/data/achievements";
+
 export type PortfolioLink = {
   label: string;
   href: string;
@@ -6,6 +8,8 @@ export type PortfolioLink = {
 export type PortfolioItem = {
   title: string;
   category: string;
+  summary?: string;
+  proof?: string;
   description: string;
   image: string;
   imageAlt?: string;
@@ -22,6 +26,9 @@ export const portfolioItems: PortfolioItem[] = [
   {
     title: "Secret Network Commercial Growth & Partnerships",
     category: "Revenue Growth / Strategic Partnerships",
+    summary:
+      "Global sales strategy, enterprise partnerships, and partner-led go-to-market execution for privacy-first blockchain and confidential computing infrastructure.",
+    proof: `${achievements.revenue.claim} ${achievements.deals.claim} ${achievements.mainnetLaunches.claim}`,
     description:
       "Commercial leadership for Secret Network Foundation across global sales strategy, enterprise sales, blockchain partnerships, AI infrastructure partnerships, DeFi partnerships, EVM and Layer-2 partnerships, and partner-led go-to-market execution.",
     image: "/images/popeblack/proof/secret-network-commercial-leadership.jpg",
@@ -34,6 +41,9 @@ export const portfolioItems: PortfolioItem[] = [
   {
     title: "Secret Network Africa Ecosystem Growth",
     category: "Africa Web3 Ecosystem",
+    summary:
+      "Regional ecosystem development across Nigeria, Kenya, Ghana, Rwanda, and South Africa through education, partnerships, and developer pathways.",
+    proof: `${achievements.ambassadors.claim} ${achievements.events.claim} ${achievements.developers.claim}`,
     description:
       `Ecosystem growth work across Nigeria, Kenya, Ghana, Rwanda, and South Africa. ${achievements.ambassadors.claim} ${achievements.events.claim} ${achievements.developers.claim} The work included regional partnerships with universities, hubs, and Web3 communities.`,
     image: "/images/popeblack/proof/ecosystem-growth-africa.jpg",
@@ -46,6 +56,10 @@ export const portfolioItems: PortfolioItem[] = [
   {
     title: "Blockchain Intelligence, AML/CFT & OSINT Capability",
     category: "Blockchain Intelligence",
+    summary:
+      "Crypto investigations, attribution research, AML/CFT risk context, OSINT workflows, and digital-asset typology analysis.",
+    proof:
+      "Evidence-based intelligence reporting designed for complex crypto-related risks.",
     description:
       "Blockchain Intelligence Analyst capability covering crypto investigations, attribution research, AML/CFT risk context, OSINT workflows, digital asset typologies, and evidence-based reporting for complex crypto-related risks.",
     image: "/images/popeblack/proof/blockchain-intelligence-proof.jpg",
@@ -58,6 +72,10 @@ export const portfolioItems: PortfolioItem[] = [
   {
     title: "Speaking & Media Credibility",
     category: "Public Visibility",
+    summary:
+      "Public speaking and ecosystem visibility across Web3, blockchain adoption, privacy, DeFi, and African market development.",
+    proof:
+      "Selected conference, broadcast, podcast, and ecosystem appearances are available in the Speaking section.",
     description:
       "Conference participation and ecosystem visibility from Blockchain Africa Summit South Africa 2023, highlighting Web3, blockchain adoption, and African ecosystem engagement.",
     image: "/images/popeblack/events/blockchain-africa-01.webp",
@@ -73,9 +91,10 @@ export const speakingMediaItems: PortfolioItem[] = [
     category: "Conference Video",
     description:
       "Conference video from Encryption Day in Argentina covering FHE, encryption, privacy infrastructure, and real-world emerging technology adoption.",
-    image: "https://img.youtube.com/vi/pTdEnLmJA9Q/maxresdefault.jpg",
+    image: "/images/popeblack/videos/encryption-day-argentina.jpg",
     imageAlt:
       "YouTube thumbnail for Popeblack at Encryption Day in Argentina - Encryption Lab: FHE in Real Life.",
+    videoEmbedUrl: "https://www.youtube.com/embed/pTdEnLmJA9Q",
     videoWatchUrl: "https://www.youtube.com/watch?v=pTdEnLmJA9Q",
   },
   {
@@ -137,4 +156,3 @@ export const speakingMediaItems: PortfolioItem[] = [
     videoWatchUrl: "https://www.youtube.com/watch?v=ktdhwuTZcb0&t=7s",
   },
 ];
-import { achievements } from "@/data/achievements";

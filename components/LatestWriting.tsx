@@ -41,9 +41,9 @@ export async function LatestWriting() {
               </p>
               <Link
                 href="/blog"
-                className="bracket-link mt-6 inline-flex items-center gap-2"
+                className="text-link mt-6 inline-flex items-center gap-2"
               >
-                [View all posts]
+                View all posts
                 <ArrowUpRight size={13} />
               </Link>
             </div>
@@ -64,9 +64,9 @@ export async function LatestWriting() {
                   <div className="article-action-row">
                     <Link
                       href={`/blog/${post.slug}`}
-                      className="bracket-link inline-flex items-center gap-2"
+                      className="text-link inline-flex items-center gap-2"
                     >
-                      [Read article]
+                      Read article
                       <ArrowUpRight size={13} />
                     </Link>
                     {post.externalUrl ? (
@@ -74,9 +74,9 @@ export async function LatestWriting() {
                         href={post.externalUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="bracket-link inline-flex items-center gap-2"
+                        className="text-link inline-flex items-center gap-2"
                       >
-                        [Source]
+                        Source
                         <ArrowUpRight size={13} />
                       </Link>
                     ) : null}

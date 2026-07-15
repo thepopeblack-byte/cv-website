@@ -106,51 +106,6 @@ export function Contact() {
                   Email Kayode
                 </Link>
               </div>
-              <div className="contact-link-grid mt-8 space-y-3">
-                <div>
-                  <Link
-                    href={`mailto:${profile.email}`}
-                    className="bracket-link"
-                  >
-                    [EMAIL]
-                  </Link>
-                </div>
-                <div>
-                  <Link
-                    href={profile.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bracket-link"
-                  >
-                    [LINKEDIN]
-                  </Link>
-                </div>
-                <div>
-                  <Link
-                    href={profile.twitter}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bracket-link"
-                  >
-                    [X]
-                  </Link>
-                </div>
-                <div>
-                  <Link
-                    href={profile.telegram}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bracket-link"
-                  >
-                    [TELEGRAM]
-                  </Link>
-                </div>
-                <div>
-                  <Link href="/privacy" className="bracket-link">
-                    [PRIVACY]
-                  </Link>
-                </div>
-              </div>
             </div>
 
             <form onSubmit={handleSubmit} className="contact-form grid gap-4">

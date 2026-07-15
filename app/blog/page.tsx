@@ -99,9 +99,9 @@ export default async function BlogPage() {
                         href={featuredArticle.externalUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="bracket-link inline-flex items-center gap-2"
+                        className="text-link inline-flex items-center gap-2"
                       >
-                        [Read from source]
+                        Read from source
                         <ArrowUpRight size={13} />
                       </Link>
                     ) : null}
@@ -138,9 +138,9 @@ export default async function BlogPage() {
                     <p>{article.excerpt}</p>
                     <Link
                       href={`/blog/${article.slug}`}
-                      className="bracket-link inline-flex items-center gap-2"
+                      className="text-link inline-flex items-center gap-2"
                     >
-                      [Read article]
+                      Read article
                       <ArrowUpRight size={13} />
                     </Link>
                   </article>

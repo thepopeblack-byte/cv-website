@@ -1,3 +1,4 @@
+import { About } from "@/components/About";
 import { Certifications } from "@/components/Certifications";
 import { Contact } from "@/components/Contact";
 import { Education } from "@/components/Education";
@@ -11,14 +12,12 @@ import { Portfolio } from "@/components/Portfolio";
 import { SelectedEcosystems } from "@/components/SelectedEcosystems";
 import { Skills } from "@/components/Skills";
 import { SpeakingMedia } from "@/components/SpeakingMedia";
-import { ScrollScenes } from "@/components/ScrollScenes";
 import { SelectedOutcomes } from "@/components/SelectedOutcomes";
 
 export default function Page() {
   return (
     <>
       <Header />
-      <ScrollScenes />
       <main id="main-content" className="page-layer pb-6">
         <Hero />
         <About />
@@ -38,4 +37,3 @@ export default function Page() {
     </>
   );
 }
-import { About } from "@/components/About";

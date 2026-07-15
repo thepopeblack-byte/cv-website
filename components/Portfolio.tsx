@@ -3,13 +3,79 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Container } from "@/components/Container";
-import { MobileSwipeRegion } from "@/components/MobileSwipeRegion";
-import { SectionReveal } from "@/components/SectionReveal";
+import {
+  ControlledScene,
+  type ControlledSceneItem,
+} from "@/components/ControlledScene";
 import { portfolioItems } from "@/data/portfolio";
 
 function isExternalHref(href: string) {
   return href.startsWith("http");
 }
+
+const projectLabels = [
+  "Commercial growth",
+  "Africa ecosystem",
+  "Intelligence",
+  "Speaking proof",
+];
+
+const projectPanels: ControlledSceneItem[] = portfolioItems.map(
+  (item, index) => {
+    const hrefIsExternal = item.href ? isExternalHref(item.href) : false;
+
+    return {
+      id: item.title.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+      label: projectLabels[index] ?? item.title,
+      content: (
+        <article className="portfolio-feature">
+          <div className="image-panel portfolio-feature-image relative">
+            <Image
+              src={item.image}
+              alt={item.imageAlt ?? item.title}
+              fill
+              className={item.imageFit === "contain" ? "object-contain" : "object-cover"}
+              style={{ objectPosition: item.imageObjectPosition ?? "center center" }}
+              sizes="(min-width: 1180px) 56vw, 100vw"
+            />
+            <div className="portfolio-feature-shade" aria-hidden="true" />
+            <div className="portfolio-feature-heading">
+              <div className="meta-stack">{item.category}</div>
+              <h3>{item.title}</h3>
+            </div>
+          </div>
+
+          <div className="portfolio-feature-copy">
+            <p>{item.summary ?? item.description}</p>
+            {item.proof ? (
+              <div className="portfolio-feature-proof">
+                <span className="meta-stack">Outcome / proof</span>
+                <p>{item.proof}</p>
+              </div>
+            ) : null}
+
+            <details className="portfolio-details">
+              <summary>View details</summary>
+              <p>{item.description}</p>
+            </details>
+
+            {item.href ? (
+              <Link
+                href={item.href}
+                target={hrefIsExternal ? "_blank" : undefined}
+                rel={hrefIsExternal ? "noopener noreferrer" : undefined}
+                className="text-link inline-flex items-center gap-2"
+              >
+                {item.ctaLabel ?? "View"}
+                {hrefIsExternal ? <ArrowUpRight size={13} /> : null}
+              </Link>
+            ) : null}
+          </div>
+        </article>
+      ),
+    };
+  },
+);
 
 export function Portfolio() {
   return (
@@ -17,92 +83,17 @@ export function Portfolio() {
       id="portfolio"
       data-nav-group="impact"
       data-scene-label="Selected Work"
-      className="page-layer py-14 md:py-16 lg:py-12"
+      className="page-layer controlled-section py-14 md:py-16 lg:py-12"
     >
       <Container>
-        <SectionReveal className="section-frame">
-          <div className="meta-stack">Selected work</div>
-          <div className="mt-4 grid gap-8 lg:grid-cols-[0.34fr_0.66fr] lg:items-start">
-            <div>
-              <h2 className="section-title">
-                Commercial proof across Web3 partnerships, ecosystem growth, and
-                intelligence.
-              </h2>
-              <p className="section-copy">
-                Four high-signal proof points across revenue growth,
-                go-to-market strategy, blockchain infrastructure, confidential
-                computing, Africa Web3 ecosystem expansion, and blockchain
-                intelligence.
-              </p>
-            </div>
-
-            <MobileSwipeRegion
-              className="portfolio-card-grid grid gap-5 md:grid-cols-2"
-              label="Selected work and professional proof"
-            >
-              {portfolioItems.map((item, index) => {
-                const hrefIsExternal = item.href
-                  ? isExternalHref(item.href)
-                  : false;
-
-                return (
-                  <SectionReveal key={item.title} delay={0.03 + index * 0.03}>
-                    <article className="portfolio-card group h-full">
-                      <div className="image-panel relative h-56 sm:h-64">
-                        <Image
-                          src={item.image}
-                          alt={item.imageAlt ?? item.title}
-                          fill
-                          className={`transition duration-500 group-hover:scale-[1.03] ${
-                            item.imageFit === "contain"
-                              ? "object-contain"
-                              : "object-cover"
-                          }`}
-                          style={{
-                            objectPosition:
-                              item.imageObjectPosition ?? "center center",
-                          }}
-                          sizes="(min-width: 768px) 42vw, 100vw"
-                        />
-                        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,11,13,0.04),rgba(10,11,13,0.85))]" />
-                        <div className="absolute left-4 top-4 meta-stack text-[0.68rem] text-[var(--muted-strong)]">
-                          [{item.category}]
-                        </div>
-                        <div className="absolute bottom-0 left-0 right-0 p-5">
-                          <h3 className="font-['Sora'] text-[1.45rem] leading-tight text-[var(--foreground)]">
-                            {item.title}
-                          </h3>
-                        </div>
-                      </div>
-
-                      <p className="mt-4 text-[0.98rem] leading-8 text-[var(--muted)]">
-                        {item.description}
-                      </p>
-
-                      {item.href ? (
-                        <div className="mt-4">
-                          <Link
-                            href={item.href}
-                            target={hrefIsExternal ? "_blank" : undefined}
-                            rel={
-                              hrefIsExternal
-                                ? "noopener noreferrer"
-                                : undefined
-                            }
-                            className="bracket-link inline-flex items-center gap-2"
-                          >
-                            [{item.ctaLabel ?? "View"}]
-                            {hrefIsExternal ? <ArrowUpRight size={13} /> : null}
-                          </Link>
-                        </div>
-                      ) : null}
-                    </article>
-                  </SectionReveal>
-                );
-              })}
-            </MobileSwipeRegion>
-          </div>
-        </SectionReveal>
+        <ControlledScene
+          eyebrow="Selected work"
+          title="Commercial proof across Web3 partnerships, ecosystem growth, and intelligence."
+          intro="Four high-signal proof points across revenue growth, go-to-market strategy, blockchain infrastructure, Africa Web3 ecosystem expansion, and blockchain intelligence."
+          items={projectPanels}
+          ariaLabel="Selected work and professional proof"
+          panelClassName="portfolio-scene-panel"
+        />
       </Container>
     </section>
   );

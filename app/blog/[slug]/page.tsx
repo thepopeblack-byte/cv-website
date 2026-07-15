@@ -109,9 +109,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <article className="page-layer py-14 md:py-16 lg:py-14">
           <Container>
             <div className="article-detail">
-              <Link href="/blog" className="bracket-link inline-flex gap-2">
+              <Link href="/blog" className="text-link inline-flex gap-2">
                 <ArrowLeft size={13} />
-                [All posts]
+                All posts
               </Link>
 
               <div className="article-eyebrow mt-8">

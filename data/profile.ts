@@ -10,6 +10,7 @@ export const profile = {
   linkedin: "https://www.linkedin.com/in/thepopeblack",
   twitter: "https://twitter.com/thepopeblack",
   telegram: "https://t.me/Popeblack",
+  youtube: "https://www.youtube.com/watch?v=pTdEnLmJA9Q",
   headline: "Head of Sales & Business Development",
   strapline:
     "Web3 Business Development Leader | Strategic Partnerships | Revenue Growth",

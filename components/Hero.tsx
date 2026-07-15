@@ -57,6 +57,7 @@ export function Hero() {
       data-scene-label="Profile"
       className="page-layer pt-8"
     >
+      <span id="top" className="anchor-alias" aria-hidden="true" />
       <span id="home" className="anchor-alias" aria-hidden="true" />
       <Container>
         <div className="section-frame">
@@ -73,7 +74,7 @@ export function Hero() {
                 <div>BLOCKCHAIN INTELLIGENCE / AML-CFT / OSINT</div>
               </div>
 
-              <div className="hero-actions flex flex-wrap gap-3">
+              <div className="hero-actions">
                 {heroActions.map((link) => (
                   <div key={link.label} className="hero-action-item">
                     <Link
@@ -110,7 +111,7 @@ export function Hero() {
               </div>
 
               <MobileSwipeRegion
-                className="hero-quick-facts mt-10 grid gap-3 border-t border-[var(--line)] pt-6 md:grid-cols-2"
+                className="hero-quick-facts mt-10 grid gap-3 pt-3 md:grid-cols-2"
                 label="Selected commercial highlights"
               >
                 {heroQuickFacts.map((fact) => (

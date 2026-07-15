@@ -2,6 +2,7 @@
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import {
+  Children,
   useEffect,
   useRef,
   useState,
@@ -31,7 +32,8 @@ export function MobileSwipeRegion({
   const [hasInteracted, setHasInteracted] = useState(false);
   const [atStart, setAtStart] = useState(true);
   const [atEnd, setAtEnd] = useState(false);
-  const [progress, setProgress] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const itemCount = Children.count(children);
 
   useEffect(() => {
     activeChangeRef.current = onActiveIndexChange;
@@ -50,18 +52,12 @@ export function MobileSwipeRegion({
       const overflow =
         compactQuery.matches && scroller.scrollWidth > scroller.clientWidth + 2;
       const maximum = Math.max(scroller.scrollWidth - scroller.clientWidth, 0);
-      const nextProgress = maximum > 0 ? scroller.scrollLeft / maximum : 0;
 
       setHasOverflow(overflow);
       setAtStart(scroller.scrollLeft <= 2);
       setAtEnd(maximum === 0 || scroller.scrollLeft >= maximum - 2);
-      setProgress(Math.min(1, Math.max(0, nextProgress)));
 
-      if (
-        compactQuery.matches &&
-        activeChangeRef.current &&
-        scroller.children.length
-      ) {
+      if (compactQuery.matches && scroller.children.length) {
         const scrollerRect = scroller.getBoundingClientRect();
         const centre = scrollerRect.left + scrollerRect.width / 2;
         let closestIndex = 0;
@@ -77,7 +73,8 @@ export function MobileSwipeRegion({
           }
         });
 
-        activeChangeRef.current(closestIndex);
+        setActiveIndex(closestIndex);
+        activeChangeRef.current?.(closestIndex);
       }
     };
 
@@ -193,8 +190,13 @@ export function MobileSwipeRegion({
               <span aria-hidden="true" />
             )}
           </div>
-          <span className="mobile-swipe-progress" aria-hidden="true">
-            <span style={{ width: `${Math.max(progress * 100, 8)}%` }} />
+          <span className="mobile-swipe-dots" aria-hidden="true">
+            {Array.from({ length: itemCount }, (_, index) => (
+              <span
+                key={index}
+                className={index === activeIndex ? "is-active" : undefined}
+              />
+            ))}
           </span>
         </div>
       ) : null}

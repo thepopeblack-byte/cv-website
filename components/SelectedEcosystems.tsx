@@ -33,10 +33,6 @@ export function SelectedEcosystems() {
                 assets, ecosystem development, commercial growth, and emerging
                 technology.
               </p>
-              <p className="ecosystem-disclaimer">
-                Logos are shown for professional context and do not necessarily
-                imply organisational endorsement.
-              </p>
             </div>
 
             <div

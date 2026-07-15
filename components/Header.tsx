@@ -17,6 +17,27 @@ import { cn } from "@/lib/utils";
 
 type NavigationId = PrimaryNavigationItem["id"];
 
+function getHeaderBottom() {
+  return (
+    document.querySelector<HTMLElement>(".site-header")?.getBoundingClientRect()
+      .bottom ?? 88
+  );
+}
+
+function LinkedInIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width="16"
+      height="16"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path d="M6.5 8.25H3.25V20H6.5V8.25ZM4.88 3A1.88 1.88 0 1 0 4.88 6.75 1.88 1.88 0 0 0 4.88 3ZM9 8.25h3.12v1.6h.05c.44-.83 1.5-1.7 3.08-1.7 3.29 0 3.9 2.17 3.9 4.99V20H15.9v-6.08c0-1.45-.03-3.32-2.02-3.32-2.02 0-2.33 1.58-2.33 3.21V20H9V8.25Z" />
+    </svg>
+  );
+}
+
 export function Header() {
   const [open, setOpen] = useState(false);
   const [activeId, setActiveId] = useState<NavigationId>("profile");
@@ -25,12 +46,20 @@ export function Header() {
   const mobileMenuRef = useRef<HTMLElement>(null);
   const firstMobileLinkRef = useRef<HTMLAnchorElement>(null);
   const pathname = usePathname();
+  const currentNavigationId: NavigationId = pathname.startsWith("/blog")
+    ? "blog"
+    : activeId;
+  const currentNavigationLabel =
+    primaryNavigation.find((item) => item.id === currentNavigationId)?.label ??
+    "Profile";
 
-  const resolveHomepageHref = (href: string) =>
-    pathname === "/" ? href : `/${href}`;
+  const resolveNavigationHref = (href: string) =>
+    href.startsWith("#") && pathname !== "/" ? `/${href}` : href;
 
   const isActive = (id: NavigationId) =>
-    pathname === "/" && activeId === id;
+    id === "blog"
+      ? pathname.startsWith("/blog")
+      : pathname === "/" && activeId === id;
 
   const closeMenu = () => setOpen(false);
 
@@ -103,36 +132,26 @@ export function Header() {
       return;
     }
 
+    const visibleTargets = new Set<HTMLElement>();
     let frameId = 0;
 
     const updateActiveNavigation = () => {
       frameId = 0;
-      const headerHeight =
-        parseFloat(
-          getComputedStyle(document.documentElement).getPropertyValue(
-            "--site-header-height",
-          ),
-        ) || 88;
+      const headerBottom = getHeaderBottom();
       const viewportCentre =
-        headerHeight + (window.innerHeight - headerHeight) * 0.5;
+        headerBottom + (window.innerHeight - headerBottom) * 0.5;
+      const candidates = visibleTargets.size
+        ? targets.filter((target) => visibleTargets.has(target.element))
+        : targets;
       let candidate: (typeof targets)[number] | null = null;
       let candidateDistance = Number.POSITIVE_INFINITY;
 
-      targets.forEach((target) => {
+      candidates.forEach((target) => {
         const rect = target.element.getBoundingClientRect();
-        const isVisible = rect.bottom > headerHeight && rect.top < window.innerHeight;
-
-        if (!isVisible) {
-          return;
-        }
-
-        const distance =
-          rect.top <= viewportCentre && rect.bottom >= viewportCentre
-            ? 0
-            : Math.min(
-                Math.abs(rect.top - viewportCentre),
-                Math.abs(rect.bottom - viewportCentre),
-              );
+        const distance = Math.abs(
+          rect.top + Math.min(rect.height * 0.5, window.innerHeight * 0.42) -
+            viewportCentre,
+        );
 
         if (distance < candidateDistance) {
           candidate = target;
@@ -140,17 +159,13 @@ export function Header() {
         }
       });
 
-      if (!candidate && window.scrollY < headerHeight) {
+      if (!candidate && window.scrollY < headerBottom) {
         candidate = targets[0];
       }
 
-      if (candidate) {
-        const nextId = candidate.navigationId;
-
-        if (activeIdRef.current !== nextId) {
-          activeIdRef.current = nextId;
-          setActiveId(nextId);
-        }
+      if (candidate && activeIdRef.current !== candidate.navigationId) {
+        activeIdRef.current = candidate.navigationId;
+        setActiveId(candidate.navigationId);
       }
     };
 
@@ -160,14 +175,29 @@ export function Header() {
       }
     };
 
-    const observer = new IntersectionObserver(requestUpdate, {
-      rootMargin: "-20% 0px -38% 0px",
-      threshold: [0, 0.2, 0.4, 0.6, 0.8],
-    });
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const element = entry.target as HTMLElement;
+
+          if (entry.isIntersecting) {
+            visibleTargets.add(element);
+          } else {
+            visibleTargets.delete(element);
+          }
+        });
+        requestUpdate();
+      },
+      {
+        rootMargin: "-12% 0px -18% 0px",
+        threshold: [0, 0.1, 0.3, 0.5, 0.75],
+      },
+    );
 
     targets.forEach((target) => observer.observe(target.element));
     window.addEventListener("scroll", requestUpdate, { passive: true });
     window.addEventListener("resize", requestUpdate);
+    window.addEventListener("orientationchange", requestUpdate);
     window.addEventListener("hashchange", requestUpdate);
     requestUpdate();
 
@@ -176,6 +206,7 @@ export function Header() {
       observer.disconnect();
       window.removeEventListener("scroll", requestUpdate);
       window.removeEventListener("resize", requestUpdate);
+      window.removeEventListener("orientationchange", requestUpdate);
       window.removeEventListener("hashchange", requestUpdate);
     };
   }, [pathname]);
@@ -199,14 +230,11 @@ export function Header() {
         const reducedMotion = window.matchMedia(
           "(prefers-reduced-motion: reduce)",
         ).matches;
-        const headerHeight =
-          parseFloat(
-            getComputedStyle(document.documentElement).getPropertyValue(
-              "--site-header-height",
-            ),
-          ) || 88;
         const targetTop =
-          target.getBoundingClientRect().top + window.scrollY - headerHeight - 16;
+          target.getBoundingClientRect().top +
+          window.scrollY -
+          getHeaderBottom() -
+          16;
 
         window.history.pushState(null, "", href);
         window.scrollTo({
@@ -226,9 +254,13 @@ export function Header() {
   return (
     <header className="site-header page-layer sticky top-0 pt-4">
       <Container>
-        <div className="site-header-panel relative rounded-[1rem] border border-[var(--line)] bg-[rgba(10,11,13,0.84)] px-4 py-4 backdrop-blur-xl">
+        <div className="site-header-panel relative rounded-[1rem] bg-[rgba(10,11,13,0.84)] px-4 py-4 backdrop-blur-xl">
           <div className="flex items-center justify-between gap-4">
-            <Link href="/" className="site-brand min-w-0" onClick={closeMenu}>
+            <Link
+              href={pathname === "/" ? "#top" : "/#top"}
+              className="site-brand min-w-0"
+              onClick={closeMenu}
+            >
               <div className="meta-stack">Kayode Popoola</div>
               <div className="site-brand-subtitle mt-1 truncate font-['Sora'] text-sm text-[var(--foreground)]">
                 Popeblack · Web3 Growth & Intelligence
@@ -242,7 +274,7 @@ export function Header() {
               {primaryNavigation.map((link) => (
                 <Link
                   key={link.id}
-                  href={resolveHomepageHref(link.href)}
+                  href={resolveNavigationHref(link.href)}
                   aria-current={isActive(link.id) ? "location" : undefined}
                   className={cn(
                     "desktop-nav-link meta-stack transition hover:text-[var(--foreground)]",
@@ -258,6 +290,15 @@ export function Header() {
             </nav>
 
             <div className="nav-actions hidden items-center gap-2 lg:flex">
+              <Link
+                href={profile.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="header-social-link"
+                aria-label="View Kayode Popoola on LinkedIn"
+              >
+                <LinkedInIcon />
+              </Link>
               <Link
                 href={profile.bookCallUrl}
                 target="_blank"
@@ -277,7 +318,7 @@ export function Header() {
                 aria-expanded={open}
                 aria-controls="mobile-nav"
                 aria-label={open ? "Close navigation" : "Open navigation"}
-                className="mobile-menu-button inline-flex h-11 w-11 items-center justify-center rounded-full border border-[var(--line)] bg-white/[0.02] text-[var(--foreground)] lg:hidden"
+                className="mobile-menu-button"
                 onClick={() => setOpen((value) => !value)}
               >
                 {open ? <X size={18} /> : <Menu size={18} />}
@@ -292,61 +333,97 @@ export function Header() {
             aria-label="Mobile navigation"
             hidden={!open}
           >
-              <div className="mobile-nav-group border-t border-[var(--line)] pt-4">
-                <div className="meta-stack mb-3">Primary</div>
-                <div className="mobile-nav-links">
-                  {primaryNavigation.map((link, index) => (
-                    <Link
-                      ref={index === 0 ? firstMobileLinkRef : undefined}
-                      key={link.id}
-                      href={resolveHomepageHref(link.href)}
-                      aria-current={isActive(link.id) ? "location" : undefined}
-                      className={cn(
-                        "mobile-nav-link meta-stack transition hover:text-[var(--foreground)]",
-                        isActive(link.id) && "is-active",
-                      )}
-                      onClick={(event) =>
-                        navigateToSection(event, link.href, link.id)
-                      }
-                    >
-                      {link.label}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-
-              <div className="mobile-nav-group mt-4 border-t border-[var(--line)] pt-4">
-                <div className="meta-stack mb-3">More</div>
-                <div className="mobile-nav-secondary">
-                  <Link href="/blog" className="mobile-nav-link meta-stack" onClick={closeMenu}>
-                    Blog
-                  </Link>
+            <div className="mobile-nav-group pt-3">
+              <div className="meta-stack mb-3">Primary</div>
+              <div className="mobile-nav-links">
+                {primaryNavigation.map((link, index) => (
                   <Link
-                    href={resolveHomepageHref("#contact")}
-                    className="mobile-nav-link meta-stack"
+                    ref={index === 0 ? firstMobileLinkRef : undefined}
+                    key={link.id}
+                    href={resolveNavigationHref(link.href)}
+                    aria-current={isActive(link.id) ? "location" : undefined}
+                    className={cn(
+                      "mobile-nav-link meta-stack transition hover:text-[var(--foreground)]",
+                      isActive(link.id) && "is-active",
+                    )}
                     onClick={(event) =>
-                      navigateToSection(event, "#contact")
+                      navigateToSection(event, link.href, link.id)
                     }
                   >
-                    Contact
+                    {link.label}
                   </Link>
-                  <Link href="/privacy" className="mobile-nav-link meta-stack" onClick={closeMenu}>
-                    Privacy
-                  </Link>
-                  <Link
-                    href={profile.bookCallUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mobile-nav-link meta-stack"
-                    onClick={closeMenu}
-                  >
-                    Book a Call
-                  </Link>
-                </div>
+                ))}
               </div>
+            </div>
+
+            <div className="mobile-nav-group mt-3 pt-2">
+              <div className="meta-stack mb-3">More</div>
+              <div className="mobile-nav-secondary">
+                <Link
+                  href={profile.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mobile-nav-link meta-stack"
+                  onClick={closeMenu}
+                >
+                  LinkedIn
+                </Link>
+                <Link
+                  href="/privacy"
+                  className="mobile-nav-link meta-stack"
+                  onClick={closeMenu}
+                >
+                  Privacy
+                </Link>
+                <Link
+                  href={profile.bookCallUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mobile-nav-link meta-stack"
+                  onClick={closeMenu}
+                >
+                  Book a Call
+                </Link>
+              </div>
+            </div>
           </nav>
         </div>
       </Container>
+
+      <nav className="section-progress-rail" aria-label="Section progress">
+        <span className="section-progress-current">{currentNavigationLabel}</span>
+        <span className="section-progress-track">
+          {primaryNavigation.map((link) => (
+            <Link
+              key={link.id}
+              href={resolveNavigationHref(link.href)}
+              className={cn(
+                "section-progress-marker",
+                currentNavigationId === link.id && "is-active",
+              )}
+              aria-current={
+                currentNavigationId === link.id ? "location" : undefined
+              }
+              aria-label={`Go to ${link.label}`}
+              onClick={(event) =>
+                navigateToSection(event, link.href, link.id)
+              }
+            />
+          ))}
+        </span>
+      </nav>
+
+      <div className="section-progress-mobile" aria-live="polite">
+        <span>{currentNavigationLabel}</span>
+        <span className="section-progress-mobile-dots" aria-hidden="true">
+          {primaryNavigation.map((link) => (
+            <span
+              key={link.id}
+              className={currentNavigationId === link.id ? "is-active" : undefined}
+            />
+          ))}
+        </span>
+      </div>
     </header>
   );
 }
