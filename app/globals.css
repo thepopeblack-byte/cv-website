@@ -3979,7 +3979,7 @@ html[data-theme="light"] textarea {
 }
 
 .section-progress-track {
-  grid-template-rows: repeat(5, 1fr) !important;
+  grid-template-rows: repeat(6, 1fr) !important;
 }
 
 .section-progress-marker.is-active::after {

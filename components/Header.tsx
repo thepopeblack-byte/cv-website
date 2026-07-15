@@ -292,13 +292,6 @@ export function Header() {
                   LinkedIn
                 </Link>
                 <Link
-                  href="/#contact"
-                  className="mobile-nav-link meta-stack"
-                  onClick={closeMenu}
-                >
-                  Contact
-                </Link>
-                <Link
                   href="/privacy"
                   className="mobile-nav-link meta-stack"
                   onClick={closeMenu}

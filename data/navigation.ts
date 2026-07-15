@@ -1,5 +1,5 @@
 export type PrimaryNavigationItem = {
-  id: "profile" | "impact" | "expertise" | "experience" | "blog";
+  id: "profile" | "impact" | "expertise" | "experience" | "blog" | "contact";
   label: string;
   href: string;
 };
@@ -10,6 +10,7 @@ export const primaryNavigation: PrimaryNavigationItem[] = [
   { id: "expertise", label: "Expertise", href: "/expertise" },
   { id: "experience", label: "Experience", href: "/experience" },
   { id: "blog", label: "Blog", href: "/blog" },
+  { id: "contact", label: "Contact", href: "/#contact" },
 ];
 
 export const homepageNavigationTargets = [
@@ -18,6 +19,7 @@ export const homepageNavigationTargets = [
   { sectionId: "expertise-preview", navigationId: "expertise" },
   { sectionId: "experience-preview", navigationId: "experience" },
   { sectionId: "writing", navigationId: "blog" },
+  { sectionId: "contact", navigationId: "contact" },
 ] satisfies Array<{
   sectionId: string;
   navigationId: PrimaryNavigationItem["id"];
@@ -29,6 +31,9 @@ export function getNavigationIdFromPathname(pathname: string) {
   }
 
   return primaryNavigation.find(
-    (item) => item.id !== "blog" && pathname.startsWith(item.href),
+    (item) =>
+      item.id !== "blog" &&
+      item.id !== "contact" &&
+      pathname.startsWith(item.href),
   )?.id;
 }
