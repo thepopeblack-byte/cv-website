@@ -1,0 +1,47 @@
+import { revalidatePath } from "next/cache";
+import { type NextRequest, NextResponse } from "next/server";
+import { parseBody } from "next-sanity/webhook";
+
+type PostWebhookBody = {
+  _type?: string;
+  slug?: string | { current?: string };
+};
+
+export async function POST(request: NextRequest) {
+  const secret = process.env.SANITY_REVALIDATE_SECRET;
+
+  if (!secret) {
+    return NextResponse.json(
+      { message: "Revalidation is not configured." },
+      { status: 503 },
+    );
+  }
+
+  const { body, isValidSignature } = await parseBody<PostWebhookBody>(
+    request,
+    secret,
+  );
+
+  if (!isValidSignature) {
+    return NextResponse.json(
+      { message: "Invalid webhook signature." },
+      { status: 401 },
+    );
+  }
+
+  if (body?._type && body._type !== "post") {
+    return NextResponse.json({ revalidated: false, ignored: true });
+  }
+
+  const slug = typeof body?.slug === "string" ? body.slug : body?.slug?.current;
+
+  revalidatePath("/");
+  revalidatePath("/blog");
+  revalidatePath("/sitemap.xml");
+
+  if (slug) {
+    revalidatePath(`/blog/${slug}`);
+  }
+
+  return NextResponse.json({ revalidated: true, slug: slug ?? null });
+}

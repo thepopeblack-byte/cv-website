@@ -6,11 +6,9 @@ import { notFound } from "next/navigation";
 import { Container } from "@/components/Container";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { PortableArticle } from "@/components/PortableArticle";
 import { siteName, siteUrl } from "@/data/site";
-import {
-  getBlogPostBySlug,
-  getLocalBlogPostSlugs,
-} from "@/lib/sanity";
+import { getBlogPostBySlug, getBlogPosts } from "@/lib/sanity";
 
 type BlogPostPageProps = {
   params: Promise<{
@@ -26,8 +24,9 @@ function formatDate(date: string) {
   }).format(new Date(`${date}T00:00:00`));
 }
 
-export function generateStaticParams() {
-  return getLocalBlogPostSlugs().map((slug) => ({ slug }));
+export async function generateStaticParams() {
+  const posts = await getBlogPosts();
+  return posts.map((post) => ({ slug: post.slug }));
 }
 
 export async function generateMetadata({
@@ -137,7 +136,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               </div>
 
               <div className="article-body">
-                <p>{post.body}</p>
+                <PortableArticle body={post.body} />
 
                 {post.whyItMatters ? (
                   <section>

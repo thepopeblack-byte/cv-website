@@ -1,5 +1,6 @@
 "use client";
 
+import { Settings2 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -415,9 +416,11 @@ export function AnalyticsProvider() {
         <button
           type="button"
           className="analytics-preferences-button"
+          aria-label="Change analytics preferences"
+          title="Change analytics preferences"
           onClick={() => setPreferencesOpen(true)}
         >
-          Change analytics preferences
+          <Settings2 size={17} aria-hidden="true" />
         </button>
       ) : null}
     </>

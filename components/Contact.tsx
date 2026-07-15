@@ -1,8 +1,15 @@
 "use client";
 
-import { LoaderCircle } from "lucide-react";
+import { Check, ChevronDown, LoaderCircle } from "lucide-react";
 import Link from "next/link";
-import { useRef, useState, type FormEvent } from "react";
+import {
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  type FormEvent,
+  type KeyboardEvent,
+} from "react";
 
 import { Container } from "@/components/Container";
 import { SectionReveal } from "@/components/SectionReveal";
@@ -18,9 +25,183 @@ const contactEndpoint =
   process.env.NEXT_PUBLIC_CONTACT_FORM_ENDPOINT ||
   "https://formspree.io/f/mbdvyddy";
 
+type OpportunityTypeSelectProps = {
+  value: string;
+  onChange: (value: string) => void;
+};
+
+function OpportunityTypeSelect({
+  value,
+  onChange,
+}: OpportunityTypeSelectProps) {
+  const [open, setOpen] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const labelId = useId();
+  const valueId = useId();
+  const listboxId = useId();
+  const rootRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const optionRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const options = profile.opportunityTypes;
+
+  useEffect(() => {
+    if (!open) {
+      return;
+    }
+
+    const frameId = window.requestAnimationFrame(() => {
+      optionRefs.current[activeIndex]?.focus();
+    });
+
+    const handlePointerDown = (event: PointerEvent) => {
+      if (
+        event.target instanceof Node &&
+        !rootRef.current?.contains(event.target)
+      ) {
+        setOpen(false);
+      }
+    };
+
+    const handleEscape = (event: globalThis.KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        triggerRef.current?.focus();
+      }
+    };
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    document.addEventListener("keydown", handleEscape);
+
+    return () => {
+      window.cancelAnimationFrame(frameId);
+      document.removeEventListener("pointerdown", handlePointerDown);
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, [activeIndex, open]);
+
+  const openOptions = (preferredIndex?: number) => {
+    const selectedIndex = options.indexOf(value);
+    setActiveIndex(
+      preferredIndex ?? (selectedIndex >= 0 ? selectedIndex : 0),
+    );
+    setOpen(true);
+  };
+
+  const selectOption = (option: string) => {
+    onChange(option);
+    setOpen(false);
+    triggerRef.current?.focus();
+  };
+
+  const handleTriggerKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      openOptions();
+    } else if (event.key === "ArrowUp") {
+      event.preventDefault();
+      openOptions(value ? options.indexOf(value) : options.length - 1);
+    }
+  };
+
+  const handleOptionKeyDown = (
+    event: KeyboardEvent<HTMLButtonElement>,
+    index: number,
+  ) => {
+    let nextIndex = index;
+
+    if (event.key === "ArrowDown") {
+      nextIndex = Math.min(index + 1, options.length - 1);
+    } else if (event.key === "ArrowUp") {
+      nextIndex = Math.max(index - 1, 0);
+    } else if (event.key === "Home") {
+      nextIndex = 0;
+    } else if (event.key === "End") {
+      nextIndex = options.length - 1;
+    } else if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      selectOption(options[index]);
+      return;
+    } else if (event.key === "Tab") {
+      setOpen(false);
+      return;
+    } else {
+      return;
+    }
+
+    event.preventDefault();
+    setActiveIndex(nextIndex);
+  };
+
+  return (
+    <div className="grid gap-2 text-sm text-[var(--muted)]">
+      <span id={labelId}>Opportunity Type</span>
+      <div ref={rootRef} className="contact-select">
+        <input type="hidden" name="opportunityType" value={value} readOnly />
+        <button
+          ref={triggerRef}
+          type="button"
+          className="contact-select-trigger"
+          aria-haspopup="listbox"
+          aria-expanded={open}
+          aria-controls={listboxId}
+          aria-labelledby={`${labelId} ${valueId}`}
+          onClick={() => {
+            if (open) {
+              setOpen(false);
+            } else {
+              openOptions();
+            }
+          }}
+          onKeyDown={handleTriggerKeyDown}
+        >
+          <span
+            id={valueId}
+            className={value ? undefined : "contact-select-placeholder"}
+          >
+            {value || "Select an option"}
+          </span>
+          <ChevronDown size={18} aria-hidden="true" />
+        </button>
+
+        {open ? (
+          <div
+            id={listboxId}
+            role="listbox"
+            aria-labelledby={labelId}
+            className="contact-select-options"
+          >
+            {options.map((option, index) => {
+              const selected = value === option;
+
+              return (
+                <button
+                  key={option}
+                  ref={(element) => {
+                    optionRefs.current[index] = element;
+                  }}
+                  type="button"
+                  role="option"
+                  aria-selected={selected}
+                  className="contact-select-option"
+                  onClick={() => selectOption(option)}
+                  onKeyDown={(event) => handleOptionKeyDown(event, index)}
+                >
+                  <span>{option}</span>
+                  {selected ? <Check size={16} aria-hidden="true" /> : null}
+                </button>
+              );
+            })}
+          </div>
+        ) : null}
+      </div>
+    </div>
+  );
+}
+
 export function Contact() {
   const formStartedRef = useRef(false);
   const [submitting, setSubmitting] = useState(false);
+  const [opportunityType, setOpportunityType] = useState("");
   const [status, setStatus] = useState<StatusState>({
     type: "idle",
     message: "",
@@ -76,6 +257,7 @@ export function Contact() {
       });
       trackEvent("generate_lead", { method: "contact_form" });
       form.reset();
+      setOpportunityType("");
     } catch {
       trackEvent("contact_form_submit_error", { error_type: "network" });
       setStatus({
@@ -158,23 +340,10 @@ export function Contact() {
                     className="rounded-[0.95rem] border border-[var(--line)] bg-[var(--panel)] px-4 py-3 text-[var(--foreground)] outline-none transition focus:border-[var(--line-strong)]"
                   />
                 </label>
-                <label className="grid gap-2 text-sm text-[var(--muted)]">
-                  Opportunity Type
-                  <select
-                    name="opportunityType"
-                    defaultValue=""
-                    className="rounded-[0.95rem] border border-[var(--line)] bg-[var(--panel)] px-4 py-3 text-[var(--foreground)] outline-none transition focus:border-[var(--line-strong)]"
-                  >
-                    <option value="" disabled>
-                      Select an option
-                    </option>
-                    {profile.opportunityTypes.map((type) => (
-                      <option key={type} value={type}>
-                        {type}
-                      </option>
-                    ))}
-                  </select>
-                </label>
+                <OpportunityTypeSelect
+                  value={opportunityType}
+                  onChange={setOpportunityType}
+                />
               </div>
 
               <label className="grid gap-2 text-sm text-[var(--muted)]">

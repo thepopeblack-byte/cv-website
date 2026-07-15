@@ -1,4 +1,21 @@
+import type { PortableTextBlock } from "@portabletext/react";
+
 export type BlogPostType = "Original" | "Featured";
+
+export type BlogBodyImage = {
+  _type: "image";
+  _key: string;
+  url?: string;
+  alt?: string;
+  caption?: string;
+  dimensions?: {
+    width: number;
+    height: number;
+    aspectRatio?: number;
+  };
+};
+
+export type BlogPostBody = string | Array<PortableTextBlock | BlogBodyImage>;
 
 export type BlogPost = {
   title: string;
@@ -8,7 +25,7 @@ export type BlogPost = {
   source?: string;
   author: string;
   excerpt: string;
-  body: string;
+  body: BlogPostBody;
   tags: string[];
   coverImage?: string;
   externalUrl?: string;
@@ -34,8 +51,7 @@ export const localBlogPosts: BlogPost[] = [
     author: "Kayode Popoola",
     excerpt:
       "Featured coverage on Secret Network Africa and Cryptocurrency Academy Kenya's collaboration to support blockchain and crypto adoption.",
-    body:
-      "This featured coverage spotlights ecosystem work between Secret Network Africa and Cryptocurrency Academy Kenya to support blockchain education, crypto literacy, and practical adoption across regional Web3 communities. The collaboration reflects a broader thesis: emerging markets need trusted education, local ecosystem partnerships, and practical community infrastructure to turn technical interest into durable adoption.",
+    body: "This featured coverage spotlights ecosystem work between Secret Network Africa and Cryptocurrency Academy Kenya to support blockchain education, crypto literacy, and practical adoption across regional Web3 communities. The collaboration reflects a broader thesis: emerging markets need trusted education, local ecosystem partnerships, and practical community infrastructure to turn technical interest into durable adoption.",
     tags: [
       "Blockchain",
       "Crypto Adoption",
@@ -64,8 +80,7 @@ export const localBlogPosts: BlogPost[] = [
     author: "Kayode Popoola / Popeblack",
     excerpt:
       "A privacy and digital-rights argument for treating AI agents inside everyday messaging apps as critical infrastructure, not just convenience.",
-    body:
-      "This original essay examines the privacy and security tradeoffs created when AI agents move into the messaging interfaces people already use for finance, health, relationships, work, and identity. The central concern is not that AI assistants are useless; it is that convenience can quietly collapse many parts of a person's digital life into one high-value surface without enough transparency, governance, or user control.",
+    body: "This original essay examines the privacy and security tradeoffs created when AI agents move into the messaging interfaces people already use for finance, health, relationships, work, and identity. The central concern is not that AI assistants are useless; it is that convenience can quietly collapse many parts of a person's digital life into one high-value surface without enough transparency, governance, or user control.",
     tags: [
       "AI Agents",
       "Privacy",

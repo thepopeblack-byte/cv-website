@@ -1,9 +1,5 @@
 import { localBlogPosts, type BlogPost } from "@/data/articles";
-
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
-const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
-const apiVersion =
-  process.env.NEXT_PUBLIC_SANITY_API_VERSION || "2026-06-28";
+import { sanityClient } from "@/sanity/lib/client";
 
 const postProjection = `{
   title,
@@ -13,7 +9,14 @@ const postProjection = `{
   source,
   author,
   excerpt,
-  "body": pt::text(body),
+  body[]{
+    ...,
+    markDefs[]{...},
+    _type == "image" => {
+      "url": asset->url,
+      "dimensions": asset->metadata.dimensions
+    }
+  },
   tags,
   "coverImage": coverImage.asset->url,
   externalUrl,
@@ -22,10 +25,6 @@ const postProjection = `{
   whyItMatters,
   keyContext
 }`;
-
-function isSanityConfigured() {
-  return Boolean(projectId && dataset && apiVersion);
-}
 
 function normalizePost(post: Partial<BlogPost>): BlogPost | null {
   if (!post.title || !post.slug || !post.excerpt) {
@@ -40,7 +39,7 @@ function normalizePost(post: Partial<BlogPost>): BlogPost | null {
     source: post.source,
     author: post.author || "Kayode Popoola",
     excerpt: post.excerpt,
-    body: post.body || post.excerpt,
+    body: post.body ?? post.excerpt,
     tags: post.tags || [],
     coverImage: post.coverImage,
     externalUrl: post.externalUrl,
@@ -51,32 +50,21 @@ function normalizePost(post: Partial<BlogPost>): BlogPost | null {
   };
 }
 
-async function sanityFetch<T>(query: string): Promise<T | null> {
-  if (!isSanityConfigured()) {
+async function sanityFetch<T>(
+  query: string,
+  params: Record<string, string> = {},
+): Promise<T | null> {
+  if (!sanityClient) {
     return null;
   }
 
-  const url = new URL(
-    `https://${projectId}.api.sanity.io/v${apiVersion}/data/query/${dataset}`,
-  );
-  url.searchParams.set("query", query);
-
   try {
-    const response = await fetch(url, {
-      headers: {
-        Accept: "application/json",
-      },
+    return await sanityClient.fetch<T>(query, params, {
       next: {
         revalidate: 300,
+        tags: ["sanity:posts"],
       },
     });
-
-    if (!response.ok) {
-      return null;
-    }
-
-    const payload = (await response.json()) as { result?: T };
-    return payload.result ?? null;
   } catch {
     return null;
   }
@@ -89,25 +77,39 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
 
   const normalizedPosts = sanityPosts
     ?.map((post) => normalizePost(post))
-    .filter(Boolean) as BlogPost[] | undefined;
+    .filter((post): post is BlogPost => Boolean(post));
 
-  return normalizedPosts?.length ? normalizedPosts : localBlogPosts;
+  if (!normalizedPosts?.length) {
+    return localBlogPosts;
+  }
+
+  const postsBySlug = new Map(
+    localBlogPosts.map((post) => [post.slug, post] as const),
+  );
+
+  for (const post of normalizedPosts) {
+    postsBySlug.set(post.slug, post);
+  }
+
+  return Array.from(postsBySlug.values()).sort((a, b) => {
+    if (a.featured !== b.featured) {
+      return Number(b.featured) - Number(a.featured);
+    }
+
+    return b.date.localeCompare(a.date);
+  });
 }
 
-export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> {
-  const quotedSlug = JSON.stringify(slug);
+export async function getBlogPostBySlug(
+  slug: string,
+): Promise<BlogPost | null> {
   const sanityPost = await sanityFetch<Partial<BlogPost>>(
-    `*[_type == "post" && slug.current == ${quotedSlug}][0] ${postProjection}`,
+    `*[_type == "post" && slug.current == $slug][0] ${postProjection}`,
+    { slug },
   );
   const normalizedPost = sanityPost ? normalizePost(sanityPost) : null;
 
   return (
-    normalizedPost ??
-    localBlogPosts.find((post) => post.slug === slug) ??
-    null
+    normalizedPost ?? localBlogPosts.find((post) => post.slug === slug) ?? null
   );
-}
-
-export function getLocalBlogPostSlugs() {
-  return localBlogPosts.map((post) => post.slug);
 }
