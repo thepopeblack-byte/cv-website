@@ -3,6 +3,8 @@
 import { Moon, Sun } from "lucide-react";
 import { useSyncExternalStore } from "react";
 
+import { trackEvent } from "@/lib/analytics";
+
 type Theme = "dark" | "light";
 
 const themeChangeEvent = "popeblack-theme-change";
@@ -39,6 +41,7 @@ export function ThemeToggle() {
     document.documentElement.style.colorScheme = nextTheme;
     window.localStorage.setItem("popeblack-theme", nextTheme);
     window.dispatchEvent(new Event(themeChangeEvent));
+    trackEvent("theme_change", { theme: nextTheme });
   };
 
   return (

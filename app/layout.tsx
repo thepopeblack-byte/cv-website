@@ -8,6 +8,7 @@ import "@fontsource/sora/600.css";
 import "@fontsource/sora/700.css";
 import "./globals.css";
 
+import { AnalyticsProvider } from "@/components/AnalyticsProvider";
 import { profile } from "@/data/profile";
 import { siteDescription, siteName, siteUrl } from "@/data/site";
 
@@ -115,6 +116,7 @@ export default function RootLayout({
           <div className="grid-overlay" />
           {children}
         </div>
+        <AnalyticsProvider />
         <script
           type="application/ld+json"
           suppressHydrationWarning

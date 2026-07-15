@@ -67,6 +67,28 @@ export default function PrivacyPage() {
               </section>
 
               <section>
+                <h2>Optional analytics</h2>
+                <p>
+                  With your consent, this website uses Google Analytics 4 to
+                  understand visits and interactions, and Microsoft Clarity to
+                  provide aggregated interaction insights such as session
+                  recordings and heatmaps. These services load only after you
+                  accept optional analytics.
+                </p>
+                <p>
+                  Contact-form content is explicitly masked from Microsoft
+                  Clarity. Names, email addresses, organisations, messages, and
+                  form-field values are not sent through the website&apos;s custom
+                  analytics events.
+                </p>
+                <p>
+                  Your analytics preference is stored in your browser. You can
+                  review or change it at any time using the Change analytics
+                  preferences control on the website.
+                </p>
+              </section>
+
+              <section>
                 <h2>Your information</h2>
                 <p>
                   You may request access to, correction of, or deletion of the

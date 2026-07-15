@@ -11,6 +11,7 @@ import {
 } from "react";
 
 import { cn } from "@/lib/utils";
+import { normalizeAnalyticsId, trackEvent } from "@/lib/analytics";
 
 type MobileSwipeRegionProps = {
   children: ReactNode;
@@ -18,6 +19,7 @@ type MobileSwipeRegionProps = {
   label: string;
   activeIndex?: number;
   onActiveIndexChange?: (index: number) => void;
+  analyticsId?: string;
 };
 
 export function MobileSwipeRegion({
@@ -26,6 +28,7 @@ export function MobileSwipeRegion({
   label,
   activeIndex: controlledActiveIndex,
   onActiveIndexChange,
+  analyticsId,
 }: MobileSwipeRegionProps) {
   const scrollerRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef(0);
@@ -36,6 +39,8 @@ export function MobileSwipeRegion({
   const [atEnd, setAtEnd] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const measuredIndexRef = useRef(0);
+  const userSwipeRef = useRef(false);
+  const swipeTrackTimerRef = useRef<number | null>(null);
   const itemCount = Children.count(children);
 
   useEffect(() => {
@@ -80,12 +85,28 @@ export function MobileSwipeRegion({
           measuredIndexRef.current = closestIndex;
           setActiveIndex(closestIndex);
           activeChangeRef.current?.(closestIndex);
+
+          if (userSwipeRef.current) {
+            if (swipeTrackTimerRef.current) {
+              window.clearTimeout(swipeTrackTimerRef.current);
+            }
+            swipeTrackTimerRef.current = window.setTimeout(() => {
+              trackEvent("mobile_swipe", {
+                region_id: normalizeAnalyticsId(analyticsId ?? label),
+                item_index: closestIndex + 1,
+              });
+              userSwipeRef.current = false;
+            }, 160);
+          }
         }
       }
     };
 
     const requestMeasure = () => {
       window.cancelAnimationFrame(frameRef.current);
+      if (swipeTrackTimerRef.current) {
+        window.clearTimeout(swipeTrackTimerRef.current);
+      }
       frameRef.current = window.requestAnimationFrame(measure);
     };
 
@@ -112,7 +133,7 @@ export function MobileSwipeRegion({
       compactQuery.removeEventListener("change", requestMeasure);
       scroller.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [analyticsId, label]);
 
   useEffect(() => {
     const scroller = scrollerRef.current;
@@ -206,6 +227,9 @@ export function MobileSwipeRegion({
         aria-roledescription={hasOverflow ? "carousel" : undefined}
         tabIndex={hasOverflow ? 0 : undefined}
         onKeyDown={handleKeyDown}
+        onPointerDown={() => {
+          userSwipeRef.current = true;
+        }}
       >
         {children}
       </div>

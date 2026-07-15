@@ -202,6 +202,8 @@ export function Header() {
                 <Link
                   key={link.id}
                   href={link.href}
+                  data-analytics-navigation={link.id}
+                  data-analytics-location="desktop_header"
                   aria-current={isActive(link.id) ? "page" : undefined}
                   className={cn(
                     "desktop-nav-link meta-stack transition hover:text-[var(--foreground)]",
@@ -265,6 +267,8 @@ export function Header() {
                     ref={index === 0 ? firstMobileLinkRef : undefined}
                     key={link.id}
                     href={link.href}
+                    data-analytics-navigation={link.id}
+                    data-analytics-location="mobile_menu"
                     aria-current={isActive(link.id) ? "page" : undefined}
                     className={cn(
                       "mobile-nav-link meta-stack transition hover:text-[var(--foreground)]",
@@ -322,6 +326,8 @@ export function Header() {
             <Link
               key={link.id}
               href={link.href}
+              data-analytics-navigation={link.id}
+              data-analytics-location="section_rail"
               className={cn(
                 "section-progress-marker",
                 isActive(link.id) && "is-active",

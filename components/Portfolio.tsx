@@ -92,6 +92,7 @@ export function Portfolio() {
           intro="Four high-signal proof points across revenue growth, go-to-market strategy, blockchain infrastructure, Africa Web3 ecosystem expansion, and blockchain intelligence."
           items={projectPanels}
           ariaLabel="Selected work and professional proof"
+          analyticsEvent="selected_work_view"
           panelClassName="portfolio-scene-panel"
         />
       </Container>

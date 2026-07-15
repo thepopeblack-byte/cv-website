@@ -2,6 +2,7 @@
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import {
+  useEffect,
   useRef,
   useState,
   type KeyboardEvent,
@@ -9,6 +10,7 @@ import {
 } from "react";
 
 import { MobileSwipeRegion } from "@/components/MobileSwipeRegion";
+import { trackEvent, type AnalyticsEventName } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
 export type ControlledSceneItem = {
@@ -26,6 +28,10 @@ type ControlledSceneProps = {
   className?: string;
   introFooter?: ReactNode;
   panelClassName?: string;
+  analyticsEvent?: Extract<
+    AnalyticsEventName,
+    "case_study_view" | "selected_work_view" | "experience_role_view"
+  >;
 };
 
 export function ControlledScene({
@@ -37,9 +43,25 @@ export function ControlledScene({
   className,
   introFooter,
   panelClassName,
+  analyticsEvent,
 }: ControlledSceneProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
+
+  useEffect(() => {
+    if (!analyticsEvent) {
+      return;
+    }
+
+    const payload = { item_index: activeIndex + 1 };
+    if (analyticsEvent === "case_study_view") {
+      trackEvent("case_study_view", payload);
+    } else if (analyticsEvent === "selected_work_view") {
+      trackEvent("selected_work_view", payload);
+    } else {
+      trackEvent("experience_role_view", payload);
+    }
+  }, [activeIndex, analyticsEvent]);
 
   const selectItem = (nextIndex: number) => {
     const boundedIndex = Math.min(Math.max(nextIndex, 0), items.length - 1);
@@ -119,6 +141,7 @@ export function ControlledScene({
             <MobileSwipeRegion
               className="controlled-scene-panel-track"
               label={ariaLabel}
+              analyticsId={ariaLabel}
               activeIndex={activeIndex}
               onActiveIndexChange={selectItem}
             >

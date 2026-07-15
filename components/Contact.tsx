@@ -2,11 +2,12 @@
 
 import { LoaderCircle } from "lucide-react";
 import Link from "next/link";
-import { useState, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
 
 import { Container } from "@/components/Container";
 import { SectionReveal } from "@/components/SectionReveal";
 import { profile } from "@/data/profile";
+import { trackEvent } from "@/lib/analytics";
 
 type StatusState = {
   type: "idle" | "success" | "error";
@@ -18,6 +19,7 @@ const contactEndpoint =
   "https://formspree.io/f/mbdvyddy";
 
 export function Contact() {
+  const formStartedRef = useRef(false);
   const [submitting, setSubmitting] = useState(false);
   const [status, setStatus] = useState<StatusState>({
     type: "idle",
@@ -38,6 +40,7 @@ export function Contact() {
     };
 
     if (!payload.name || !payload.email || !payload.message) {
+      trackEvent("contact_form_submit_error", { error_type: "validation" });
       setStatus({
         type: "error",
         message:
@@ -58,15 +61,23 @@ export function Contact() {
       });
 
       if (!response.ok) {
-        throw new Error("Form submission failed.");
+        trackEvent("contact_form_submit_error", { error_type: "server" });
+        setStatus({
+          type: "error",
+          message:
+            "Something went wrong. Please use the email link or try again.",
+        });
+        return;
       }
 
       setStatus({
         type: "success",
         message: "Message sent successfully. I\u2019ll get back to you soon.",
       });
+      trackEvent("generate_lead", { method: "contact_form" });
       form.reset();
     } catch {
+      trackEvent("contact_form_submit_error", { error_type: "network" });
       setStatus({
         type: "error",
         message:
@@ -108,7 +119,17 @@ export function Contact() {
               </div>
             </div>
 
-            <form onSubmit={handleSubmit} className="contact-form grid gap-4">
+            <form
+              onSubmit={handleSubmit}
+              onFocusCapture={() => {
+                if (!formStartedRef.current) {
+                  formStartedRef.current = true;
+                  trackEvent("contact_form_start", { form_id: "contact" });
+                }
+              }}
+              data-clarity-mask="true"
+              className="contact-form grid gap-4"
+            >
               <div className="grid gap-4 md:grid-cols-2">
                 <label className="grid gap-2 text-sm text-[var(--muted)]">
                   Name

@@ -73,6 +73,7 @@ export function SelectedOutcomes() {
           intro="Concise examples of commercial leadership, market development, capacity building, and digital-asset intelligence in practice."
           items={outcomePanels}
           ariaLabel="Institutional case studies"
+          analyticsEvent="case_study_view"
           introFooter={
             <p className="outcomes-confidentiality-note">
               {confidentialityNote}

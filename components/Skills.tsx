@@ -6,6 +6,7 @@ import { Container } from "@/components/Container";
 import { MobileSwipeRegion } from "@/components/MobileSwipeRegion";
 import { SectionReveal } from "@/components/SectionReveal";
 import { skillGroups } from "@/data/skills";
+import { normalizeAnalyticsId, trackEvent } from "@/lib/analytics";
 
 export function Skills() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -163,6 +164,12 @@ export function Skills() {
 
   const activeGroup = skillGroups[activeIndex] ?? skillGroups[0];
 
+  useEffect(() => {
+    trackEvent("capability_view", {
+      capability_id: normalizeAnalyticsId(activeGroup.title),
+    });
+  }, [activeGroup.title]);
+
   return (
     <section
       ref={sectionRef}
@@ -216,6 +223,7 @@ export function Skills() {
             <MobileSwipeRegion
               className="capability-cluster-stack"
               label="Capability clusters"
+              analyticsId="capabilities"
               activeIndex={activeIndex}
               onActiveIndexChange={activateCluster}
             >

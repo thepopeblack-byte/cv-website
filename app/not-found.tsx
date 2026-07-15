@@ -3,12 +3,14 @@ import Link from "next/link";
 import { Container } from "@/components/Container";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { NotFoundTracker } from "@/components/NotFoundTracker";
 import { primaryNavigation } from "@/data/navigation";
 import { profile } from "@/data/profile";
 
 export default function NotFound() {
   return (
     <>
+      <NotFoundTracker />
       <Header />
       <main id="main-content" className="page-layer not-found-page">
         <Container>

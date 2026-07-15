@@ -127,6 +127,7 @@ export function ExperienceTimeline() {
           intro="The throughline is disciplined execution: building markets, partnerships, revenue systems, stakeholder programmes, and defensible digital-asset intelligence in complex environments."
           items={experiencePanels}
           ariaLabel="Professional experience by company"
+          analyticsEvent="experience_role_view"
           panelClassName="experience-scene-panel"
           introFooter={
             <div className="experience-scene-signals">
