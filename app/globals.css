@@ -25,6 +25,7 @@
   --site-header-height: 5.6rem;
   --site-header-safe: calc(var(--site-header-height) + 1.35rem);
   --site-sticky-top: calc(var(--site-header-height) + 1.2rem);
+  color-scheme: dark;
 }
 
 html[data-theme="light"] {
@@ -1042,6 +1043,15 @@ html[data-theme="light"] .theme-icon-moon {
   padding-block: 0.35rem;
 }
 
+.logo-marquee-label {
+  margin: 0 0 0.75rem;
+  color: var(--muted-strong);
+  font-family: "Sora", "Avenir Next", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
 .logo-marquee::before,
 .logo-marquee::after {
   display: none;
@@ -1675,6 +1685,26 @@ html[data-theme="light"] select,
 html[data-theme="light"] textarea {
   background: rgba(255, 250, 241, 0.78) !important;
   color: var(--foreground);
+}
+
+html[data-theme="dark"] select {
+  background: var(--background-soft) !important;
+  color: var(--foreground);
+  color-scheme: dark;
+}
+
+html[data-theme="dark"] select option {
+  background: #13161b;
+  color: #f3efe7;
+}
+
+html[data-theme="dark"] select option:disabled {
+  color: #b2aca2;
+}
+
+html[data-theme="light"] select option {
+  background: #fbf8f2;
+  color: #17191c;
 }
 
 .logo-marquee-link:hover .logo-marquee-item,
@@ -2633,7 +2663,7 @@ html[data-theme="light"] .logo-marquee-item:hover .logo-tone-light {
   }
 
   .site-header .container-shell {
-    width: min(1220px, calc(100% - 2rem));
+    width: min(1120px, calc(100% - 2rem));
   }
 
   .site-header-panel {

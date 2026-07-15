@@ -35,56 +35,58 @@ export function SelectedEcosystems() {
               </p>
             </div>
 
-            <div
-              className="logo-marquee"
-              aria-label="Selected organisations, ecosystems, and projects"
-            >
-              <div className="logo-marquee-track">
-                {marqueeLogos.map((logo, index) => {
-                  const isDuplicate = index >= logoItems.length;
-                  const logoMark = (
-                    <span className="logo-marquee-item">
-                      <Image
-                        src={logo.src}
-                        alt={isDuplicate ? "" : `${logo.name} logo`}
-                        width={logo.width}
-                        height={logo.height}
-                        className={`logo-marquee-image logo-tone-${logo.tone ?? "adaptive"}`}
-                        aria-hidden={isDuplicate}
-                      />
-                      {logo.category ? (
-                        <span className="sr-only">{logo.category}</span>
-                      ) : null}
-                    </span>
-                  );
-
-                  if (!logo.href || isDuplicate) {
-                    return (
-                      <span
-                        key={`${logo.name}-${index}`}
-                        aria-hidden={isDuplicate}
-                      >
-                        {logoMark}
+            <div>
+              <p className="logo-marquee-label">Trusted by:</p>
+              <div
+                className="logo-marquee"
+                aria-label="Selected organisations, ecosystems, and projects"
+              >
+                <div className="logo-marquee-track">
+                  {marqueeLogos.map((logo, index) => {
+                    const isDuplicate = index >= logoItems.length;
+                    const logoMark = (
+                      <span className="logo-marquee-item">
+                        <Image
+                          src={logo.src}
+                          alt={isDuplicate ? "" : `${logo.name} logo`}
+                          width={logo.width}
+                          height={logo.height}
+                          className={`logo-marquee-image logo-tone-${logo.tone ?? "adaptive"}`}
+                          aria-hidden={isDuplicate}
+                        />
+                        {logo.category ? (
+                          <span className="sr-only">{logo.category}</span>
+                        ) : null}
                       </span>
                     );
-                  }
 
-                  return (
-                    <Link
-                      key={`${logo.name}-${index}`}
-                      href={logo.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="logo-marquee-link"
-                      aria-label={`Visit ${logo.name}`}
-                    >
-                      {logoMark}
-                    </Link>
-                  );
-                })}
+                    if (!logo.href || isDuplicate) {
+                      return (
+                        <span
+                          key={`${logo.name}-${index}`}
+                          aria-hidden={isDuplicate}
+                        >
+                          {logoMark}
+                        </span>
+                      );
+                    }
+
+                    return (
+                      <Link
+                        key={`${logo.name}-${index}`}
+                        href={logo.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="logo-marquee-link"
+                        aria-label={`Visit ${logo.name}`}
+                      >
+                        {logoMark}
+                      </Link>
+                    );
+                  })}
+                </div>
               </div>
             </div>
-
           </div>
         </SectionReveal>
       </Container>
