@@ -2,13 +2,13 @@
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import {
-  useId,
   useRef,
   useState,
   type KeyboardEvent,
   type ReactNode,
 } from "react";
 
+import { MobileSwipeRegion } from "@/components/MobileSwipeRegion";
 import { cn } from "@/lib/utils";
 
 export type ControlledSceneItem = {
@@ -40,7 +40,6 @@ export function ControlledScene({
 }: ControlledSceneProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
-  const baseId = useId().replaceAll(":", "");
 
   const selectItem = (nextIndex: number) => {
     const boundedIndex = Math.min(Math.max(nextIndex, 0), items.length - 1);
@@ -74,10 +73,6 @@ export function ControlledScene({
     return null;
   }
 
-  const activeItem = items[activeIndex] ?? items[0];
-  const activeTabId = `${baseId}-tab-${activeItem.id}`;
-  const activePanelId = `${baseId}-panel-${activeItem.id}`;
-
   return (
     <div className={cn("controlled-scene section-frame", className)}>
       <div className="controlled-scene-sticky">
@@ -89,13 +84,10 @@ export function ControlledScene({
 
             <div
               className="controlled-scene-tabs"
-              role="tablist"
               aria-label={ariaLabel}
             >
               {items.map((item, index) => {
                 const selected = index === activeIndex;
-                const tabId = `${baseId}-tab-${item.id}`;
-                const panelId = `${baseId}-panel-${item.id}`;
 
                 return (
                   <button
@@ -103,12 +95,8 @@ export function ControlledScene({
                       tabRefs.current[index] = node;
                     }}
                     key={item.id}
-                    id={tabId}
                     type="button"
-                    role="tab"
-                    aria-selected={selected}
-                    aria-controls={panelId}
-                    tabIndex={selected ? 0 : -1}
+                    aria-pressed={selected}
                     className={cn(
                       "controlled-scene-tab",
                       selected && "is-active",
@@ -128,16 +116,27 @@ export function ControlledScene({
           </div>
 
           <div className="controlled-scene-stage">
-            <div
-              key={activeItem.id}
-              id={activePanelId}
-              role="tabpanel"
-              aria-labelledby={activeTabId}
-              tabIndex={0}
-              className={cn("controlled-scene-panel", panelClassName)}
+            <MobileSwipeRegion
+              className="controlled-scene-panel-track"
+              label={ariaLabel}
+              activeIndex={activeIndex}
+              onActiveIndexChange={selectItem}
             >
-              {activeItem.content}
-            </div>
+              {items.map((item, index) => (
+                <div
+                  key={item.id}
+                  role="group"
+                  aria-label={item.label}
+                  className={cn(
+                    "controlled-scene-panel",
+                    panelClassName,
+                    index === activeIndex && "is-active",
+                  )}
+                >
+                  {item.content}
+                </div>
+              ))}
+            </MobileSwipeRegion>
 
             <div className="controlled-scene-controls" aria-label={ariaLabel}>
               <button

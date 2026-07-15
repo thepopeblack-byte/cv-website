@@ -16,6 +16,7 @@ type MobileSwipeRegionProps = {
   children: ReactNode;
   className?: string;
   label: string;
+  activeIndex?: number;
   onActiveIndexChange?: (index: number) => void;
 };
 
@@ -23,6 +24,7 @@ export function MobileSwipeRegion({
   children,
   className,
   label,
+  activeIndex: controlledActiveIndex,
   onActiveIndexChange,
 }: MobileSwipeRegionProps) {
   const scrollerRef = useRef<HTMLDivElement>(null);
@@ -33,6 +35,7 @@ export function MobileSwipeRegion({
   const [atStart, setAtStart] = useState(true);
   const [atEnd, setAtEnd] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
+  const measuredIndexRef = useRef(0);
   const itemCount = Children.count(children);
 
   useEffect(() => {
@@ -73,8 +76,11 @@ export function MobileSwipeRegion({
           }
         });
 
-        setActiveIndex(closestIndex);
-        activeChangeRef.current?.(closestIndex);
+        if (measuredIndexRef.current !== closestIndex) {
+          measuredIndexRef.current = closestIndex;
+          setActiveIndex(closestIndex);
+          activeChangeRef.current?.(closestIndex);
+        }
       }
     };
 
@@ -108,6 +114,41 @@ export function MobileSwipeRegion({
     };
   }, []);
 
+  useEffect(() => {
+    const scroller = scrollerRef.current;
+
+    if (
+      controlledActiveIndex === undefined ||
+      !scroller ||
+      measuredIndexRef.current === controlledActiveIndex
+    ) {
+      return;
+    }
+
+    measuredIndexRef.current = controlledActiveIndex;
+    setActiveIndex(controlledActiveIndex);
+
+    if (!window.matchMedia("(max-width: 768px)").matches) {
+      return;
+    }
+
+    const target = scroller.children.item(controlledActiveIndex) as
+      | HTMLElement
+      | null;
+
+    if (!target) {
+      return;
+    }
+
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    scroller.scrollTo({
+      left: target.offsetLeft - scroller.offsetLeft,
+      behavior: reducedMotion ? "auto" : "smooth",
+    });
+  }, [controlledActiveIndex]);
+
   const move = (direction: -1 | 1) => {
     const scroller = scrollerRef.current;
 
@@ -115,13 +156,26 @@ export function MobileSwipeRegion({
       return;
     }
 
+    const nextIndex = Math.min(
+      Math.max(activeIndex + direction, 0),
+      Math.max(itemCount - 1, 0),
+    );
+    const target = scroller.children.item(nextIndex) as HTMLElement | null;
+
+    if (!target) {
+      return;
+    }
+
     const reducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
-    scroller.scrollBy({
-      left: direction * scroller.clientWidth * 0.88,
+    scroller.scrollTo({
+      left: target.offsetLeft - scroller.offsetLeft,
       behavior: reducedMotion ? "auto" : "smooth",
     });
+    measuredIndexRef.current = nextIndex;
+    setActiveIndex(nextIndex);
+    activeChangeRef.current?.(nextIndex);
     setHasInteracted(true);
   };
 

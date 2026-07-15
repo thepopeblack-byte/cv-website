@@ -198,7 +198,7 @@ export function Skills() {
                     className={`capability-rail-item ${
                       index === activeIndex ? "is-active" : ""
                     }`}
-                    aria-current={index === activeIndex ? "step" : undefined}
+                    aria-pressed={index === activeIndex}
                     onClick={() => selectCluster(index)}
                   >
                     <span>{group.title}</span>
@@ -216,6 +216,7 @@ export function Skills() {
             <MobileSwipeRegion
               className="capability-cluster-stack"
               label="Capability clusters"
+              activeIndex={activeIndex}
               onActiveIndexChange={activateCluster}
             >
               {skillGroups.map((group, index) => (

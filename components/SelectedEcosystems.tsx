@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Container } from "@/components/Container";
+import { MobileSwipeRegion } from "@/components/MobileSwipeRegion";
 import { SectionReveal } from "@/components/SectionReveal";
 import { logoItems } from "@/data/logos";
 
@@ -83,6 +84,42 @@ export function SelectedEcosystems() {
                   );
                 })}
               </div>
+            </div>
+
+            <div className="logo-swipe-mobile">
+              <MobileSwipeRegion
+                className="logo-swipe-list"
+                label="Selected organisations, ecosystems, and projects"
+              >
+                {logoItems.map((logo) => {
+                  const logoMark = (
+                    <span className="logo-swipe-item">
+                      <Image
+                        src={logo.src}
+                        alt={`${logo.name} logo`}
+                        width={logo.width}
+                        height={logo.height}
+                        className="logo-marquee-image"
+                      />
+                      <span className="logo-swipe-name">{logo.name}</span>
+                    </span>
+                  );
+
+                  return logo.href ? (
+                    <Link
+                      key={logo.name}
+                      href={logo.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Visit ${logo.name}`}
+                    >
+                      {logoMark}
+                    </Link>
+                  ) : (
+                    <span key={logo.name}>{logoMark}</span>
+                  );
+                })}
+              </MobileSwipeRegion>
             </div>
           </div>
         </SectionReveal>

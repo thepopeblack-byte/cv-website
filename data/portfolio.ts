@@ -35,7 +35,7 @@ export const portfolioItems: PortfolioItem[] = [
     imageAlt:
       "Kayode Popoola with Secret Network ecosystem partners during commercial and partnership activity.",
     imageObjectPosition: "center 42%",
-    href: "#experience",
+    href: "/experience",
     ctaLabel: "View Experience",
   },
   {
@@ -50,7 +50,7 @@ export const portfolioItems: PortfolioItem[] = [
     imageAlt:
       "Kayode Popoola speaking on a DeFi panel in front of an African Web3 conference audience.",
     imageObjectPosition: "center 45%",
-    href: "#impact",
+    href: "/impact#impact",
     ctaLabel: "View Impact",
   },
   {
@@ -66,7 +66,7 @@ export const portfolioItems: PortfolioItem[] = [
     imageAlt:
       "Verified IMF edX AML/CFT risk-based supervision certificate awarded to Kayode Popoola.",
     imageFit: "contain",
-    href: "#experience",
+    href: "/experience",
     ctaLabel: "View Experience",
   },
   {
@@ -79,7 +79,7 @@ export const portfolioItems: PortfolioItem[] = [
     description:
       "Conference participation and ecosystem visibility from Blockchain Africa Summit South Africa 2023, highlighting Web3, blockchain adoption, and African ecosystem engagement.",
     image: "/images/popeblack/events/blockchain-africa-01.webp",
-    href: "#speaking",
+    href: "/expertise#speaking",
     ctaLabel: "View Media",
   },
 ];

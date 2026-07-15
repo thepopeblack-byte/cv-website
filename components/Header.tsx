@@ -3,11 +3,12 @@
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState, type MouseEvent } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { Container } from "@/components/Container";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import {
+  getNavigationIdFromPathname,
   homepageNavigationTargets,
   primaryNavigation,
   type PrimaryNavigationItem,
@@ -28,8 +29,8 @@ function LinkedInIcon() {
   return (
     <svg
       viewBox="0 0 24 24"
-      width="16"
-      height="16"
+      width="17"
+      height="17"
       fill="currentColor"
       aria-hidden="true"
     >
@@ -39,27 +40,20 @@ function LinkedInIcon() {
 }
 
 export function Header() {
+  const pathname = usePathname();
+  const pathnameNavigationId = getNavigationIdFromPathname(pathname);
   const [open, setOpen] = useState(false);
-  const [activeId, setActiveId] = useState<NavigationId>("profile");
+  const [homepageActiveId, setHomepageActiveId] =
+    useState<NavigationId>("profile");
   const activeIdRef = useRef<NavigationId>("profile");
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const mobileMenuRef = useRef<HTMLElement>(null);
   const firstMobileLinkRef = useRef<HTMLAnchorElement>(null);
-  const pathname = usePathname();
-  const currentNavigationId: NavigationId = pathname.startsWith("/blog")
-    ? "blog"
-    : activeId;
-  const currentNavigationLabel =
-    primaryNavigation.find((item) => item.id === currentNavigationId)?.label ??
-    "Profile";
-
-  const resolveNavigationHref = (href: string) =>
-    href.startsWith("#") && pathname !== "/" ? `/${href}` : href;
-
-  const isActive = (id: NavigationId) =>
-    id === "blog"
-      ? pathname.startsWith("/blog")
-      : pathname === "/" && activeId === id;
+  const currentNavigationId =
+    pathname === "/" ? homepageActiveId : pathnameNavigationId;
+  const currentNavigationLabel = primaryNavigation.find(
+    (item) => item.id === currentNavigationId,
+  )?.label;
 
   const closeMenu = () => setOpen(false);
 
@@ -90,12 +84,12 @@ export function Header() {
         ),
       ).filter((element) => !element.hasAttribute("hidden"));
 
-      if (!focusable.length) {
-        return;
-      }
-
       const first = focusable[0];
       const last = focusable[focusable.length - 1];
+
+      if (!first || !last) {
+        return;
+      }
 
       if (event.shiftKey && document.activeElement === first) {
         event.preventDefault();
@@ -132,7 +126,6 @@ export function Header() {
       return;
     }
 
-    const visibleTargets = new Set<HTMLElement>();
     let frameId = 0;
 
     const updateActiveNavigation = () => {
@@ -140,32 +133,24 @@ export function Header() {
       const headerBottom = getHeaderBottom();
       const viewportCentre =
         headerBottom + (window.innerHeight - headerBottom) * 0.5;
-      const candidates = visibleTargets.size
-        ? targets.filter((target) => visibleTargets.has(target.element))
-        : targets;
-      let candidate: (typeof targets)[number] | null = null;
-      let candidateDistance = Number.POSITIVE_INFINITY;
+      let nextId = targets[0].navigationId;
+      let bestDistance = Number.POSITIVE_INFINITY;
 
-      candidates.forEach((target) => {
+      targets.forEach((target) => {
         const rect = target.element.getBoundingClientRect();
-        const distance = Math.abs(
-          rect.top + Math.min(rect.height * 0.5, window.innerHeight * 0.42) -
-            viewportCentre,
-        );
+        const centre =
+          rect.top + Math.min(rect.height * 0.5, window.innerHeight * 0.42);
+        const distance = Math.abs(centre - viewportCentre);
 
-        if (distance < candidateDistance) {
-          candidate = target;
-          candidateDistance = distance;
+        if (distance < bestDistance) {
+          nextId = target.navigationId;
+          bestDistance = distance;
         }
       });
 
-      if (!candidate && window.scrollY < headerBottom) {
-        candidate = targets[0];
-      }
-
-      if (candidate && activeIdRef.current !== candidate.navigationId) {
-        activeIdRef.current = candidate.navigationId;
-        setActiveId(candidate.navigationId);
+      if (activeIdRef.current !== nextId) {
+        activeIdRef.current = nextId;
+        setHomepageActiveId(nextId);
       }
     };
 
@@ -175,30 +160,15 @@ export function Header() {
       }
     };
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const element = entry.target as HTMLElement;
-
-          if (entry.isIntersecting) {
-            visibleTargets.add(element);
-          } else {
-            visibleTargets.delete(element);
-          }
-        });
-        requestUpdate();
-      },
-      {
-        rootMargin: "-12% 0px -18% 0px",
-        threshold: [0, 0.1, 0.3, 0.5, 0.75],
-      },
-    );
+    const observer = new IntersectionObserver(requestUpdate, {
+      rootMargin: "-18% 0px -18% 0px",
+      threshold: [0, 0.15, 0.35, 0.6, 0.85],
+    });
 
     targets.forEach((target) => observer.observe(target.element));
     window.addEventListener("scroll", requestUpdate, { passive: true });
     window.addEventListener("resize", requestUpdate);
     window.addEventListener("orientationchange", requestUpdate);
-    window.addEventListener("hashchange", requestUpdate);
     requestUpdate();
 
     return () => {
@@ -207,60 +177,17 @@ export function Header() {
       window.removeEventListener("scroll", requestUpdate);
       window.removeEventListener("resize", requestUpdate);
       window.removeEventListener("orientationchange", requestUpdate);
-      window.removeEventListener("hashchange", requestUpdate);
     };
   }, [pathname]);
 
-  const activateLink = (id: NavigationId) => {
-    activeIdRef.current = id;
-    setActiveId(id);
-    closeMenu();
-  };
-
-  const navigateToSection = (
-    event: MouseEvent<HTMLAnchorElement>,
-    href: string,
-    navigationId?: NavigationId,
-  ) => {
-    if (pathname === "/" && href.startsWith("#")) {
-      const target = document.getElementById(href.slice(1));
-
-      if (target) {
-        event.preventDefault();
-        const reducedMotion = window.matchMedia(
-          "(prefers-reduced-motion: reduce)",
-        ).matches;
-        const targetTop =
-          target.getBoundingClientRect().top +
-          window.scrollY -
-          getHeaderBottom() -
-          16;
-
-        window.history.pushState(null, "", href);
-        window.scrollTo({
-          top: Math.max(0, targetTop),
-          behavior: reducedMotion ? "auto" : "smooth",
-        });
-      }
-    }
-
-    if (navigationId) {
-      activateLink(navigationId);
-    } else {
-      closeMenu();
-    }
-  };
+  const isActive = (id: NavigationId) => id === currentNavigationId;
 
   return (
     <header className="site-header page-layer sticky top-0 pt-4">
       <Container>
         <div className="site-header-panel relative rounded-[1rem] bg-[rgba(10,11,13,0.84)] px-4 py-4 backdrop-blur-xl">
           <div className="flex items-center justify-between gap-4">
-            <Link
-              href={pathname === "/" ? "#top" : "/#top"}
-              className="site-brand min-w-0"
-              onClick={closeMenu}
-            >
+            <Link href="/" className="site-brand min-w-0" onClick={closeMenu}>
               <div className="meta-stack">Kayode Popoola</div>
               <div className="site-brand-subtitle mt-1 truncate font-['Sora'] text-sm text-[var(--foreground)]">
                 Popeblack · Web3 Growth & Intelligence
@@ -274,15 +201,12 @@ export function Header() {
               {primaryNavigation.map((link) => (
                 <Link
                   key={link.id}
-                  href={resolveNavigationHref(link.href)}
-                  aria-current={isActive(link.id) ? "location" : undefined}
+                  href={link.href}
+                  aria-current={isActive(link.id) ? "page" : undefined}
                   className={cn(
                     "desktop-nav-link meta-stack transition hover:text-[var(--foreground)]",
                     isActive(link.id) && "is-active",
                   )}
-                  onClick={(event) =>
-                    navigateToSection(event, link.href, link.id)
-                  }
                 >
                   {link.label}
                 </Link>
@@ -334,21 +258,19 @@ export function Header() {
             hidden={!open}
           >
             <div className="mobile-nav-group pt-3">
-              <div className="meta-stack mb-3">Primary</div>
+              <div className="meta-stack mb-3">Explore</div>
               <div className="mobile-nav-links">
                 {primaryNavigation.map((link, index) => (
                   <Link
                     ref={index === 0 ? firstMobileLinkRef : undefined}
                     key={link.id}
-                    href={resolveNavigationHref(link.href)}
-                    aria-current={isActive(link.id) ? "location" : undefined}
+                    href={link.href}
+                    aria-current={isActive(link.id) ? "page" : undefined}
                     className={cn(
                       "mobile-nav-link meta-stack transition hover:text-[var(--foreground)]",
                       isActive(link.id) && "is-active",
                     )}
-                    onClick={(event) =>
-                      navigateToSection(event, link.href, link.id)
-                    }
+                    onClick={closeMenu}
                   >
                     {link.label}
                   </Link>
@@ -357,16 +279,24 @@ export function Header() {
             </div>
 
             <div className="mobile-nav-group mt-3 pt-2">
-              <div className="meta-stack mb-3">More</div>
+              <div className="meta-stack mb-3">Connect</div>
               <div className="mobile-nav-secondary">
                 <Link
                   href={profile.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
+                  className="mobile-nav-link meta-stack mobile-linkedin-link"
+                  onClick={closeMenu}
+                >
+                  <LinkedInIcon />
+                  LinkedIn
+                </Link>
+                <Link
+                  href="/#contact"
                   className="mobile-nav-link meta-stack"
                   onClick={closeMenu}
                 >
-                  LinkedIn
+                  Contact
                 </Link>
                 <Link
                   href="/privacy"
@@ -390,40 +320,39 @@ export function Header() {
         </div>
       </Container>
 
-      <nav className="section-progress-rail" aria-label="Section progress">
-        <span className="section-progress-current">{currentNavigationLabel}</span>
+      <nav className="section-progress-rail" aria-label="Portfolio sections">
+        <span className="section-progress-current">
+          {currentNavigationLabel ?? "Explore"}
+        </span>
         <span className="section-progress-track">
           {primaryNavigation.map((link) => (
             <Link
               key={link.id}
-              href={resolveNavigationHref(link.href)}
+              href={link.href}
               className={cn(
                 "section-progress-marker",
-                currentNavigationId === link.id && "is-active",
+                isActive(link.id) && "is-active",
               )}
-              aria-current={
-                currentNavigationId === link.id ? "location" : undefined
-              }
+              aria-current={isActive(link.id) ? "page" : undefined}
               aria-label={`Go to ${link.label}`}
-              onClick={(event) =>
-                navigateToSection(event, link.href, link.id)
-              }
             />
           ))}
         </span>
       </nav>
 
-      <div className="section-progress-mobile" aria-live="polite">
-        <span>{currentNavigationLabel}</span>
-        <span className="section-progress-mobile-dots" aria-hidden="true">
-          {primaryNavigation.map((link) => (
-            <span
-              key={link.id}
-              className={currentNavigationId === link.id ? "is-active" : undefined}
-            />
-          ))}
-        </span>
-      </div>
+      {currentNavigationLabel ? (
+        <div className="section-progress-mobile" aria-live="polite">
+          <span>{currentNavigationLabel}</span>
+          <span className="section-progress-mobile-dots" aria-hidden="true">
+            {primaryNavigation.map((link) => (
+              <span
+                key={link.id}
+                className={isActive(link.id) ? "is-active" : undefined}
+              />
+            ))}
+          </span>
+        </div>
+      ) : null}
     </header>
   );
 }

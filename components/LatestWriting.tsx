@@ -25,6 +25,7 @@ export async function LatestWriting() {
   return (
     <section
       id="writing"
+      data-nav-group="blog"
       data-scene-label="Writing"
       className="page-layer py-14 md:py-16 lg:py-12"
     >

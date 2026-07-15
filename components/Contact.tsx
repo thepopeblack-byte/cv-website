@@ -195,9 +195,9 @@ export function Contact() {
                     aria-live={status.type === "error" ? "assertive" : "polite"}
                     className={`max-w-xl text-sm leading-7 ${
                       status.type === "error"
-                        ? "text-[#e0a7a0]"
+                        ? "text-[var(--error)]"
                         : status.type === "success"
-                          ? "text-[#d8d1c2]"
+                          ? "text-[var(--success)]"
                           : "text-[var(--muted)]"
                     }`}
                   >

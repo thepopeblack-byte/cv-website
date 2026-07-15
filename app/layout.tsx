@@ -87,7 +87,7 @@ alternates: {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#08111f",
+  themeColor: "#0B0D10",
   colorScheme: "dark light",
 };
 

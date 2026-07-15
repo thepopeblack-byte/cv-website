@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Container } from "@/components/Container";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { MobileSwipeRegion } from "@/components/MobileSwipeRegion";
 import { siteDescription, siteUrl } from "@/data/site";
 import { getBlogPosts } from "@/lib/sanity";
 
@@ -120,7 +121,10 @@ export default async function BlogPage() {
         {otherArticles.length ? (
           <section className="page-layer py-8 md:py-10">
             <Container>
-              <div className="article-grid">
+              <MobileSwipeRegion
+                className="article-grid"
+                label="More writing from Kayode Popoola"
+              >
                 {otherArticles.map((article) => (
                   <article key={article.slug} className="article-card">
                     <div className="article-eyebrow">
@@ -145,7 +149,7 @@ export default async function BlogPage() {
                     </Link>
                   </article>
                 ))}
-              </div>
+              </MobileSwipeRegion>
             </Container>
           </section>
         ) : null}

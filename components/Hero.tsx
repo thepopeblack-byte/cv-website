@@ -27,7 +27,7 @@ const heroActions: HeroAction[] = [
   },
   {
     label: "View Experience",
-    href: "#experience",
+    href: "/experience",
     variant: "button-secondary",
   },
   {
