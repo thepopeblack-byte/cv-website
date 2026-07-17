@@ -4931,15 +4931,16 @@ html[data-theme="light"] textarea {
   }
 }
 
-/* Substack newsletter embed */
+/* Substack newsletter experience */
 .substack-signup {
-  display: grid;
+  --newsletter-violet: #7657ff;
+  --newsletter-violet-strong: #5f42dc;
   min-width: 0;
-  gap: clamp(1.75rem, 5vw, 4.5rem);
-  align-items: center;
-  padding: clamp(1.25rem, 3.5vw, 2.5rem);
-  border-radius: 0.8rem;
-  background: var(--soft-surface);
+}
+
+html[data-theme="light"] .substack-signup {
+  --newsletter-violet: #6245dd;
+  --newsletter-violet-strong: #5035c2;
 }
 
 .substack-signup-copy,
@@ -4949,124 +4950,248 @@ html[data-theme="light"] textarea {
 
 .substack-signup h1,
 .substack-signup h2 {
-  max-width: 12ch;
   margin: 0.85rem 0 0;
   color: var(--foreground);
   font-family: "Sora", "Avenir Next", sans-serif;
-  line-height: 0.96;
-  letter-spacing: -0.055em;
+  line-height: 1;
+  letter-spacing: -0.05em;
 }
 
 .substack-signup h1 {
-  font-size: clamp(3.2rem, 8vw, 7rem);
+  font-size: clamp(3.2rem, 8vw, 6.6rem);
 }
 
 .substack-signup h2 {
-  font-size: clamp(2rem, 4.5vw, 3.6rem);
+  font-size: clamp(1.9rem, 4vw, 3.2rem);
 }
 
 .substack-signup-copy > p {
-  max-width: 42rem;
+  max-width: 44rem;
   margin: 1rem 0 0;
   color: var(--muted);
   line-height: 1.7;
 }
 
+.substack-signup.is-compact {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(1.5rem, 5vw, 4.5rem);
+  align-items: center;
+  padding: clamp(1.4rem, 3vw, 2.25rem);
+  border-radius: 1rem;
+  background:
+    linear-gradient(
+      112deg,
+      color-mix(in srgb, var(--newsletter-violet) 8%, transparent),
+      transparent 44%
+    ),
+    var(--soft-surface);
+}
+
+.substack-signup.is-compact h2 {
+  max-width: 18ch;
+}
+
+.substack-actions,
+.substack-full-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem 1.15rem;
+  align-items: center;
+}
+
+.substack-actions {
+  justify-content: flex-end;
+}
+
+.substack-cta-primary,
+.substack-cta-secondary,
+.substack-publication-link {
+  display: inline-flex;
+  gap: 0.45rem;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.9rem;
+  border-radius: 999px;
+  font-weight: 700;
+  transition:
+    transform 180ms ease,
+    color 180ms ease,
+    background-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.substack-cta-primary {
+  padding: 0.78rem 1.15rem;
+  background: var(--newsletter-violet-strong);
+  box-shadow: 0 10px 30px
+    color-mix(in srgb, var(--newsletter-violet) 18%, transparent);
+  color: #fff;
+}
+
+.substack-cta-primary:hover {
+  transform: translateY(-2px);
+  background: var(--newsletter-violet);
+}
+
+.substack-cta-secondary {
+  padding: 0.7rem 0.25rem;
+  color: var(--muted-strong);
+}
+
+.substack-cta-secondary:hover {
+  color: var(--newsletter-violet);
+}
+
+.substack-cta-primary:focus-visible,
+.substack-cta-secondary:focus-visible,
+.substack-publication-link:focus-visible {
+  outline-color: var(--newsletter-violet);
+}
+
+.substack-signup.is-full {
+  display: flex;
+  width: min(100%, 58rem);
+  margin-inline: auto;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.substack-signup.is-full .substack-signup-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.substack-signup.is-full h1 {
+  max-width: 13ch;
+}
+
 .substack-topics {
-  margin-top: 1.75rem;
+  width: min(100%, 48rem);
+  margin-top: clamp(2rem, 5vw, 3.25rem);
+  text-align: left;
+}
+
+.substack-topics .meta-stack {
+  text-align: center;
 }
 
 .substack-topics ul {
   display: grid;
-  gap: 0.55rem;
-  margin: 1rem 0 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem 2rem;
+  margin: 1.25rem 0 0;
   padding: 0;
   list-style: none;
 }
 
 .substack-topics li {
+  position: relative;
+  padding-left: 1rem;
   color: var(--muted-strong);
   line-height: 1.55;
 }
 
+.substack-topics li::before {
+  position: absolute;
+  top: 0.7em;
+  left: 0;
+  width: 0.32rem;
+  height: 0.32rem;
+  border-radius: 50%;
+  background: var(--newsletter-violet);
+  content: "";
+}
+
 .substack-frequency {
-  color: var(--bronze) !important;
+  margin: 1.75rem 0 0;
+  color: var(--bronze);
   font-size: 0.9rem;
   font-weight: 650;
 }
 
-.substack-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.85rem 1.15rem;
-  align-items: center;
-  margin-top: 1.75rem;
-}
-
-.substack-publication-link {
-  display: inline-flex;
-  gap: 0.45rem;
-  align-items: center;
-}
-
 .substack-embed-column {
   display: flex;
+  width: 100%;
   justify-content: center;
+  margin-top: clamp(2rem, 5vw, 3.5rem);
 }
 
 .substack-embed-frame {
-  width: 100%;
-  max-width: 480px;
+  width: min(100%, 560px);
   overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--line) 72%, transparent);
-  border-radius: 0.5rem;
-  background: #fff;
+  padding: clamp(0.65rem, 2vw, 1rem);
+  border-radius: 0.85rem;
+  background: #f5f0e8;
+  box-shadow: 0 18px 54px rgba(0, 0, 0, 0.16);
 }
 
 .substack-embed-frame iframe {
   display: block;
   width: 100%;
   min-width: 0;
-  height: 320px;
+  height: 340px;
   border: 0;
+  border-radius: 0.5rem;
   background: #fff;
   color-scheme: light;
+}
+
+.substack-full-links {
+  justify-content: center;
+  margin-top: 1.25rem;
+}
+
+.substack-publication-link {
+  min-height: auto;
+  border-radius: 0;
+  color: var(--newsletter-violet);
+}
+
+.substack-fallback-cta {
+  margin-top: 2rem;
 }
 
 .article-substack-signup {
   margin-top: clamp(2.5rem, 7vw, 5rem);
 }
 
-@media (min-width: 900px) {
-  .substack-signup.has-embed {
-    grid-template-columns: minmax(0, 0.48fr) minmax(20rem, 0.52fr);
-  }
-
-  .substack-signup.is-compact.has-embed {
-    grid-template-columns: minmax(0, 0.42fr) minmax(20rem, 0.58fr);
-  }
-
-  .substack-signup.has-no-embed {
-    grid-template-columns: minmax(0, 48rem);
-  }
-}
-
 @media (max-width: 767px) {
-  .substack-signup {
-    gap: 1.5rem;
-    padding: 1.1rem;
+  .substack-signup.is-compact {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.4rem;
+    padding: 1.2rem;
   }
 
   .substack-signup h1 {
-    font-size: clamp(3rem, 15vw, 4.5rem);
+    font-size: clamp(2.9rem, 14vw, 4.25rem);
   }
 
   .substack-signup h2 {
-    font-size: clamp(1.85rem, 9vw, 2.7rem);
+    font-size: clamp(1.8rem, 8.5vw, 2.55rem);
   }
 
-  .substack-actions .button-primary {
+  .substack-actions {
+    justify-content: flex-start;
+  }
+
+  .substack-cta-primary {
     width: 100%;
+  }
+
+  .substack-topics ul {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.65rem;
+  }
+
+  .substack-embed-frame {
+    padding: 0.5rem;
+  }
+
+  .substack-embed-frame iframe {
+    height: 350px;
   }
 }
 
@@ -5074,5 +5199,9 @@ html[data-theme="light"] textarea {
   .substack-signup * {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .substack-cta-primary:hover {
+    transform: none;
   }
 }
