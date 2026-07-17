@@ -3,6 +3,8 @@ import type { MetadataRoute } from "next";
 import { siteUrl } from "@/data/site";
 import { getBlogPosts } from "@/lib/sanity";
 
+export const revalidate = 60;
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
   const posts = await getBlogPosts();
@@ -25,6 +27,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: now,
       changeFrequency: "weekly",
       priority: 0.78,
+    },
+    {
+      url: `${siteUrl}/newsletter`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.72,
     },
     ...posts.map((post) => ({
       url: `${siteUrl}/blog/${post.slug}`,

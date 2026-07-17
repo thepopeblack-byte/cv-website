@@ -1,11 +1,34 @@
-import { localBlogPosts, type BlogPost } from "@/data/articles";
+import type {
+  BlogContentType,
+  BlogPost,
+  BlogPostVisibility,
+} from "@/data/articles";
 import { sanityClient } from "@/sanity/lib/client";
 
+const publishedPostFilter = `
+  _type == "post" &&
+  !(_id in path("drafts.**")) &&
+  defined(slug.current) &&
+  (!defined(publishedAt) || publishedAt <= now())
+`;
+
+const publicOriginalPostFilter = `
+  ${publishedPostFilter} &&
+  (!defined(visibility) || visibility == "public") &&
+  (!defined(contentType) || contentType == "original")
+`;
+
 const postProjection = `{
+  _id,
   title,
   "slug": slug.current,
-  date,
+  publishedAt,
+  _createdAt,
+  "date": coalesce(publishedAt, _createdAt),
   type,
+  contentType,
+  visibility,
+  category,
   source,
   author,
   excerpt,
@@ -14,39 +37,59 @@ const postProjection = `{
     markDefs[]{...},
     _type == "image" => {
       "url": asset->url,
+      "assetId": asset->_id,
       "dimensions": asset->metadata.dimensions
     }
   },
   tags,
-  "coverImage": coverImage.asset->url,
+  coverImage{
+    ...,
+    asset,
+    "assetData": asset->{
+      _id,
+      url,
+      metadata{dimensions}
+    }
+  },
   externalUrl,
   readingTime,
-  featured,
-  whyItMatters,
-  keyContext
+  featured
 }`;
 
 function normalizePost(post: Partial<BlogPost>): BlogPost | null {
-  if (!post.title || !post.slug || !post.excerpt) {
+  if (!post._id || !post.title || !post.slug || !post.excerpt || !post.date) {
     return null;
   }
 
+  const contentType: BlogContentType =
+    post.contentType === "external" || post.type === "Featured"
+      ? "external"
+      : "original";
+  const visibility: BlogPostVisibility =
+    post.visibility === "hidden" || post.visibility === "archived"
+      ? post.visibility
+      : "public";
+
   return {
+    _id: post._id,
     title: post.title,
     slug: post.slug,
-    date: post.date || new Date().toISOString().slice(0, 10),
-    type: post.type === "Original" ? "Original" : "Featured",
-    source: post.source,
+    date: post.date,
+    publishedAt: post.publishedAt || undefined,
+    _createdAt: post._createdAt || undefined,
+    type: contentType === "external" ? "Featured" : "Original",
+    contentType,
+    visibility,
+    category: post.category || undefined,
+    source: post.source || undefined,
     author: post.author || "Kayode Popoola",
     excerpt: post.excerpt,
     body: post.body ?? post.excerpt,
-    tags: post.tags || [],
+    tags: (post.tags || []).map((tag) => tag.trim()).filter(Boolean),
     coverImage: post.coverImage,
     externalUrl: post.externalUrl,
     readingTime: post.readingTime || "3 min read",
     featured: Boolean(post.featured),
-    whyItMatters: post.whyItMatters,
-    keyContext: post.keyContext || [],
   };
 }
 
@@ -61,7 +104,7 @@ async function sanityFetch<T>(
   try {
     return await sanityClient.fetch<T>(query, params, {
       next: {
-        revalidate: 300,
+        revalidate: 60,
         tags: ["sanity:posts"],
       },
     });
@@ -72,44 +115,24 @@ async function sanityFetch<T>(
 
 export async function getBlogPosts(): Promise<BlogPost[]> {
   const sanityPosts = await sanityFetch<Array<Partial<BlogPost>>>(
-    `*[_type == "post"] | order(featured desc, date desc) ${postProjection}`,
+    `*[${publicOriginalPostFilter}] | order(coalesce(publishedAt, _createdAt) desc) ${postProjection}`,
   );
 
-  const normalizedPosts = sanityPosts
-    ?.map((post) => normalizePost(post))
-    .filter((post): post is BlogPost => Boolean(post));
-
-  if (!normalizedPosts?.length) {
-    return localBlogPosts;
-  }
-
-  const postsBySlug = new Map(
-    localBlogPosts.map((post) => [post.slug, post] as const),
+  return (
+    sanityPosts
+      ?.map((post) => normalizePost(post))
+      .filter((post): post is BlogPost => Boolean(post)) ?? []
   );
-
-  for (const post of normalizedPosts) {
-    postsBySlug.set(post.slug, post);
-  }
-
-  return Array.from(postsBySlug.values()).sort((a, b) => {
-    if (a.featured !== b.featured) {
-      return Number(b.featured) - Number(a.featured);
-    }
-
-    return b.date.localeCompare(a.date);
-  });
 }
 
 export async function getBlogPostBySlug(
   slug: string,
 ): Promise<BlogPost | null> {
   const sanityPost = await sanityFetch<Partial<BlogPost>>(
-    `*[_type == "post" && slug.current == $slug][0] ${postProjection}`,
+    `*[${publishedPostFilter} && slug.current == $slug][0] ${postProjection}`,
     { slug },
   );
   const normalizedPost = sanityPost ? normalizePost(sanityPost) : null;
 
-  return (
-    normalizedPost ?? localBlogPosts.find((post) => post.slug === slug) ?? null
-  );
+  return normalizedPost;
 }

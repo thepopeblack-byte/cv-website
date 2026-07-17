@@ -11,7 +11,7 @@ function formatDate(date: string) {
     month: "short",
     day: "numeric",
     year: "numeric",
-  }).format(new Date(`${date}T00:00:00`));
+  }).format(new Date(date));
 }
 
 export async function LatestWriting() {
@@ -55,33 +55,23 @@ export async function LatestWriting() {
             >
               {featuredPosts.map((post) => (
                 <article key={post.slug} className="writing-preview-item">
-                  <div className="article-eyebrow">
-                    <span>{post.type}</span>
-                    <span>{formatDate(post.date)}</span>
-                    <span>{post.readingTime}</span>
-                  </div>
-                  <h3>{post.title}</h3>
-                  <p>{post.excerpt}</p>
-                  <div className="article-action-row">
-                    <Link
-                      href={`/blog/${post.slug}`}
-                      className="text-link inline-flex items-center gap-2"
-                    >
+                  <Link
+                    href={`/blog/${post.slug}`}
+                    className="article-card-link writing-preview-link"
+                    aria-label={`Read ${post.title}`}
+                  >
+                    <div className="article-eyebrow">
+                      <span>Original</span>
+                      <span>{formatDate(post.date)}</span>
+                      <span>{post.readingTime}</span>
+                    </div>
+                    <h3>{post.title}</h3>
+                    <p>{post.excerpt}</p>
+                    <span className="article-read-indicator text-link">
                       Read article
-                      <ArrowUpRight size={13} />
-                    </Link>
-                    {post.externalUrl ? (
-                      <Link
-                        href={post.externalUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-link inline-flex items-center gap-2"
-                      >
-                        Source
-                        <ArrowUpRight size={13} />
-                      </Link>
-                    ) : null}
-                  </div>
+                      <ArrowUpRight size={13} aria-hidden="true" />
+                    </span>
+                  </Link>
                 </article>
               ))}
             </MobileSwipeRegion>

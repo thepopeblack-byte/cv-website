@@ -1,5 +1,6 @@
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -7,8 +8,13 @@ import { Container } from "@/components/Container";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { PortableArticle } from "@/components/PortableArticle";
+import { SubstackSignup } from "@/components/SubstackSignup";
+import type { BlogBodyImage, BlogPostBody } from "@/data/articles";
 import { siteName, siteUrl } from "@/data/site";
 import { getBlogPostBySlug, getBlogPosts } from "@/lib/sanity";
+import { getSanityImageUrl } from "@/sanity/lib/image";
+
+export const revalidate = 60;
 
 type BlogPostPageProps = {
   params: Promise<{
@@ -21,7 +27,21 @@ function formatDate(date: string) {
     month: "long",
     day: "numeric",
     year: "numeric",
-  }).format(new Date(`${date}T00:00:00`));
+  }).format(new Date(date));
+}
+
+function withoutDuplicateCoverImage(
+  body: BlogPostBody,
+  coverAssetId: string | undefined,
+): BlogPostBody {
+  if (!Array.isArray(body) || !coverAssetId) {
+    return body;
+  }
+
+  return body.filter((block) => {
+    const image = block as BlogBodyImage;
+    return image._type !== "image" || image.assetId !== coverAssetId;
+  });
 }
 
 export async function generateStaticParams() {
@@ -41,6 +61,12 @@ export async function generateMetadata({
     };
   }
 
+  const socialImage = getSanityImageUrl(post.coverImage, {
+    width: 1200,
+    height: 630,
+    quality: 90,
+  });
+
   return {
     title: `${post.title} | Kayode Popoola`,
     description: post.excerpt,
@@ -55,13 +81,20 @@ export async function generateMetadata({
       publishedTime: post.date,
       authors: [post.author],
       tags: post.tags,
-      images: [post.coverImage ?? "/opengraph-image"],
+      images: [
+        {
+          url: socialImage ?? `${siteUrl}/opengraph-image`,
+          width: 1200,
+          height: 630,
+          alt: post.coverImage?.alt || post.title,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: post.title,
       description: post.excerpt,
-      images: [post.coverImage ?? "/opengraph-image"],
+      images: [socialImage ?? `${siteUrl}/opengraph-image`],
     },
   };
 }
@@ -73,6 +106,18 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   if (!post) {
     notFound();
   }
+
+  const coverImageUrl = getSanityImageUrl(post.coverImage, {
+    width: 1600,
+    height: 900,
+    quality: 90,
+  });
+  const articleBody = withoutDuplicateCoverImage(
+    post.body,
+    post.coverImage?.assetData?._id ??
+      post.coverImage?.asset?._id ??
+      post.coverImage?.asset?._ref,
+  );
 
   const articleJsonLd = JSON.stringify({
     "@context": "https://schema.org",
@@ -96,7 +141,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       name: siteName,
       url: siteUrl,
     },
-    image: post.coverImage ?? `${siteUrl}/opengraph-image`,
+    image: coverImageUrl ?? `${siteUrl}/opengraph-image`,
     keywords: post.tags.join(", "),
     ...(post.externalUrl ? { isBasedOn: post.externalUrl } : {}),
   }).replace(/</g, "\\u003c");
@@ -114,16 +159,15 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               </Link>
 
               <div className="article-eyebrow mt-8">
-                <span>{post.type}</span>
+                <span>
+                  {post.contentType === "external" ? "External" : "Original"}
+                </span>
                 <span>By {post.author}</span>
                 <span>{formatDate(post.date)}</span>
                 <span>{post.readingTime}</span>
-                {post.source ? <span>{post.source}</span> : null}
-                {post.externalUrl ? (
-                  <span>Externally published</span>
-                ) : (
-                  <span>Original</span>
-                )}
+                {post.contentType === "external" && post.source ? (
+                  <span>{post.source}</span>
+                ) : null}
               </div>
 
               <h1>{post.title}</h1>
@@ -135,27 +179,38 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 ))}
               </div>
 
+              {coverImageUrl ? (
+                <figure className="article-cover-figure">
+                  <div className="article-cover-frame">
+                    <Image
+                      src={coverImageUrl}
+                      alt={
+                        post.coverImage?.alt ||
+                        `Article cover for ${post.title}`
+                      }
+                      fill
+                      priority
+                      className="object-cover"
+                      sizes="(max-width: 767px) 100vw, 880px"
+                    />
+                  </div>
+                  {post.coverImage?.caption ? (
+                    <figcaption>{post.coverImage.caption}</figcaption>
+                  ) : null}
+                </figure>
+              ) : null}
+
               <div className="article-body">
-                <PortableArticle body={post.body} />
-
-                {post.whyItMatters ? (
-                  <section>
-                    <h2>Why it matters</h2>
-                    <p>{post.whyItMatters}</p>
-                  </section>
-                ) : null}
-
-                {post.keyContext?.length ? (
-                  <section>
-                    <h2>Key context</h2>
-                    <ul>
-                      {post.keyContext.map((item) => (
-                        <li key={item}>{item}</li>
-                      ))}
-                    </ul>
-                  </section>
-                ) : null}
+                <PortableArticle body={articleBody} />
               </div>
+
+              {post.contentType === "original" ? (
+                <SubstackSignup
+                  variant="compact"
+                  location="article_footer"
+                  className="article-substack-signup"
+                />
+              ) : null}
 
               <div className="article-action-row article-detail-actions">
                 {post.externalUrl ? (
@@ -172,6 +227,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 <Link href="/blog" className="button-secondary">
                   More writing
                 </Link>
+                {post.tags.includes("Newsletter") ? (
+                  <Link href="/newsletter" className="text-link">
+                    The Popeblack Brief archive
+                  </Link>
+                ) : null}
               </div>
             </div>
           </Container>

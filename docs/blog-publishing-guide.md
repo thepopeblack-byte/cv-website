@@ -15,29 +15,37 @@ create, edit or publish posts.
 3. Write a short excerpt for the blog card and search preview.
 4. Write the article using headings, paragraphs, links, lists and images.
 5. Open the **Publishing** group and select **Generate** beside the URL slug.
-6. Confirm the author, date, reading time, type and tags.
-7. Upload a cover image and describe it in the alternative-text field.
-8. Turn on **Feature this post** only when the post should lead the blog page.
-9. Select **Publish**.
+6. Confirm the author, publication date and time, reading time, content type,
+   public visibility, optional category and tags.
+7. Upload an **Article cover image** at approximately 1600 x 900 pixels, then
+   add meaningful alternative text and an optional caption.
+8. Keep original articles set to **Original article** and **Public**.
+9. Turn on **Feature this post** only when the post should lead the blog page.
+10. Select **Publish**.
 
 The post will appear at `/blog` and `/blog/your-slug`. Publishing triggers the
 signed revalidation webhook, so no code edit or redeployment is needed.
 
-The two existing local articles remain on the blog after Sanity is connected.
-To make either one editable in Studio, recreate it with the same URL slug; the
-Sanity version will then take precedence without creating a duplicate.
+The blog index contains published Sanity posts only. There are no local or
+hardcoded fallback articles.
 
 ## Edit or remove a post
 
 - Open the post, make the change and select **Publish** again.
-- To remove a post from the public site, use the document menu and select
-  **Unpublish**. Use **Delete** only when the record should be permanently
-  removed.
+- To remove a post from public indexes while retaining its direct URL, change
+  **Public visibility** to **Hidden** or **Archived** and publish the change.
+- Use **Unpublish** when the direct public article route should also disappear.
+- Use **Delete** only when the record should be permanently removed.
 
-## Featured and external articles
+## Visibility and external articles
 
-- **Original** is for writing published directly by Kayode Popoola.
-- **Featured coverage** is for coverage or work first published elsewhere.
+- **Public** posts appear on the blog, homepage writing preview, relevant
+  newsletter archive and sitemap.
+- **Hidden** and **Archived** posts remain in Sanity and may retain their direct
+  URL, but they do not appear in public indexes.
+- **Original article** is for writing published directly by Kayode Popoola.
+- **External or featured coverage** is for coverage or work first published
+  elsewhere and is excluded from the original-writing index.
 - Add **Source or publication** and **External source URL** for external work.
 - Do not paste a third party's full article into the body. Add an original
   summary and link readers to the source.
@@ -57,3 +65,8 @@ Sanity version will then take precedence without creating a duplicate.
    `SANITY_REVALIDATE_SECRET` in the production environment.
 4. Check that the production build received the three `NEXT_PUBLIC_SANITY_*`
    values.
+5. Confirm the webhook triggers create, update and delete and uses the filter
+   and projection documented in `sanity/README.md`.
+
+The public queries revalidate every 60 seconds, so a published post should still
+appear after a short delay if webhook delivery fails.

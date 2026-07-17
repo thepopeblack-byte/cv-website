@@ -26,18 +26,29 @@ export const post = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: "publishedAt",
+      title: "Publication date and time",
+      description:
+        "Optional. When empty, the public site uses the document creation time.",
+      type: "datetime",
+      group: "publishing",
+      initialValue: () => new Date().toISOString(),
+    }),
+    defineField({
       name: "date",
-      title: "Publication date",
+      title: "Legacy publication date",
+      description:
+        "Retained for existing documents; use Publication date and time.",
       type: "date",
       group: "publishing",
-      initialValue: () => new Date().toISOString().slice(0, 10),
-      validation: (rule) => rule.required(),
+      hidden: true,
     }),
     defineField({
       name: "type",
-      title: "Post type",
+      title: "Legacy post type",
       type: "string",
       group: "publishing",
+      hidden: true,
       options: {
         layout: "radio",
         list: [
@@ -46,7 +57,49 @@ export const post = defineType({
         ],
       },
       initialValue: "Original",
+    }),
+    defineField({
+      name: "contentType",
+      title: "Content type",
+      description:
+        "Original writing appears in the public Popeblack editorial index. External coverage can remain available by direct URL.",
+      type: "string",
+      group: "publishing",
+      options: {
+        layout: "radio",
+        list: [
+          { title: "Original article", value: "original" },
+          { title: "External or featured coverage", value: "external" },
+        ],
+      },
+      initialValue: "original",
       validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "visibility",
+      title: "Public visibility",
+      description:
+        "Hidden and archived posts remain in Sanity and may keep their direct URL, but are excluded from public indexes and the sitemap.",
+      type: "string",
+      group: "publishing",
+      options: {
+        layout: "radio",
+        list: [
+          { title: "Public", value: "public" },
+          { title: "Hidden", value: "hidden" },
+          { title: "Archived", value: "archived" },
+        ],
+      },
+      initialValue: "public",
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "category",
+      title: "Category",
+      description: "Optional editorial category used on article cards.",
+      type: "string",
+      group: "publishing",
+      validation: (rule) => rule.max(60),
     }),
     defineField({
       name: "source",
@@ -140,6 +193,8 @@ export const post = defineType({
     defineField({
       name: "tags",
       title: "Tags",
+      description:
+        'Add the exact tag "Newsletter" to include this post in The Popeblack Brief archive.',
       type: "array",
       group: "publishing",
       of: [defineArrayMember({ type: "string" })],
@@ -148,7 +203,9 @@ export const post = defineType({
     }),
     defineField({
       name: "coverImage",
-      title: "Cover image",
+      title: "Article cover image",
+      description:
+        "Used on the blog listing, article header and social-sharing preview. Recommended size: 1600 x 900 pixels (16:9).",
       type: "image",
       group: "editorial",
       options: { hotspot: true },
@@ -156,8 +213,15 @@ export const post = defineType({
         defineField({
           name: "alt",
           title: "Alternative text",
+          description: "Describe the image for screen-reader users.",
           type: "string",
           validation: (rule) => rule.required(),
+        }),
+        defineField({
+          name: "caption",
+          title: "Caption",
+          description: "Optional context displayed beneath the article image.",
+          type: "string",
         }),
       ],
     }),
@@ -183,20 +247,6 @@ export const post = defineType({
       type: "boolean",
       group: "publishing",
       initialValue: false,
-    }),
-    defineField({
-      name: "whyItMatters",
-      title: "Why it matters",
-      type: "text",
-      rows: 4,
-      group: "editorial",
-    }),
-    defineField({
-      name: "keyContext",
-      title: "Key context",
-      type: "array",
-      group: "editorial",
-      of: [defineArrayMember({ type: "string" })],
     }),
   ],
   preview: {

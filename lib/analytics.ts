@@ -1,5 +1,4 @@
-export const ANALYTICS_CONSENT_STORAGE_KEY =
-  "popeblack-analytics-consent";
+export const ANALYTICS_CONSENT_STORAGE_KEY = "popeblack-analytics-consent";
 
 export type AnalyticsConsent = "accepted" | "rejected";
 
@@ -11,6 +10,12 @@ type AnalyticsLocation =
   | "contact"
   | "footer"
   | "content";
+
+type NewsletterAnalyticsContext = {
+  page_path: string;
+  cta_location: "newsletter_page" | "homepage" | "blog_page" | "article_footer";
+  device_layout: "mobile" | "desktop";
+};
 
 type AnalyticsEventMap = {
   navigation_click: {
@@ -36,6 +41,13 @@ type AnalyticsEventMap = {
   };
   theme_change: { theme: "dark" | "light" };
   not_found_view: { page_path: string };
+  newsletter_page_view: {
+    page_path: string;
+    device_layout: "mobile" | "desktop";
+  };
+  newsletter_section_view: NewsletterAnalyticsContext;
+  substack_cta_click: NewsletterAnalyticsContext;
+  substack_publication_click: NewsletterAnalyticsContext;
 };
 
 export type AnalyticsEventName = keyof AnalyticsEventMap;
@@ -88,8 +100,7 @@ function isAnalyticsEnabled() {
 function hasStoredConsent() {
   try {
     return (
-      window.localStorage.getItem(ANALYTICS_CONSENT_STORAGE_KEY) ===
-      "accepted"
+      window.localStorage.getItem(ANALYTICS_CONSENT_STORAGE_KEY) === "accepted"
     );
   } catch {
     return false;
@@ -104,8 +115,7 @@ function sanitizePayload(payload: AnalyticsPayload) {
       return;
     }
 
-    safePayload[key] =
-      typeof value === "string" ? value.slice(0, 100) : value;
+    safePayload[key] = typeof value === "string" ? value.slice(0, 100) : value;
   });
 
   return safePayload;

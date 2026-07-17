@@ -41,9 +41,9 @@ export default function PrivacyPage() {
               <section>
                 <h2>Information collected</h2>
                 <p>
-                  The contact form may collect your name, email address,
-                  company or organisation, enquiry type, and the message you
-                  choose to provide.
+                  The contact form may collect your name, email address, company
+                  or organisation, enquiry type, and the message you choose to
+                  provide.
                 </p>
               </section>
 
@@ -59,10 +59,34 @@ export default function PrivacyPage() {
               <section>
                 <h2>Form processing</h2>
                 <p>
-                  Formspree processes contact-form submissions on behalf of
-                  this website. Information submitted through the form is sent
+                  Formspree processes contact-form submissions on behalf of this
+                  website. Information submitted through the form is sent
                   through Formspree so that Kayode can receive and respond to
                   your enquiry.
+                </p>
+              </section>
+
+              <section>
+                <h2>Newsletter subscriptions</h2>
+                <p>
+                  The Popeblack Brief is distributed through Substack. When you
+                  subscribe using the embedded form or visit the Substack
+                  publication, your subscription information is submitted
+                  directly to Substack and handled under Substack&apos;s
+                  applicable privacy terms.
+                </p>
+                <p>
+                  Popeblack.com does not receive or store the email address
+                  entered inside the embedded Substack form. Subscribers can
+                  unsubscribe using the link included in every newsletter email
+                  or through their Substack account.
+                </p>
+                <p>
+                  Newsletter subscription data is not used as custom analytics
+                  event content. The newsletter embed and professional contact
+                  form serve different purposes: Substack handles newsletter
+                  subscriptions, while Formspree processes professional
+                  enquiries submitted through the contact form.
                 </p>
               </section>
 
@@ -78,8 +102,8 @@ export default function PrivacyPage() {
                 <p>
                   Contact-form content is explicitly masked from Microsoft
                   Clarity. Names, email addresses, organisations, messages, and
-                  form-field values are not sent through the website&apos;s custom
-                  analytics events.
+                  form-field values are not sent through the website&apos;s
+                  custom analytics events.
                 </p>
                 <p>
                   Your analytics preference is stored in your browser. You can

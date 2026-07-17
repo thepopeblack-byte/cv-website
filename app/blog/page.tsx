@@ -1,18 +1,23 @@
 import { ArrowUpRight } from "lucide-react";
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 
 import { Container } from "@/components/Container";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { MobileSwipeRegion } from "@/components/MobileSwipeRegion";
+import { SubstackSignup } from "@/components/SubstackSignup";
 import { siteDescription, siteUrl } from "@/data/site";
 import { getBlogPosts } from "@/lib/sanity";
+import { getSanityImageUrl } from "@/sanity/lib/image";
+
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "Blog | Kayode Popoola",
   description:
-    "Ideas, field notes, and featured coverage from Kayode Popoola across Web3 growth, blockchain intelligence, partnerships, and emerging markets.",
+    "Original writing and field notes from Kayode Popoola across AI, privacy, Web3 growth, blockchain intelligence, partnerships, and emerging markets.",
   alternates: {
     canonical: `${siteUrl}/blog`,
   },
@@ -34,7 +39,7 @@ function formatDate(date: string) {
     month: "long",
     day: "numeric",
     year: "numeric",
-  }).format(new Date(`${date}T00:00:00`));
+  }).format(new Date(date));
 }
 
 export default async function BlogPage() {
@@ -43,6 +48,13 @@ export default async function BlogPage() {
   const otherArticles = posts.filter(
     (post) => post.slug !== featuredArticle?.slug,
   );
+  const featuredImageUrl = featuredArticle
+    ? getSanityImageUrl(featuredArticle.coverImage, {
+        width: 1280,
+        height: 720,
+        quality: 90,
+      })
+    : null;
 
   return (
     <>
@@ -51,14 +63,13 @@ export default async function BlogPage() {
         <section className="page-layer py-14 md:py-16 lg:py-14">
           <Container>
             <div className="section-frame blog-hero">
-              <div className="meta-stack">Editorial / Features / Field Notes</div>
+              <div className="meta-stack">Original writing / Field notes</div>
               <div className="mt-5 grid gap-8 lg:grid-cols-[0.42fr_0.58fr] lg:items-end">
-                <h1 className="blog-title">
-                  From the Desk of Kayode Popoola
-                </h1>
+                <h1 className="blog-title">From the Desk of Kayode Popoola</h1>
                 <p className="section-copy blog-intro">
-                  Ideas, field notes, and featured coverage across Web3 growth,
-                  blockchain intelligence, partnerships, and emerging markets.
+                  Original essays and field notes across AI, privacy, Web3
+                  growth, blockchain intelligence, partnerships, and emerging
+                  markets.
                 </p>
               </div>
             </div>
@@ -69,86 +80,127 @@ export default async function BlogPage() {
           <section className="page-layer py-8 md:py-10">
             <Container>
               <article className="article-feature">
-                <div>
-                  <div className="article-eyebrow">
-                    <span>{featuredArticle.type}</span>
-                    <span>By {featuredArticle.author}</span>
-                    <span>{formatDate(featuredArticle.date)}</span>
-                    <span>{featuredArticle.readingTime}</span>
-                    {featuredArticle.externalUrl ? (
-                      <span>Externally published</span>
-                    ) : (
+                <Link
+                  href={`/blog/${featuredArticle.slug}`}
+                  className="article-card-link article-feature-link"
+                  aria-label={`Read ${featuredArticle.title}`}
+                >
+                  {featuredImageUrl ? (
+                    <div className="article-feature-image">
+                      <Image
+                        src={featuredImageUrl}
+                        alt={
+                          featuredArticle.coverImage?.alt ||
+                          `Article cover for ${featuredArticle.title}`
+                        }
+                        fill
+                        className="article-cover-image object-cover"
+                        sizes="(min-width: 1024px) 48vw, 100vw"
+                        priority
+                      />
+                    </div>
+                  ) : null}
+                  <div className="article-feature-copy">
+                    <div className="article-eyebrow">
+                      {featuredArticle.category ? (
+                        <span>{featuredArticle.category}</span>
+                      ) : null}
                       <span>Original</span>
-                    )}
-                  </div>
-                  <h2>{featuredArticle.title}</h2>
-                  <p>{featuredArticle.excerpt}</p>
-                  <div className="article-tag-row">
-                    {featuredArticle.tags.map((tag) => (
-                      <span key={tag}>{tag}</span>
-                    ))}
-                  </div>
-                  <div className="article-action-row">
-                    <Link
-                      href={`/blog/${featuredArticle.slug}`}
-                      className="button-primary"
-                    >
+                      <span>By {featuredArticle.author}</span>
+                      <span>{formatDate(featuredArticle.date)}</span>
+                      <span>{featuredArticle.readingTime}</span>
+                    </div>
+                    <h2>{featuredArticle.title}</h2>
+                    <p>{featuredArticle.excerpt}</p>
+                    <div className="article-tag-row">
+                      {featuredArticle.tags.map((tag) => (
+                        <span key={tag}>{tag}</span>
+                      ))}
+                    </div>
+                    <span className="article-read-indicator text-link">
                       Read article
-                    </Link>
-                    {featuredArticle.externalUrl ? (
-                      <Link
-                        href={featuredArticle.externalUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-link inline-flex items-center gap-2"
-                      >
-                        Read from source
-                        <ArrowUpRight size={13} />
-                      </Link>
-                    ) : null}
+                      <ArrowUpRight size={14} aria-hidden="true" />
+                    </span>
                   </div>
-                </div>
-                <div className="article-source-panel">
-                  <div className="meta-stack">Source</div>
-                  <p>{featuredArticle.source ?? "Kayode Popoola"}</p>
-                  <span>{featuredArticle.type} coverage</span>
-                </div>
+                </Link>
               </article>
             </Container>
           </section>
         ) : null}
 
+        {!featuredArticle ? (
+          <section className="page-layer py-8 md:py-10">
+            <Container>
+              <div className="blog-empty-state">
+                <h2>New writing is being prepared.</h2>
+                <p>Published articles will appear here as they are released.</p>
+              </div>
+            </Container>
+          </section>
+        ) : null}
+
+        <section className="page-layer py-10 md:py-14">
+          <Container>
+            <SubstackSignup variant="compact" location="blog_page" />
+          </Container>
+        </section>
+
         {otherArticles.length ? (
           <section className="page-layer py-8 md:py-10">
             <Container>
+              <div className="article-list-heading">
+                <div className="meta-stack">Latest writing</div>
+                <h2>Latest writing</h2>
+              </div>
               <MobileSwipeRegion
                 className="article-grid"
-                label="More writing from Kayode Popoola"
+                label="Latest writing from Kayode Popoola"
               >
-                {otherArticles.map((article) => (
-                  <article key={article.slug} className="article-card">
-                    <div className="article-eyebrow">
-                      <span>{article.type}</span>
-                      <span>By {article.author}</span>
-                      <span>{formatDate(article.date)}</span>
-                      <span>{article.readingTime}</span>
-                      {article.externalUrl ? (
-                        <span>Externally published</span>
-                      ) : (
-                        <span>Original</span>
-                      )}
-                    </div>
-                    <h2>{article.title}</h2>
-                    <p>{article.excerpt}</p>
-                    <Link
-                      href={`/blog/${article.slug}`}
-                      className="text-link inline-flex items-center gap-2"
-                    >
-                      Read article
-                      <ArrowUpRight size={13} />
-                    </Link>
-                  </article>
-                ))}
+                {otherArticles.map((article) => {
+                  const imageUrl = getSanityImageUrl(article.coverImage, {
+                    width: 960,
+                    height: 540,
+                  });
+
+                  return (
+                    <article key={article.slug} className="article-card">
+                      <Link
+                        href={`/blog/${article.slug}`}
+                        className="article-card-link"
+                        aria-label={`Read ${article.title}`}
+                      >
+                        {imageUrl ? (
+                          <div className="article-card-image">
+                            <Image
+                              src={imageUrl}
+                              alt={
+                                article.coverImage?.alt ||
+                                `Article cover for ${article.title}`
+                              }
+                              fill
+                              className="article-cover-image object-cover"
+                              sizes="(min-width: 768px) 42vw, 88vw"
+                            />
+                          </div>
+                        ) : null}
+                        <div className="article-eyebrow">
+                          {article.category ? (
+                            <span>{article.category}</span>
+                          ) : null}
+                          <span>Original</span>
+                          <span>{formatDate(article.date)}</span>
+                          <span>{article.readingTime}</span>
+                        </div>
+                        <h2>{article.title}</h2>
+                        <p>{article.excerpt}</p>
+                        <span className="article-read-indicator text-link">
+                          Read article
+                          <ArrowUpRight size={14} aria-hidden="true" />
+                        </span>
+                      </Link>
+                    </article>
+                  );
+                })}
               </MobileSwipeRegion>
             </Container>
           </section>

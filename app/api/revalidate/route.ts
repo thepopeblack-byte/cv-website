@@ -1,11 +1,16 @@
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { type NextRequest, NextResponse } from "next/server";
 import { parseBody } from "next-sanity/webhook";
 
 type PostWebhookBody = {
   _type?: string;
   slug?: string | { current?: string };
+  previousSlug?: string | { current?: string };
 };
+
+function getSlug(value: PostWebhookBody["slug"]) {
+  return typeof value === "string" ? value : value?.current;
+}
 
 export async function POST(request: NextRequest) {
   const secret = process.env.SANITY_REVALIDATE_SECRET;
@@ -33,15 +38,24 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ revalidated: false, ignored: true });
   }
 
-  const slug = typeof body?.slug === "string" ? body.slug : body?.slug?.current;
+  const slugs = Array.from(
+    new Set(
+      [getSlug(body?.slug), getSlug(body?.previousSlug)].filter(
+        (slug): slug is string => Boolean(slug),
+      ),
+    ),
+  );
 
+  revalidateTag("sanity:posts", "max");
   revalidatePath("/");
   revalidatePath("/blog");
+  revalidatePath("/blog/[slug]", "page");
+  revalidatePath("/newsletter");
   revalidatePath("/sitemap.xml");
 
-  if (slug) {
+  slugs.forEach((slug) => {
     revalidatePath(`/blog/${slug}`);
-  }
+  });
 
-  return NextResponse.json({ revalidated: true, slug: slug ?? null });
+  return NextResponse.json({ revalidated: true, slugs });
 }
