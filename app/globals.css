@@ -1071,6 +1071,13 @@ html[data-theme="light"] .theme-icon-moon {
   animation: logo-marquee 42s linear infinite;
 }
 
+.logo-marquee-track > * {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+}
+
 .logo-marquee:hover .logo-marquee-track,
 .logo-marquee:focus-within .logo-marquee-track {
   animation-play-state: paused;
@@ -1082,9 +1089,8 @@ html[data-theme="light"] .theme-icon-moon {
 
 .logo-marquee-item {
   display: inline-flex !important;
-  min-height: 3.5rem;
-  min-width: clamp(5.8rem, 18vw, 8.5rem);
-  max-width: clamp(6rem, 22vw, 11rem);
+  width: 8.5rem;
+  height: 3.5rem;
   align-items: center;
   justify-content: center;
   border: 0;
@@ -1095,10 +1101,8 @@ html[data-theme="light"] .theme-icon-moon {
 }
 
 .logo-marquee-image {
-  max-height: 2.65rem;
-  width: auto !important;
-  max-width: min(11rem, 28vw);
-  height: auto !important;
+  width: 7.5rem !important;
+  height: 2.5rem !important;
   display: block !important;
   object-fit: contain;
   filter: grayscale(1) saturate(0.2);
@@ -3071,15 +3075,14 @@ html[data-theme="light"] .logo-marquee-item:hover .logo-tone-light {
   }
 
   .logo-marquee-item {
-    min-height: 3.25rem;
-    min-width: 7rem;
-    max-width: 7.5rem;
+    width: 7.25rem;
+    height: 3.25rem;
     padding: 0;
   }
 
   .logo-marquee-image {
-    max-height: 2.25rem;
-    max-width: 7.5rem;
+    width: 6.5rem !important;
+    height: 2.25rem !important;
   }
 }
 
