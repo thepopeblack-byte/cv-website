@@ -1035,6 +1035,9 @@ html[data-theme="light"] .theme-icon-moon {
 
 .logo-marquee {
   position: relative;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
   overflow: hidden;
   border: 0;
   border-radius: 0;
@@ -1057,11 +1060,13 @@ html[data-theme="light"] .theme-icon-moon {
 }
 
 .logo-marquee-track {
+  --logo-marquee-seam: clamp(0.625rem, 1.25vw, 1rem);
+
   display: flex;
   width: max-content;
   min-width: 100%;
   align-items: center;
-  gap: clamp(2.25rem, 5vw, 4.5rem);
+  gap: clamp(1.25rem, 2.5vw, 2rem);
   padding: 0.7rem 0;
   animation: logo-marquee 42s linear infinite;
 }
@@ -1966,11 +1971,11 @@ html[data-theme="light"] .logo-marquee-item:hover .logo-tone-light {
 
 @keyframes logo-marquee {
   from {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
 
   to {
-    transform: translateX(-50%);
+    transform: translate3d(calc(-50% - var(--logo-marquee-seam)), 0, 0);
   }
 }
 
@@ -2029,6 +2034,10 @@ html[data-theme="light"] .logo-marquee-item:hover .logo-tone-light {
   .logo-marquee-track {
     animation: none;
     flex-wrap: wrap;
+  }
+
+  .logo-marquee-track > [aria-hidden="true"] {
+    display: none;
   }
 
   .experience-signal-strip span {
@@ -3055,7 +3064,9 @@ html[data-theme="light"] .logo-marquee-item:hover .logo-tone-light {
   }
 
   .logo-marquee-track {
-    gap: 2rem;
+    --logo-marquee-seam: 0.5rem;
+
+    gap: 1rem;
     padding: 0.55rem 0;
   }
 

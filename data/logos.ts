@@ -10,6 +10,24 @@ export type LogoItem = {
 
 export const logoItems: LogoItem[] = [
   {
+    name: "Cosmos",
+    src: "/logos/cosmos.svg",
+    width: 105,
+    height: 19,
+    href: "https://cosmos.network/",
+    category: "Blockchain Infrastructure",
+    tone: "dark",
+  },
+  {
+    name: "Cosmos Hub",
+    src: "/logos/cosmos-hub.svg",
+    width: 26,
+    height: 30,
+    href: "https://hub.cosmos.network/",
+    category: "Blockchain Network",
+    tone: "light",
+  },
+  {
     name: "Secret Network",
     src: "/logos/secret-network.png",
     width: 485,

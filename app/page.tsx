@@ -20,7 +20,7 @@ export default function Page() {
         <HomeExpertisePreview />
         <HomeExperiencePreview />
         <LatestWriting />
-        <section className="page-layer py-12 md:py-14">
+        <section className="page-layer py-8 md:py-10">
           <div className="container-shell">
             <SubstackSignup variant="compact" location="homepage" />
           </div>

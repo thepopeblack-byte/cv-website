@@ -22,7 +22,7 @@ export function SelectedEcosystems() {
       <Container>
         <SectionReveal className="section-frame">
           <div className="meta-stack">Ecosystems & partners</div>
-          <div className="mt-4 grid gap-8 lg:grid-cols-[0.34fr_0.66fr] lg:items-start">
+          <div className="mt-4 grid min-w-0 gap-8 lg:grid-cols-[0.34fr_0.66fr] lg:items-start">
             <div>
               <h2 className="section-title">
                 Selected organisations, ecosystems and projects I have worked
@@ -35,7 +35,7 @@ export function SelectedEcosystems() {
               </p>
             </div>
 
-            <div>
+            <div className="min-w-0">
               <p className="logo-marquee-label">Trusted by:</p>
               <div
                 className="logo-marquee"
