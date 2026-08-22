@@ -1,4 +1,4 @@
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Play } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -9,7 +9,7 @@ import { achievements, experienceProofChips } from "@/data/achievements";
 import { certifications } from "@/data/certifications";
 import { experience } from "@/data/experience";
 import { institutionalOutcomes } from "@/data/outcomes";
-import { portfolioItems } from "@/data/portfolio";
+import { portfolioItems, speakingMediaItems } from "@/data/portfolio";
 import { profile } from "@/data/profile";
 import { skillGroups } from "@/data/skills";
 
@@ -97,6 +97,8 @@ export function HomeImpactPreview() {
 }
 
 export function HomeExpertisePreview() {
+  const featuredSpeaking = speakingMediaItems[0];
+
   return (
     <section
       id="expertise-preview"
@@ -149,6 +151,52 @@ export function HomeExpertisePreview() {
                 <span>{profile.education.school}</span>
               </p>
             </div>
+          </div>
+
+          <div className="home-speaking-proof">
+            <Link
+              href={featuredSpeaking.videoWatchUrl ?? "/expertise#speaking"}
+              target={featuredSpeaking.videoWatchUrl ? "_blank" : undefined}
+              rel={
+                featuredSpeaking.videoWatchUrl
+                  ? "noopener noreferrer"
+                  : undefined
+              }
+              className="home-speaking-preview"
+              aria-label={`Watch ${featuredSpeaking.title}`}
+            >
+              <div className="home-speaking-image">
+                <Image
+                  src={featuredSpeaking.image}
+                  alt={featuredSpeaking.imageAlt ?? featuredSpeaking.title}
+                  fill
+                  className="object-cover"
+                  sizes="(min-width: 1024px) 34vw, 100vw"
+                />
+                <span className="home-speaking-play" aria-hidden="true">
+                  <Play size={18} fill="currentColor" />
+                </span>
+              </div>
+              <div className="home-speaking-copy">
+                <div className="meta-stack bronze-label">
+                  Featured speaking
+                </div>
+                <h3>{featuredSpeaking.title}</h3>
+                <p>{featuredSpeaking.description}</p>
+                <span className="text-link home-speaking-watch">
+                  Watch featured talk
+                  <ArrowUpRight size={14} aria-hidden="true" />
+                </span>
+              </div>
+            </Link>
+
+            <Link
+              href="/expertise#speaking"
+              className="text-link home-speaking-more"
+            >
+              View all speaking &amp; media
+              <ArrowUpRight size={14} aria-hidden="true" />
+            </Link>
           </div>
         </SectionReveal>
       </Container>

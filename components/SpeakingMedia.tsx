@@ -4,6 +4,7 @@ import { ArrowUpRight, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 import { Container } from "@/components/Container";
 import {
@@ -22,6 +23,7 @@ export function SpeakingMedia() {
   const [activeMedia, setActiveMedia] = useState<ActiveMedia>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const mediaTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const scrollPositionRef = useRef(0);
 
   useEffect(() => {
     if (!activeMedia) {
@@ -29,7 +31,15 @@ export function SpeakingMedia() {
     }
 
     const previousOverflow = document.body.style.overflow;
+    const previousPaddingRight = document.body.style.paddingRight;
+    const scrollbarWidth =
+      window.innerWidth - document.documentElement.clientWidth;
+
+    scrollPositionRef.current = window.scrollY;
     document.body.style.overflow = "hidden";
+    if (scrollbarWidth > 0) {
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
+    }
     closeButtonRef.current?.focus();
 
     const closeOnEscape = (event: globalThis.KeyboardEvent) => {
@@ -42,8 +52,12 @@ export function SpeakingMedia() {
 
     return () => {
       document.body.style.overflow = previousOverflow;
+      document.body.style.paddingRight = previousPaddingRight;
       document.removeEventListener("keydown", closeOnEscape);
-      mediaTriggerRef.current?.focus();
+      window.scrollTo({ top: scrollPositionRef.current, behavior: "auto" });
+      window.requestAnimationFrame(() => {
+        mediaTriggerRef.current?.focus({ preventScroll: true });
+      });
     };
   }, [activeMedia]);
 
@@ -79,19 +93,15 @@ export function SpeakingMedia() {
             <div className="media-feature-actions">
               {item.videoEmbedUrl ? (
                 <button
-                  ref={(node) => {
-                    if (node) {
-                      mediaTriggerRef.current = node;
-                    }
-                  }}
                   type="button"
                   className="text-link"
-                  onClick={() =>
+                  onClick={(event) => {
+                    mediaTriggerRef.current = event.currentTarget;
                     setActiveMedia({
                       title: item.title,
                       videoEmbedUrl: item.videoEmbedUrl,
-                    })
-                  }
+                    });
+                  }}
                 >
                   Play
                 </button>
@@ -137,60 +147,66 @@ export function SpeakingMedia() {
     }),
   );
 
-  return (
-    <section
-      id="speaking"
-      data-nav-group="expertise"
-      data-scene-label="Speaking & Media"
-      className="page-layer controlled-section py-14 md:py-16 lg:py-12"
+  const mediaDialog = activeMedia?.videoEmbedUrl ? (
+    <div
+      className="media-dialog-backdrop"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="media-dialog-title"
     >
-      <Container>
-        <ControlledScene
-          eyebrow="Speaking & media"
-          title="Watch Kayode in Action"
-          intro="Selected talks, workshops, media appearances, and public proof across Web3, blockchain privacy, ecosystem growth, and digital assets."
-          items={mediaPanels}
-          ariaLabel="Speaking and media appearances"
-          panelClassName="media-scene-panel"
-        />
-      </Container>
-
-      {activeMedia?.videoEmbedUrl ? (
-        <div
-          className="media-dialog-backdrop"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="media-dialog-title"
-        >
-          <div className="media-dialog-shell">
-            <div className="media-dialog">
-              <div className="media-dialog-header">
-                <div>
-                  <div className="meta-stack">Speaking clip</div>
-                  <h3 id="media-dialog-title">{activeMedia.title}</h3>
-                </div>
-                <button
-                  ref={closeButtonRef}
-                  type="button"
-                  onClick={() => setActiveMedia(null)}
-                  className="media-dialog-close"
-                  aria-label="Close media modal"
-                >
-                  <X size={18} />
-                </button>
-              </div>
-              <div className="media-dialog-frame">
-                <iframe
-                  src={withAutoplay(activeMedia.videoEmbedUrl)}
-                  title={activeMedia.title}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              </div>
+      <div className="media-dialog-shell">
+        <div className="media-dialog">
+          <div className="media-dialog-header">
+            <div>
+              <div className="meta-stack">Speaking clip</div>
+              <h3 id="media-dialog-title">{activeMedia.title}</h3>
             </div>
+            <button
+              ref={closeButtonRef}
+              type="button"
+              onClick={() => setActiveMedia(null)}
+              className="media-dialog-close"
+              aria-label="Close media modal"
+            >
+              <X size={18} />
+            </button>
+          </div>
+          <div className="media-dialog-frame">
+            <iframe
+              src={withAutoplay(activeMedia.videoEmbedUrl)}
+              title={activeMedia.title}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
           </div>
         </div>
-      ) : null}
-    </section>
+      </div>
+    </div>
+  ) : null;
+
+  return (
+    <>
+      <section
+        id="speaking"
+        data-nav-group="expertise"
+        data-scene-label="Speaking & Media"
+        className="page-layer controlled-section py-14 md:py-16 lg:py-12"
+      >
+        <Container>
+          <ControlledScene
+            eyebrow="Speaking & media"
+            title="Watch Kayode in Action"
+            intro="Selected talks, workshops, media appearances, and public proof across Web3, blockchain privacy, ecosystem growth, and digital assets."
+            items={mediaPanels}
+            ariaLabel="Speaking and media appearances"
+            panelClassName="media-scene-panel"
+          />
+        </Container>
+      </section>
+
+      {mediaDialog && typeof document !== "undefined"
+        ? createPortal(mediaDialog, document.body)
+        : null}
+    </>
   );
 }
