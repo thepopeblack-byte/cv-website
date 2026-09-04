@@ -82,3 +82,15 @@ export type BlogPost = {
   readingTime: string;
   featured: boolean;
 };
+
+export function getFeaturedBlogPost(posts: BlogPost[]) {
+  return posts.find((post) => post.featured) ?? posts[0];
+}
+
+export function getBlogPublicationLabel(post: BlogPost) {
+  return post.contentType === "external"
+    ? post.source
+      ? `Published on ${post.source}`
+      : "Externally published"
+    : "Original";
+}

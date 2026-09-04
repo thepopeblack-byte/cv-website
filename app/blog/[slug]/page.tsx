@@ -9,7 +9,11 @@ import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { PortableArticle } from "@/components/PortableArticle";
 import { SubstackSignup } from "@/components/SubstackSignup";
-import type { BlogBodyImage, BlogPostBody } from "@/data/articles";
+import {
+  getBlogPublicationLabel,
+  type BlogBodyImage,
+  type BlogPostBody,
+} from "@/data/articles";
 import { siteName, siteUrl } from "@/data/site";
 import { getBlogPostBySlug, getBlogPosts } from "@/lib/sanity";
 import { getSanityImageUrl } from "@/sanity/lib/image";
@@ -159,15 +163,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               </Link>
 
               <div className="article-eyebrow mt-8">
-                <span>
-                  {post.contentType === "external" ? "External" : "Original"}
-                </span>
+                <span>{getBlogPublicationLabel(post)}</span>
                 <span>By {post.author}</span>
-                <span>{formatDate(post.date)}</span>
+                <span>
+                  {post.contentType === "external" ? "Added " : ""}
+                  {formatDate(post.date)}
+                </span>
                 <span>{post.readingTime}</span>
-                {post.contentType === "external" && post.source ? (
-                  <span>{post.source}</span>
-                ) : null}
               </div>
 
               <h1>{post.title}</h1>
@@ -220,8 +222,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                     rel="noopener noreferrer"
                     className="button-primary"
                   >
-                    Read from source
-                    <ArrowUpRight size={16} />
+                    Read on {post.source || "the original publication"}
+                    <ArrowUpRight size={16} aria-hidden="true" />
                   </Link>
                 ) : null}
                 <Link href="/blog" className="button-secondary">

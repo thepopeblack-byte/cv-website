@@ -6,18 +6,23 @@ import Link from "next/link";
 import { Container } from "@/components/Container";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
-import { MobileSwipeRegion } from "@/components/MobileSwipeRegion";
 import { SubstackSignup } from "@/components/SubstackSignup";
+import {
+  getBlogPublicationLabel,
+  getFeaturedBlogPost,
+  type BlogPost,
+} from "@/data/articles";
 import { siteDescription, siteUrl } from "@/data/site";
 import { getBlogPosts } from "@/lib/sanity";
 import { getSanityImageUrl } from "@/sanity/lib/image";
+import styles from "./page.module.css";
 
 export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "Blog | Kayode Popoola",
   description:
-    "Original writing and field notes from Kayode Popoola across AI, privacy, Web3 growth, blockchain intelligence, partnerships, and emerging markets.",
+    "Original writing, published features, and field notes from Kayode Popoola across AI, privacy, Web3 growth, blockchain intelligence, partnerships, and emerging markets.",
   alternates: {
     canonical: `${siteUrl}/blog`,
   },
@@ -36,175 +41,158 @@ export const metadata: Metadata = {
 
 function formatDate(date: string) {
   return new Intl.DateTimeFormat("en", {
-    month: "long",
+    month: "short",
     day: "numeric",
     year: "numeric",
   }).format(new Date(date));
 }
 
+function StoryCard({ post, lead = false }: { post: BlogPost; lead?: boolean }) {
+  const imageUrl = getSanityImageUrl(post.coverImage, {
+    width: lead ? 1280 : 960,
+    height: lead ? 720 : 540,
+    quality: 90,
+  });
+  const titleId = `story-${post.slug}`;
+
+  return (
+    <article className={`${styles.story} ${lead ? styles.leadStory : ""}`}>
+      <Link
+        href={`/blog/${post.slug}`}
+        className={styles.storyLink}
+        aria-labelledby={titleId}
+      >
+        {imageUrl ? (
+          <div className={styles.imageFrame}>
+            <Image
+              src={imageUrl}
+              alt={post.coverImage?.alt || `Article cover for ${post.title}`}
+              fill
+              className={styles.coverImage}
+              sizes={
+                lead
+                  ? "(min-width: 1200px) 650px, (min-width: 900px) 58vw, calc(100vw - 40px)"
+                  : "(min-width: 1200px) 420px, (min-width: 900px) 37vw, calc(100vw - 40px)"
+              }
+              priority={lead}
+            />
+          </div>
+        ) : null}
+        <div className={styles.storyCopy}>
+          <div className={styles.kicker}>
+            <span>{getBlogPublicationLabel(post)}</span>
+            {post.category ? <span>{post.category}</span> : null}
+          </div>
+          <h3 id={titleId} className={styles.storyTitle}>
+            {post.title}
+          </h3>
+          <p className={styles.excerpt}>{post.excerpt}</p>
+          {lead && post.tags.length ? (
+            <ul className={styles.tags} aria-label="Article topics">
+              {post.tags.map((tag) => (
+                <li key={tag}>{tag}</li>
+              ))}
+            </ul>
+          ) : null}
+          <div className={styles.byline}>
+            <span>By {post.author}</span>
+            <span>
+              {post.contentType === "external" ? "Added " : ""}
+              <time dateTime={post.date}>{formatDate(post.date)}</time>
+            </span>
+            {post.readingTime ? <span>{post.readingTime}</span> : null}
+          </div>
+          <span className={styles.readLink}>
+            Read article
+            <ArrowUpRight size={16} aria-hidden="true" />
+          </span>
+        </div>
+      </Link>
+    </article>
+  );
+}
+
 export default async function BlogPage() {
   const posts = await getBlogPosts();
-  const featuredArticle = posts.find((post) => post.featured) ?? posts[0];
+  const featuredArticle = getFeaturedBlogPost(posts);
   const otherArticles = posts.filter(
     (post) => post.slug !== featuredArticle?.slug,
   );
-  const featuredImageUrl = featuredArticle
-    ? getSanityImageUrl(featuredArticle.coverImage, {
-        width: 1280,
-        height: 720,
-        quality: 90,
-      })
-    : null;
+  const supportingArticles = otherArticles.slice(0, 1);
+  const archiveArticles = otherArticles.slice(1);
 
   return (
     <>
       <Header />
-      <main id="main-content" className="page-layer blog-page pb-10">
-        <section className="page-layer py-14 md:py-16 lg:py-14">
-          <Container>
-            <div className="section-frame blog-hero">
-              <div className="meta-stack">Original writing / Field notes</div>
-              <div className="mt-5 grid gap-8 lg:grid-cols-[0.42fr_0.58fr] lg:items-end">
-                <h1 className="blog-title">From the Desk of Kayode Popoola</h1>
-                <p className="section-copy blog-intro">
-                  Original essays and field notes across AI, privacy, Web3
-                  growth, blockchain intelligence, partnerships, and emerging
-                  markets.
-                </p>
-              </div>
+      <main id="main-content" className={`page-layer ${styles.page}`}>
+        <Container className={styles.container}>
+          <header className={styles.masthead}>
+            <div className="meta-stack">Writing / Published features</div>
+            <div className={styles.introduction}>
+              <h1 className={styles.title}>From the Desk of Kayode Popoola</h1>
+              <p className={styles.description}>
+                Original essays, published features, and field notes across AI,
+                privacy, Web3 growth, blockchain intelligence, partnerships, and
+                emerging markets.
+              </p>
             </div>
-          </Container>
-        </section>
+          </header>
 
-        {featuredArticle ? (
-          <section className="page-layer py-8 md:py-10">
-            <Container>
-              <article className="article-feature">
-                <Link
-                  href={`/blog/${featuredArticle.slug}`}
-                  className="article-card-link article-feature-link"
-                  aria-label={`Read ${featuredArticle.title}`}
-                >
-                  {featuredImageUrl ? (
-                    <div className="article-feature-image">
-                      <Image
-                        src={featuredImageUrl}
-                        alt={
-                          featuredArticle.coverImage?.alt ||
-                          `Article cover for ${featuredArticle.title}`
-                        }
-                        fill
-                        className="article-cover-image object-cover"
-                        sizes="(min-width: 1024px) 48vw, 100vw"
-                        priority
-                      />
-                    </div>
-                  ) : null}
-                  <div className="article-feature-copy">
-                    <div className="article-eyebrow">
-                      {featuredArticle.category ? (
-                        <span>{featuredArticle.category}</span>
-                      ) : null}
-                      <span>Original</span>
-                      <span>By {featuredArticle.author}</span>
-                      <span>{formatDate(featuredArticle.date)}</span>
-                      <span>{featuredArticle.readingTime}</span>
-                    </div>
-                    <h2>{featuredArticle.title}</h2>
-                    <p>{featuredArticle.excerpt}</p>
-                    <div className="article-tag-row">
-                      {featuredArticle.tags.map((tag) => (
-                        <span key={tag}>{tag}</span>
-                      ))}
-                    </div>
-                    <span className="article-read-indicator text-link">
-                      Read article
-                      <ArrowUpRight size={14} aria-hidden="true" />
-                    </span>
+          {featuredArticle ? (
+            <div
+              className={`${styles.frontPage} ${supportingArticles.length ? styles.hasSupporting : ""}`}
+            >
+              <section aria-labelledby="featured-story-heading">
+                <h2 id="featured-story-heading" className={styles.sectionLabel}>
+                  Featured story
+                </h2>
+                <StoryCard post={featuredArticle} lead />
+              </section>
+              {supportingArticles.length ? (
+                <section aria-labelledby="latest-writing-heading">
+                  <h2
+                    id="latest-writing-heading"
+                    className={styles.sectionLabel}
+                  >
+                    Latest writing
+                  </h2>
+                  <div className={styles.supportingStories}>
+                    {supportingArticles.map((post) => (
+                      <StoryCard key={post.slug} post={post} />
+                    ))}
                   </div>
-                </Link>
-              </article>
-            </Container>
-          </section>
-        ) : null}
+                </section>
+              ) : null}
+            </div>
+          ) : null}
 
-        {!featuredArticle ? (
-          <section className="page-layer py-8 md:py-10">
-            <Container>
-              <div className="blog-empty-state">
-                <h2>New writing is being prepared.</h2>
-                <p>Published articles will appear here as they are released.</p>
+          {!featuredArticle ? (
+            <section className={styles.emptyState}>
+              <h2>New writing is being prepared.</h2>
+              <p>Published articles will appear here as they are released.</p>
+            </section>
+          ) : null}
+
+          {archiveArticles.length ? (
+            <section
+              className={styles.archive}
+              aria-labelledby="more-writing-heading"
+            >
+              <h2 id="more-writing-heading" className={styles.sectionLabel}>
+                More writing
+              </h2>
+              <div className={styles.archiveGrid}>
+                {archiveArticles.map((post) => (
+                  <StoryCard key={post.slug} post={post} />
+                ))}
               </div>
-            </Container>
-          </section>
-        ) : null}
+            </section>
+          ) : null}
 
-        <section className="page-layer py-10 md:py-14">
-          <Container>
+          <div className={styles.newsletter}>
             <SubstackSignup variant="compact" location="blog_page" />
-          </Container>
-        </section>
-
-        {otherArticles.length ? (
-          <section className="page-layer py-8 md:py-10">
-            <Container>
-              <div className="article-list-heading">
-                <div className="meta-stack">Latest writing</div>
-                <h2>Latest writing</h2>
-              </div>
-              <MobileSwipeRegion
-                className="article-grid"
-                label="Latest writing from Kayode Popoola"
-              >
-                {otherArticles.map((article) => {
-                  const imageUrl = getSanityImageUrl(article.coverImage, {
-                    width: 960,
-                    height: 540,
-                  });
-
-                  return (
-                    <article key={article.slug} className="article-card">
-                      <Link
-                        href={`/blog/${article.slug}`}
-                        className="article-card-link"
-                        aria-label={`Read ${article.title}`}
-                      >
-                        {imageUrl ? (
-                          <div className="article-card-image">
-                            <Image
-                              src={imageUrl}
-                              alt={
-                                article.coverImage?.alt ||
-                                `Article cover for ${article.title}`
-                              }
-                              fill
-                              className="article-cover-image object-cover"
-                              sizes="(min-width: 768px) 42vw, 88vw"
-                            />
-                          </div>
-                        ) : null}
-                        <div className="article-eyebrow">
-                          {article.category ? (
-                            <span>{article.category}</span>
-                          ) : null}
-                          <span>Original</span>
-                          <span>{formatDate(article.date)}</span>
-                          <span>{article.readingTime}</span>
-                        </div>
-                        <h2>{article.title}</h2>
-                        <p>{article.excerpt}</p>
-                        <span className="article-read-indicator text-link">
-                          Read article
-                          <ArrowUpRight size={14} aria-hidden="true" />
-                        </span>
-                      </Link>
-                    </article>
-                  );
-                })}
-              </MobileSwipeRegion>
-            </Container>
-          </section>
-        ) : null}
+          </div>
+        </Container>
       </main>
       <Footer />
     </>

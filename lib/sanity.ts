@@ -12,10 +12,15 @@ const publishedPostFilter = `
   (!defined(publishedAt) || publishedAt <= now())
 `;
 
-const publicOriginalPostFilter = `
+const publicBlogPostFilter = `
   ${publishedPostFilter} &&
   (!defined(visibility) || visibility == "public") &&
-  (!defined(contentType) || contentType == "original")
+  (
+    contentType == "original" ||
+    (!defined(contentType) && coalesce(type, "Original") != "Featured") ||
+    (contentType == "external" && visibility == "public" &&
+      featured == true && defined(externalUrl))
+  )
 `;
 
 const postProjection = `{
@@ -62,7 +67,8 @@ function normalizePost(post: Partial<BlogPost>): BlogPost | null {
   }
 
   const contentType: BlogContentType =
-    post.contentType === "external" || post.type === "Featured"
+    post.contentType === "external" ||
+    (!post.contentType && post.type === "Featured")
       ? "external"
       : "original";
   const visibility: BlogPostVisibility =
@@ -82,7 +88,11 @@ function normalizePost(post: Partial<BlogPost>): BlogPost | null {
     visibility,
     category: post.category || undefined,
     source: post.source || undefined,
-    author: post.author || "Kayode Popoola",
+    author:
+      post.author ||
+      (contentType === "external"
+        ? post.source || "External publication"
+        : "Kayode Popoola"),
     excerpt: post.excerpt,
     body: post.body ?? post.excerpt,
     tags: (post.tags || []).map((tag) => tag.trim()).filter(Boolean),
@@ -115,7 +125,7 @@ async function sanityFetch<T>(
 
 export async function getBlogPosts(): Promise<BlogPost[]> {
   const sanityPosts = await sanityFetch<Array<Partial<BlogPost>>>(
-    `*[${publicOriginalPostFilter}] | order(coalesce(publishedAt, _createdAt) desc) ${postProjection}`,
+    `*[${publicBlogPostFilter}] | order(coalesce(publishedAt, _createdAt) desc) ${postProjection}`,
   );
 
   return (

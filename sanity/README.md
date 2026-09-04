@@ -60,5 +60,7 @@ Leave publication date and time empty only when the document creation time is
 the intended public date. Future-dated posts remain hidden until that time.
 
 For externally published work, select **External or featured coverage** and add
-the publication name and source URL. It can retain an internal direct route but
-is excluded from the original-writing index.
+the publication name and source URL. Set visibility to **Public** and enable
+**Feature this post** to include it in the blog and homepage writing preview.
+Unfeatured external entries can retain an internal direct route without appearing
+in public indexes. The newest featured post leads the blog.

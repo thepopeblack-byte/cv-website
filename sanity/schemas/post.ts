@@ -62,7 +62,7 @@ export const post = defineType({
       name: "contentType",
       title: "Content type",
       description:
-        "Original writing appears in the public Popeblack editorial index. External coverage can remain available by direct URL.",
+        "Original writing appears in the public index. To include external work, set Public visibility, Feature this post, and an External source URL.",
       type: "string",
       group: "publishing",
       options: {

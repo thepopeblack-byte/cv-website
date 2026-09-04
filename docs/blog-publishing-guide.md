@@ -45,10 +45,16 @@ hardcoded fallback articles.
   URL, but they do not appear in public indexes.
 - **Original article** is for writing published directly by Kayode Popoola.
 - **External or featured coverage** is for coverage or work first published
-  elsewhere and is excluded from the original-writing index.
+  elsewhere. It appears in public indexes only when visibility is **Public**,
+  **Feature this post** is enabled and an **External source URL** is provided.
+  The newest featured post leads both the blog and homepage writing preview.
+- External entries show the source publication and the date they were added to
+  this site. Keep authorship accurate and set reading time for the text on this site.
 - Add **Source or publication** and **External source URL** for external work.
-- Do not paste a third party's full article into the body. Add an original
-  summary and link readers to the source.
+- Kayode's own articles may be republished in full when he authorises it. Preserve
+  the headings and source links, and keep the original publication URL available.
+  For third-party work without republication permission, use an original summary
+  rather than copying the full article.
 
 ## Image guidance
 

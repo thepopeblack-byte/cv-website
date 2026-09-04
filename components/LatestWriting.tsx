@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Container } from "@/components/Container";
 import { MobileSwipeRegion } from "@/components/MobileSwipeRegion";
 import { SectionReveal } from "@/components/SectionReveal";
+import { getBlogPublicationLabel, getFeaturedBlogPost } from "@/data/articles";
 import { getBlogPosts } from "@/lib/sanity";
 
 function formatDate(date: string) {
@@ -16,7 +17,13 @@ function formatDate(date: string) {
 
 export async function LatestWriting() {
   const posts = await getBlogPosts();
-  const featuredPosts = posts.slice(0, 2);
+  const leadPost = getFeaturedBlogPost(posts);
+  const featuredPosts = leadPost
+    ? [leadPost, ...posts.filter((post) => post.slug !== leadPost.slug)].slice(
+        0,
+        2,
+      )
+    : [];
 
   if (!featuredPosts.length) {
     return null;
@@ -61,8 +68,11 @@ export async function LatestWriting() {
                     aria-label={`Read ${post.title}`}
                   >
                     <div className="article-eyebrow">
-                      <span>Original</span>
-                      <span>{formatDate(post.date)}</span>
+                      <span>{getBlogPublicationLabel(post)}</span>
+                      <span>
+                        {post.contentType === "external" ? "Added " : ""}
+                        {formatDate(post.date)}
+                      </span>
                       <span>{post.readingTime}</span>
                     </div>
                     <h3>{post.title}</h3>

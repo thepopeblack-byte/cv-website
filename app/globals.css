@@ -1126,9 +1126,9 @@ html[data-theme="light"] .theme-icon-moon {
 .blog-title {
   margin: 0;
   font-family: "Sora", "Avenir Next", sans-serif;
-  font-size: clamp(3rem, 8vw, 6.8rem);
-  line-height: 0.9;
-  letter-spacing: -0.075em;
+  font-size: clamp(2.25rem, 4.2vw, 3.75rem);
+  line-height: 1.08;
+  letter-spacing: -0.055em;
   color: var(--foreground);
 }
 
@@ -2856,7 +2856,7 @@ html[data-theme="light"] .logo-marquee-item:hover .logo-tone-light {
   }
 
   .blog-title {
-    font-size: clamp(2.55rem, 14vw, 4.4rem);
+    font-size: clamp(2rem, 7.5vw, 2.625rem);
   }
 
   .article-feature {
