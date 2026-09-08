@@ -16,6 +16,7 @@ const experienceSignals = [
   "Ecosystem Growth",
   "Intelligence",
   "GTM",
+  "Product Marketing",
   "Web3",
   "Africa Expansion",
 ];
@@ -71,7 +72,7 @@ export function ExperienceTimeline() {
                   </div>
                   <div className="experience-role-meta meta-stack">
                     <span>{role.period}</span>
-                    <span>{role.location}</span>
+                    {role.location ? <span>{role.location}</span> : null}
                     {role.engagementType ? <span>{role.engagementType}</span> : null}
                   </div>
                   {showsPreview ? (

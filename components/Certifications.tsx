@@ -1,3 +1,5 @@
+import { ArrowUpRight } from "lucide-react";
+
 import { Container } from "@/components/Container";
 import { MobileSwipeRegion } from "@/components/MobileSwipeRegion";
 import { SectionReveal } from "@/components/SectionReveal";
@@ -18,9 +20,9 @@ export function Certifications() {
             <div>
               <h2 className="section-title">Credentials.</h2>
               <p className="section-copy">
-                Certification work across compliance, financial crime analysis,
-                open-source intelligence, institutional operations, and
-                commercial leadership.
+                Certification work across AML/CFT, transaction monitoring,
+                KYC/KYB, fraud prevention, open-source intelligence,
+                institutional operations, and commercial leadership.
               </p>
             </div>
 
@@ -35,6 +37,18 @@ export function Certifications() {
                 >
                   <div className="meta-stack">{certification.issuer}</div>
                   <h3>{certification.title}</h3>
+                  {certification.credentialUrl ? (
+                    <a
+                      href={certification.credentialUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-link mt-4 inline-flex items-center gap-2"
+                      aria-label={`View ${certification.title} credential`}
+                    >
+                      View credential
+                      <ArrowUpRight size={13} aria-hidden="true" />
+                    </a>
+                  ) : null}
                 </article>
               ))}
             </MobileSwipeRegion>

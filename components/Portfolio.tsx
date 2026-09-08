@@ -15,6 +15,7 @@ function isExternalHref(href: string) {
 
 const projectLabels = [
   "Commercial growth",
+  "Fina product growth",
   "Africa ecosystem",
   "Intelligence",
   "Speaking proof",
@@ -89,7 +90,7 @@ export function Portfolio() {
         <ControlledScene
           eyebrow="Selected work"
           title="Commercial proof across Web3 partnerships, ecosystem growth, and intelligence."
-          intro="Four high-signal proof points across revenue growth, go-to-market strategy, blockchain infrastructure, Africa Web3 ecosystem expansion, and blockchain intelligence."
+          intro="Five high-signal proof points across revenue growth, product marketing, go-to-market strategy, blockchain infrastructure, Africa Web3 ecosystem expansion, and blockchain intelligence."
           items={projectPanels}
           ariaLabel="Selected work and professional proof"
           analyticsEvent="selected_work_view"

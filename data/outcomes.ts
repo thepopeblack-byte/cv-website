@@ -18,7 +18,7 @@ export const institutionalOutcomes: InstitutionalOutcome[] = [
     role: "Head of Sales & Business Development, following earlier business-development roles within the ecosystem.",
     actions:
       "Led sales strategy, structured partnership pipelines, negotiated commercial opportunities, coordinated partner activation, and supported teams through ecosystem and mainnet readiness.",
-    outcome: `${achievements.revenue.claim} ${achievements.deals.claim} ${achievements.evmPartnerships.claim} ${achievements.mainnetLaunches.claim} ${achievements.tvlGrowth.claim}`,
+    outcome: `${achievements.secretRevenue.claim} ${achievements.deals.claim} ${achievements.evmPartnerships.claim} ${achievements.mainnetLaunches.claim} ${achievements.tvlGrowth.claim}`,
     evidenceLabel:
       "Supporting documentation or professional references are available where appropriate.",
   },

@@ -16,8 +16,8 @@ import { skillGroups } from "@/data/skills";
 const impactPreviewStats = [
   achievements.revenue,
   achievements.deals,
-  achievements.mainnetLaunches,
-  achievements.developers,
+  achievements.finaStakingGrowth,
+  achievements.communityReach,
 ];
 
 function PreviewLink({ href, children }: { href: string; children: string }) {

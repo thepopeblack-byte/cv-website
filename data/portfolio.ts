@@ -28,13 +28,27 @@ export const portfolioItems: PortfolioItem[] = [
     category: "Revenue Growth / Strategic Partnerships",
     summary:
       "Global sales strategy, enterprise partnerships, and partner-led go-to-market execution for privacy-first blockchain and confidential computing infrastructure.",
-    proof: `${achievements.revenue.claim} ${achievements.deals.claim} ${achievements.mainnetLaunches.claim}`,
+    proof: `${achievements.secretRevenue.claim} ${achievements.deals.claim} ${achievements.mainnetLaunches.claim}`,
     description:
       "Commercial leadership for Secret Network Foundation across global sales strategy, enterprise sales, blockchain partnerships, AI infrastructure partnerships, DeFi partnerships, EVM and Layer-2 partnerships, and partner-led go-to-market execution.",
     image: "/images/popeblack/proof/secret-network-commercial-leadership.jpg",
     imageAlt:
       "Kayode Popoola with Secret Network ecosystem partners during commercial and partnership activity.",
     imageObjectPosition: "center 42%",
+    href: "/experience",
+    ctaLabel: "View Experience",
+  },
+  {
+    title: "Fina Product Growth & Ecosystem Expansion",
+    category: "Product Marketing / Community Growth",
+    summary:
+      "Community growth, product marketing, user acquisition, campaigns, and ecosystem partnerships supporting Fina's wallet, staking, and crypto card products.",
+    proof: `${achievements.finaRevenue.claim} ${achievements.finaStakingGrowth.claim} ${achievements.communityReach.claim}`,
+    description:
+      "Led and supported community growth, product marketing, social strategy, user acquisition, campaigns, and ecosystem partnerships. Supported product adoption and expansion across Secret Network and the wider Cosmos/IBC ecosystem.",
+    image: "/logos/fina.png",
+    imageAlt: "Fina logo.",
+    imageFit: "contain",
     href: "/experience",
     ctaLabel: "View Experience",
   },

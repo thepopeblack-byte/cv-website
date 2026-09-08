@@ -11,18 +11,42 @@ export type Achievement = {
 
 export const achievements = {
   revenue: {
+    label: "Revenue Impact",
+    value: 1.3,
+    prefix: "$",
+    suffix: "M+",
+    display: "$1.3M+",
+    short: "$1.3M+ revenue impact",
+    claim:
+      "Contributed to $1.3M+ in revenue across Web3 products, partnerships and commercial initiatives.",
+    description:
+      "Career-wide revenue impact across Web3 products, partnerships, product growth, and commercial initiatives.",
+  },
+  secretRevenue: {
     label: "Revenue Generated in 90 Days",
     value: 300,
     prefix: "$",
     suffix: "K+",
     display: "$300K+",
-    short: "$300K+ revenue generated in 90 days",
-    claim: "Generated $300K+ in revenue within the first 90 days.",
+    short: "$300K+ Secret Network revenue generated in 90 days",
+    claim:
+      "Generated $300K+ in revenue within my first 90 days as Head of Sales & Business Development.",
     description:
-      "Commercial impact delivered shortly after stepping into senior sales leadership.",
+      "Secret Network commercial impact delivered within the first 90 days of senior sales leadership.",
+  },
+  finaRevenue: {
+    label: "Fina Card Revenue Contribution",
+    value: 1,
+    prefix: "$",
+    suffix: "M+",
+    display: "$1M+",
+    short: "$1M+ Fina Card revenue contribution",
+    claim: "Contributed to $1M+ in revenue from the Fina Card product.",
+    description:
+      "Revenue contribution through community growth, product marketing, user acquisition, campaigns, and ecosystem partnerships.",
   },
   deals: {
-    label: "Strategic Deals Closed",
+    label: "Strategic Deals",
     value: 50,
     suffix: "+",
     display: "50+",
@@ -31,6 +55,36 @@ export const achievements = {
       "Closed and negotiated 50+ strategic partnerships and commercial deals.",
     description:
       "Partnerships and commercial agreements across Web3, AI, infrastructure, DeFi, and emerging technology.",
+  },
+  finaStakingGrowth: {
+    label: "Staking Growth",
+    value: 5,
+    suffix: "x+",
+    display: "5x+",
+    short: "5x+ Fina staking growth contribution",
+    claim: "Contributed to 5x+ staking growth at Fina.",
+    description:
+      "Growth contribution across Fina's staking product through community, marketing, adoption, and ecosystem activity.",
+  },
+  communityReach: {
+    label: "Community Reach",
+    value: 300,
+    suffix: "K+",
+    display: "300K+",
+    short: "300K+ Fina social and community reach",
+    claim:
+      "Helped grow Fina's combined social and community audience to 300K+.",
+    description:
+      "Combined social and community audience growth supported through content, campaigns, acquisition, and community strategy.",
+  },
+  countries: {
+    label: "Countries Internationally",
+    value: 6,
+    display: "6",
+    short: "6 countries internationally",
+    claim: "Delivered commercial and ecosystem work across six countries.",
+    description:
+      "International commercial, partnership, and ecosystem experience spanning six countries.",
   },
   evmPartnerships: {
     label: "EVM & Layer-2 Partnerships",
@@ -104,35 +158,52 @@ export const achievements = {
   },
 } satisfies Record<string, Achievement>;
 
-export const impactStats: Achievement[] = Object.values(achievements);
+export const impactStats: Achievement[] = [
+  achievements.revenue,
+  achievements.deals,
+  achievements.finaStakingGrowth,
+  achievements.communityReach,
+  achievements.countries,
+  achievements.evmPartnerships,
+  achievements.mainnetLaunches,
+  achievements.tvlGrowth,
+  achievements.developers,
+  achievements.experience,
+];
 
 export const heroQuickFacts = [
   achievements.revenue.short,
   achievements.deals.short,
-  achievements.mainnetLaunches.short,
-  achievements.developers.short,
+  achievements.finaStakingGrowth.short,
+  achievements.communityReach.short,
 ];
 
 export const experienceProofChips = [
-  achievements.revenue.display + " revenue",
-  achievements.deals.display + " deals",
+  achievements.revenue.display + " revenue impact",
+  achievements.deals.display + " strategic deals",
+  achievements.finaStakingGrowth.display + " staking growth contribution",
+  achievements.communityReach.display + " community reach",
+  achievements.countries.display + " countries internationally",
+  achievements.secretRevenue.display + " Secret Network revenue in 90 days",
+  achievements.finaRevenue.display + " Fina Card revenue contribution",
   achievements.evmPartnerships.display + " EVM / L2 partnerships",
   achievements.tvlGrowth.display + " TVL growth contribution",
   achievements.developers.display + " developers trained",
 ];
 
 export const socialProofChips = [
-  achievements.revenue.display + " revenue",
-  achievements.deals.display + " deals",
-  achievements.evmPartnerships.display + " EVM / L2 partnerships",
-  achievements.tvlGrowth.display + " TVL growth",
+  achievements.revenue.display + " revenue impact",
+  achievements.deals.display + " strategic deals",
+  achievements.finaStakingGrowth.display + " staking growth",
+  achievements.communityReach.display + " community reach",
 ];
 
 export const achievementSummary = [
   achievements.revenue.claim,
   achievements.deals.claim,
-  achievements.mainnetLaunches.claim,
-  achievements.developers.claim,
+  achievements.finaStakingGrowth.claim,
+  achievements.communityReach.claim,
+  achievements.countries.claim,
 ].join(" ");
 
 export const confidentialityNote =

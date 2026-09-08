@@ -3,7 +3,7 @@ import { achievements } from "@/data/achievements";
 export type Role = {
   title: string;
   period: string;
-  location: string;
+  location?: string;
   engagementType?: "Part-time" | "Contract" | "Consulting" | "Advisory" | "Full-time";
   bullets: string[];
 };
@@ -25,7 +25,7 @@ export const experience: ExperienceEntry[] = [
         location: "Remote",
         bullets: [
           "Lead global sales strategy, revenue growth, strategic partnerships, and enterprise engagement for Secret Network Foundation.",
-          achievements.revenue.claim,
+          achievements.secretRevenue.claim,
           achievements.deals.claim,
           achievements.evmPartnerships.claim,
           achievements.mainnetLaunches.claim,
@@ -87,6 +87,23 @@ export const experience: ExperienceEntry[] = [
           "Apply professional classification standards to ensure accuracy, auditability, and defensibility of findings.",
           "Track emerging crypto-related risks across African digital asset ecosystems.",
           "Support operational intelligence needs through structured OSINT and evidence-based reporting.",
+        ],
+      },
+    ],
+  },
+  {
+    company: "Fina",
+    label: "Product growth | community scale | ecosystem expansion",
+    roles: [
+      {
+        title: "Community, Growth & Product Marketing",
+        period: "Jun 2023 - Apr 2025",
+        bullets: [
+          achievements.finaRevenue.claim,
+          achievements.communityReach.claim,
+          "Led and supported community growth, product marketing, social strategy, user acquisition, campaigns, and ecosystem partnerships.",
+          "Supported adoption across Fina's wallet, staking, and crypto card products, contributing to 5x+ staking growth.",
+          "Supported expansion across Secret Network and the wider Cosmos/IBC ecosystem.",
         ],
       },
     ],
