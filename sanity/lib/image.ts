@@ -24,6 +24,10 @@ export function getSanityImageUrl(
   image: BlogImage | undefined,
   { width, height, quality = 88 }: ImageUrlOptions,
 ) {
+  if (image?.url) {
+    return image.url;
+  }
+
   if (!imageBuilder || !image?.asset) {
     return null;
   }

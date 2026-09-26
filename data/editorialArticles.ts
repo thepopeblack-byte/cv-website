@@ -1,8 +1,8 @@
 import type { BlogPost } from "@/data/articles";
-import previewArticle from "@/data/preview-ai-safety-article.json";
+import aiSafetyArticle from "@/data/ai-safety-article.json";
 
 const blockleadersFeature: BlogPost = {
-  _id: "preview.popeblacks-web3-journey",
+  _id: "local.popeblacks-web3-journey",
   title:
     "From Community Builder to Blockchain Investigator: Popeblack’s Web3 Journey",
   slug: "popeblacks-web3-journey",
@@ -20,13 +20,17 @@ const blockleadersFeature: BlogPost = {
   body:
     "A Blockleaders profile tracing Kayode Popoola’s journey from university community building and African Web3 ecosystem development to privacy technology, commercial leadership and blockchain intelligence.",
   tags: ["Web3", "Privacy", "Leadership", "Blockchain Intelligence"],
+  coverImage: {
+    url: "/images/blog/popeblacks-web3-journey.jpg",
+    alt: "Kayode Popoola speaking on a conference panel.",
+  },
   externalUrl: "https://blockleaders.io/popeblacks-web3-journey/",
   readingTime: "6 min read",
   featured: true,
 };
 
-// Editorial previews are development-only. Approved articles are published in Sanity.
-export const previewBlogPosts = [
-  previewArticle as BlogPost,
+// Locally authored editorial entries are merged with published Sanity posts.
+export const editorialBlogPosts = [
+  aiSafetyArticle as BlogPost,
   blockleadersFeature,
 ];

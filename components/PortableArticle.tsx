@@ -27,11 +27,15 @@ const components: PortableTextComponents = {
     },
   },
   list: {
+    bullet: ({ children }) => <ul>{children}</ul>,
+    number: ({ children }) => <ol>{children}</ol>,
     task: ({ children }) => (
       <ul className="article-checklist">{children}</ul>
     ),
   },
   listItem: {
+    bullet: ({ children }) => <li>{children}</li>,
+    number: ({ children }) => <li>{children}</li>,
     task: ({ children, value }) => {
       const checked = Boolean((value as { checked?: boolean }).checked);
 

@@ -6,6 +6,7 @@ export type BlogContentType = "original" | "external";
 
 export type BlogImage = {
   _type?: "image";
+  url?: string;
   asset?: {
     _ref?: string;
     _id?: string;

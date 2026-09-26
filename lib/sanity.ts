@@ -3,7 +3,7 @@ import type {
   BlogPost,
   BlogPostVisibility,
 } from "@/data/articles";
-import { previewBlogPosts } from "@/data/previewArticles";
+import { editorialBlogPosts } from "@/data/editorialArticles";
 import { sanityClient } from "@/sanity/lib/client";
 
 const publishedPostFilter = `
@@ -104,16 +104,12 @@ function normalizePost(post: Partial<BlogPost>): BlogPost | null {
   };
 }
 
-function includeEditorialPreviews(posts: BlogPost[]) {
-  if (process.env.NODE_ENV !== "development") {
-    return posts;
-  }
-
-  const previewSlugs = new Set(previewBlogPosts.map((post) => post.slug));
+function includeEditorialPosts(posts: BlogPost[]) {
+  const editorialSlugs = new Set(editorialBlogPosts.map((post) => post.slug));
 
   return [
-    ...previewBlogPosts,
-    ...posts.filter((post) => !previewSlugs.has(post.slug)),
+    ...editorialBlogPosts,
+    ...posts.filter((post) => !editorialSlugs.has(post.slug)),
   ].sort((left, right) => right.date.localeCompare(left.date));
 }
 
@@ -147,18 +143,16 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
       ?.map((post) => normalizePost(post))
       .filter((post): post is BlogPost => Boolean(post)) ?? [];
 
-  return includeEditorialPreviews(posts);
+  return includeEditorialPosts(posts);
 }
 
 export async function getBlogPostBySlug(
   slug: string,
 ): Promise<BlogPost | null> {
-  if (process.env.NODE_ENV === "development") {
-    const previewPost = previewBlogPosts.find((post) => post.slug === slug);
+  const editorialPost = editorialBlogPosts.find((post) => post.slug === slug);
 
-    if (previewPost) {
-      return previewPost;
-    }
+  if (editorialPost) {
+    return editorialPost;
   }
 
   const sanityPost = await sanityFetch<Partial<BlogPost>>(

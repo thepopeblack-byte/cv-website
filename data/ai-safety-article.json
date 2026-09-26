@@ -1,5 +1,5 @@
 {
-  "_id": "preview.how-to-start-a-career-in-ai-safety-in-30-days",
+  "_id": "local.how-to-start-a-career-in-ai-safety-in-30-days",
   "title": "How to Start a Career in AI Safety in 30 Days",
   "slug": "how-to-start-a-career-in-ai-safety-in-30-days",
   "date": "2026-09-26T08:00:00.000Z",
@@ -11,6 +11,10 @@
   "category": "AI Safety & Careers",
   "author": "Kayode Popoola",
   "excerpt": "An actionable roadmap for non-engineers, using BlueDot Impact as a learning and funding pathway.",
+  "coverImage": {
+    "url": "/images/blog/ai-safety-career-30-days.png",
+    "alt": "How to Start a Career in AI Safety in 30 Days: learn, focus, build, connect and apply."
+  },
   "body": [
     {
       "_type": "block",
