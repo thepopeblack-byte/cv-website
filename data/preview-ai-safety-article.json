@@ -1,0 +1,1225 @@
+{
+  "_id": "preview.how-to-start-a-career-in-ai-safety-in-30-days",
+  "title": "How to Start a Career in AI Safety in 30 Days",
+  "slug": "how-to-start-a-career-in-ai-safety-in-30-days",
+  "date": "2026-09-26T08:00:00.000Z",
+  "publishedAt": "2026-09-26T08:00:00.000Z",
+  "_createdAt": "2026-09-26T08:00:00.000Z",
+  "type": "Original",
+  "contentType": "original",
+  "visibility": "public",
+  "category": "AI Safety & Careers",
+  "author": "Kayode Popoola",
+  "excerpt": "An actionable roadmap for non-engineers, using BlueDot Impact as a learning and funding pathway.",
+  "body": [
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "526ab19dea43",
+          "text": "AI safety is often presented as a field reserved for machine-learning researchers, software engineers, and people with advanced technical degrees. Yet the challenges surrounding increasingly capable AI systems extend well beyond engineering. Cybersecurity professionals, financial-crime investigators, intelligence analysts, policymakers, lawyers, and community organizers can all bring relevant expertise.",
+          "marks": []
+        }
+      ],
+      "_key": "6f04bdf1d1d0",
+      "markDefs": []
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "7d0232a4e0d3",
+          "text": "The harder question is not simply ",
+          "marks": []
+        },
+        {
+          "_type": "span",
+          "_key": "b379b6b24f15",
+          "text": "“How do I get into AI safety?”",
+          "marks": [
+            "em"
+          ]
+        },
+        {
+          "_type": "span",
+          "_key": "a98067daef36",
+          "text": " It is ",
+          "marks": []
+        },
+        {
+          "_type": "span",
+          "_key": "b8286299b3c0",
+          "text": "“What specific problem can I help solve, and how can I demonstrate that I am already working on it?”",
+          "marks": [
+            "em"
+          ]
+        }
+      ],
+      "_key": "fa65a29a9767",
+      "markDefs": []
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "4cb50eaa8b13",
+          "text": "Anthropic's September 2026 report, ",
+          "marks": []
+        },
+        {
+          "_type": "span",
+          "_key": "cd9735fe31e5",
+          "text": "Detecting and countering misuse of AI",
+          "marks": [
+            "em",
+            "anthropicReport1"
+          ]
+        },
+        {
+          "_type": "span",
+          "_key": "18ba315ecc0e",
+          "text": ", provides one example of this work. Its threat-intelligence team describes investigating malicious AI use, disrupting abusive activity, strengthening safeguards, and sharing relevant intelligence with partners. You do not have to design a foundation model to contribute to that kind of work.",
+          "marks": []
+        }
+      ],
+      "_key": "fca14e2c367d",
+      "markDefs": [
+        {
+          "_key": "anthropicReport1",
+          "_type": "link",
+          "href": "https://www.anthropic.com/threat-intelligence-report-september-2026"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "3a98d3d57c57",
+          "text": "This 30-day roadmap is designed to help you move from interest to a concrete first contribution. It uses ",
+          "marks": []
+        },
+        {
+          "_type": "span",
+          "_key": "3aaa55e5c794",
+          "text": "BlueDot Impact",
+          "marks": [
+            "4ff68073124b"
+          ]
+        },
+        {
+          "_type": "span",
+          "_key": "a59dae947c87",
+          "text": " as one pathway, alongside independent research, public work samples, and practitioner feedback.",
+          "marks": []
+        }
+      ],
+      "_key": "442f47611060",
+      "markDefs": [
+        {
+          "_key": "4ff68073124b",
+          "_type": "link",
+          "href": "https://bluedot.org/"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "32e47a3fc132",
+          "text": "Your 30-day roadmap",
+          "marks": []
+        }
+      ],
+      "_key": "1bb5c3705ffa",
+      "markDefs": []
+    },
+    {
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "07307a9ecb53",
+          "text": "Days 1–3: Understand the AI-safety landscape",
+          "marks": []
+        }
+      ],
+      "_key": "5db9757a6169",
+      "markDefs": []
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "1dd98979ca25",
+          "text": "Start with BlueDot's free ",
+          "marks": []
+        },
+        {
+          "_type": "span",
+          "_key": "02a272115a61",
+          "text": "Future of AI course",
+          "marks": [
+            "064961aa2a04"
+          ]
+        },
+        {
+          "_type": "span",
+          "_key": "44d439af8d4d",
+          "text": ". Build a basic understanding of frontier AI, emerging capabilities, potential benefits, and risks. You do not need to master the technical details on day one.",
+          "marks": []
+        }
+      ],
+      "_key": "c5846656af12",
+      "markDefs": [
+        {
+          "_key": "064961aa2a04",
+          "_type": "link",
+          "href": "https://bluedot.org/courses/future-of-ai"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "f17eeded59e1",
+          "text": "Then write a one-page reflection answering three questions:",
+          "marks": []
+        }
+      ],
+      "_key": "397a0e5204e3",
+      "markDefs": []
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "a52818eabe3f",
+          "text": "What could go wrong as AI systems become more capable or autonomous?",
+          "marks": []
+        }
+      ],
+      "_key": "ac0a2b193f28",
+      "markDefs": [],
+      "listItem": "bullet",
+      "level": 1
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "cc2f20f8b996",
+          "text": "Which of those problems connects to my existing expertise?",
+          "marks": []
+        }
+      ],
+      "_key": "8740d8c6f7f8",
+      "markDefs": [],
+      "listItem": "bullet",
+      "level": 1
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "2d2cfce77b66",
+          "text": "What is one concrete way I might contribute?",
+          "marks": []
+        }
+      ],
+      "_key": "fe8e682aac54",
+      "markDefs": [],
+      "listItem": "bullet",
+      "level": 1
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "f13c30fabb95",
+          "text": "Your output:",
+          "marks": [
+            "strong"
+          ]
+        },
+        {
+          "_type": "span",
+          "_key": "2c838ed3f43b",
+          "text": " A one-page statement of the AI-safety area you want to investigate.",
+          "marks": []
+        }
+      ],
+      "_key": "dd292f4d8544",
+      "markDefs": []
+    },
+    {
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "523a6e08ee05",
+          "text": "Days 4–8: Find a specialization",
+          "marks": []
+        }
+      ],
+      "_key": "846cc65f6982",
+      "markDefs": []
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "500bb6e1d793",
+          "text": "Work through the relevant sections of BlueDot's publicly available ",
+          "marks": []
+        },
+        {
+          "_type": "span",
+          "_key": "95eda43004c4",
+          "text": "AGI Strategy curriculum",
+          "marks": [
+            "0a1c3f6247ae"
+          ]
+        },
+        {
+          "_type": "span",
+          "_key": "f87449783876",
+          "text": ". Study advanced-AI capabilities, pathways to harm, possible interventions, and how to select a contribution area. Continue any remaining modules after day eight if needed; understanding the material matters more than racing through it.",
+          "marks": []
+        }
+      ],
+      "_key": "42a3a2253a2a",
+      "markDefs": [
+        {
+          "_key": "0a1c3f6247ae",
+          "_type": "link",
+          "href": "https://bluedot.org/courses/agi-strategy"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "b8e7c465a085",
+          "text": "Avoid choosing a field solely because it is fashionable. Look for the intersection between an important safety problem and the skills you already possess. A fraud analyst might study adversarial misuse of AI agents; a lawyer might focus on incident reporting; a cybersecurity professional might investigate vulnerabilities in AI deployments.",
+          "marks": []
+        }
+      ],
+      "_key": "ac7e3ddd18ab",
+      "markDefs": []
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "4cd17f87b1f4",
+          "text": "Your output:",
+          "marks": [
+            "strong"
+          ]
+        },
+        {
+          "_type": "span",
+          "_key": "9688dd8c6bb9",
+          "text": " One specific research question and a short explanation of why your experience is relevant.",
+          "marks": []
+        }
+      ],
+      "_key": "2cc63b35a14f",
+      "markDefs": []
+    },
+    {
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "ee8db9ce9a33",
+          "text": "Days 9–14: Complete your first case analysis",
+          "marks": []
+        }
+      ],
+      "_key": "b8a0fee40db3",
+      "markDefs": []
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "5954c1326cee",
+          "text": "Read two or three credible reports or research papers in your chosen area. If you are interested in AI threat intelligence, start with Anthropic's ",
+          "marks": []
+        },
+        {
+          "_type": "span",
+          "_key": "870ba580af1d",
+          "text": "Detecting and countering misuse of AI: September 2026",
+          "marks": [
+            "em",
+            "anthropicReport2"
+          ]
+        },
+        {
+          "_type": "span",
+          "_key": "6b0ddfa6049f",
+          "text": ". Identify one publicly documented case, then examine:",
+          "marks": []
+        }
+      ],
+      "_key": "01ec41635e5a",
+      "markDefs": [
+        {
+          "_key": "anthropicReport2",
+          "_type": "link",
+          "href": "https://www.anthropic.com/threat-intelligence-report-september-2026"
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "6384d6d44bdd",
+          "text": "The actor, motivation, and objective, where supported by evidence.",
+          "marks": []
+        }
+      ],
+      "_key": "cb296a59469a",
+      "markDefs": [],
+      "listItem": "bullet",
+      "level": 1
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "17be2e8472da",
+          "text": "What the AI system actually contributed to the operation.",
+          "marks": []
+        }
+      ],
+      "_key": "e3602a9e1ff5",
+      "markDefs": [],
+      "listItem": "bullet",
+      "level": 1
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "a851b8b6b576",
+          "text": "What remains uncertain or cannot be verified independently.",
+          "marks": []
+        }
+      ],
+      "_key": "7724e5dfab7b",
+      "markDefs": [],
+      "listItem": "bullet",
+      "level": 1
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "f5c217f5b8d2",
+          "text": "Which signals defenders could observe.",
+          "marks": []
+        }
+      ],
+      "_key": "4ea94f3d05b6",
+      "markDefs": [],
+      "listItem": "bullet",
+      "level": 1
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "c388f8f51602",
+          "text": "What interventions or safeguards might reduce recurrence.",
+          "marks": []
+        }
+      ],
+      "_key": "ab5246f40936",
+      "markDefs": [],
+      "listItem": "bullet",
+      "level": 1
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "8c76c4206f39",
+          "text": "Separate the source's findings from your own interpretation. If you discuss a sensitive case, keep your analysis defensive and avoid publishing instructions that would facilitate misuse.",
+          "marks": []
+        }
+      ],
+      "_key": "7bc8e9131fd9",
+      "markDefs": []
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "f2cdf19e7461",
+          "text": "Your output:",
+          "marks": [
+            "strong"
+          ]
+        },
+        {
+          "_type": "span",
+          "_key": "06d43f524238",
+          "text": " A sourced, 1,500–2,500-word case analysis or short research paper.",
+          "marks": []
+        }
+      ],
+      "_key": "62ce53540132",
+      "markDefs": []
+    },
+    {
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "3a5748242924",
+          "text": "Days 15–20: Build a useful work sample",
+          "marks": []
+        }
+      ],
+      "_key": "5014a7a87859",
+      "markDefs": []
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "cf09d97799e7",
+          "text": "Turn your research into something another practitioner can use. You do ",
+          "marks": []
+        },
+        {
+          "_type": "span",
+          "_key": "0af6a69ac9e9",
+          "text": "not",
+          "marks": [
+            "strong"
+          ]
+        },
+        {
+          "_type": "span",
+          "_key": "3af0ec87b4cc",
+          "text": " have to write software. Your first project might be a defensive threat model, an incident-response checklist, a policy brief, a research dataset derived from public information, or an evaluation proposal for an authorized test environment.",
+          "marks": []
+        }
+      ],
+      "_key": "2962f5cbeb1b",
+      "markDefs": []
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "3a62962a1643",
+          "text": "For example, an AI-misuse investigation framework could follow this sequence:",
+          "marks": []
+        }
+      ],
+      "_key": "528fa620e4d3",
+      "markDefs": []
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "943af78dd657",
+          "text": "Detect → Cluster → Investigate → Attribute carefully → Assess AI uplift → Disrupt → Improve safeguards → Share intelligence",
+          "marks": [
+            "strong"
+          ]
+        }
+      ],
+      "_key": "0464b84bd670",
+      "markDefs": []
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "88cd2c0a18c1",
+          "text": "Explain the purpose of every step and include a worked example. Make your assumptions and limitations visible.",
+          "marks": []
+        }
+      ],
+      "_key": "a7bab7e55198",
+      "markDefs": []
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "a0231cc0bb0a",
+          "text": "Your output:",
+          "marks": [
+            "strong"
+          ]
+        },
+        {
+          "_type": "span",
+          "_key": "d54fa2ba051d",
+          "text": " One practical artifact published on your website, GitHub, or a public document.",
+          "marks": []
+        }
+      ],
+      "_key": "e0bdc4e0d11e",
+      "markDefs": []
+    },
+    {
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "fda1934adbec",
+          "text": "Days 21–25: Engage with the field",
+          "marks": []
+        }
+      ],
+      "_key": "1e14721f2b39",
+      "markDefs": []
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "2e1a4da0f7dc",
+          "text": "Share your draft with two or three people who work in AI safety, AI security, governance, threat intelligence, or adjacent areas. Ask where your analysis is weak, which assumptions need testing, and whether your proposed artifact would actually be useful.",
+          "marks": []
+        }
+      ],
+      "_key": "81f1e08c60da",
+      "markDefs": []
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "143c4c3ee8fe",
+          "text": "You can also host a small online discussion with interested colleagues. The point is not to claim that an event is a major accomplishment; it is to test whether your work solves a problem people recognize.",
+          "marks": []
+        }
+      ],
+      "_key": "8808b840d6e5",
+      "markDefs": []
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "b5580e3490fd",
+          "text": "Your output:",
+          "marks": [
+            "strong"
+          ]
+        },
+        {
+          "_type": "span",
+          "_key": "1ce33404c6ad",
+          "text": " Documented feedback and a revised version of your project.",
+          "marks": []
+        }
+      ],
+      "_key": "144a3bebded6",
+      "markDefs": []
+    },
+    {
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "3f4dd89262f6",
+          "text": "Days 26–30: Publish your portfolio and plan the next six months",
+          "marks": []
+        }
+      ],
+      "_key": "8392d84da90e",
+      "markDefs": []
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "ac17b3336813",
+          "text": "Make it easy for someone to verify your progress. Create a simple portfolio page containing your learning reflection, research question, case analysis, practical artifact, and what you changed after receiving feedback.",
+          "marks": []
+        }
+      ],
+      "_key": "817f1cd0cae6",
+      "markDefs": []
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "09cc0ed0c9a6",
+          "text": "Write a one-page six-month plan: the problem you intend to focus on, the work you will produce, the people or organizations you hope to collaborate with, and what you need to learn next. Only then shortlist relevant courses, cohorts, grants, research programs, or jobs.",
+          "marks": []
+        }
+      ],
+      "_key": "9da82d64ac16",
+      "markDefs": []
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "ad1146892291",
+          "text": "Your output:",
+          "marks": [
+            "strong"
+          ]
+        },
+        {
+          "_type": "span",
+          "_key": "92d939b440f2",
+          "text": " A public portfolio and a focused next-step plan.",
+          "marks": []
+        }
+      ],
+      "_key": "657b3b7a3202",
+      "markDefs": []
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "78c46a21a128",
+          "text": "Where BlueDot fits in",
+          "marks": []
+        }
+      ],
+      "_key": "41e7b31e93de",
+      "markDefs": []
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "ee02aab91a47",
+          "text": "BlueDot offers several possible stages in this journey. They are opportunities rather than a guaranteed sequence:",
+          "marks": []
+        }
+      ],
+      "_key": "be39cffecd12",
+      "markDefs": []
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "4cbd9912520c",
+          "text": "Learn the fundamentals:",
+          "marks": [
+            "strong"
+          ]
+        },
+        {
+          "_type": "span",
+          "_key": "6fd7daf5f001",
+          "text": " ",
+          "marks": []
+        },
+        {
+          "_type": "span",
+          "_key": "699bb7900bb1",
+          "text": "Future of AI",
+          "marks": [
+            "a327fa531232"
+          ]
+        },
+        {
+          "_type": "span",
+          "_key": "f3b305adc28e",
+          "text": " is a starting point for understanding advanced AI and its possible futures.",
+          "marks": []
+        }
+      ],
+      "_key": "db87ab7336fa",
+      "markDefs": [
+        {
+          "_key": "a327fa531232",
+          "_type": "link",
+          "href": "https://bluedot.org/courses/future-of-ai"
+        }
+      ],
+      "listItem": "number",
+      "level": 1
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "b7a0da362d2b",
+          "text": "Develop a direction:",
+          "marks": [
+            "strong"
+          ]
+        },
+        {
+          "_type": "span",
+          "_key": "4b5bea761ec0",
+          "text": " ",
+          "marks": []
+        },
+        {
+          "_type": "span",
+          "_key": "a6c84d9c748a",
+          "text": "AGI Strategy",
+          "marks": [
+            "0ebda081cdb6"
+          ]
+        },
+        {
+          "_type": "span",
+          "_key": "c814bf53e0ec",
+          "text": " helps participants explore risk pathways and the contributions they could make. Public material can be studied independently; facilitated cohorts involve a separate application.",
+          "marks": []
+        }
+      ],
+      "_key": "65dfda7d0142",
+      "markDefs": [
+        {
+          "_key": "0ebda081cdb6",
+          "_type": "link",
+          "href": "https://bluedot.org/courses/agi-strategy"
+        }
+      ],
+      "listItem": "number",
+      "level": 1
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "7585e41f15a4",
+          "text": "Fund a specific project:",
+          "marks": [
+            "strong"
+          ]
+        },
+        {
+          "_type": "span",
+          "_key": "2c0b4260ce82",
+          "text": " ",
+          "marks": []
+        },
+        {
+          "_type": "span",
+          "_key": "2e61ab06ac1b",
+          "text": "Rapid Grants",
+          "marks": [
+            "532c67f60334"
+          ]
+        },
+        {
+          "_type": "span",
+          "_key": "40591732734f",
+          "text": " may support eligible research, events, experiments, and community projects when the work and funding need are concrete.",
+          "marks": []
+        }
+      ],
+      "_key": "c9ad2b11e791",
+      "markDefs": [
+        {
+          "_key": "532c67f60334",
+          "_type": "link",
+          "href": "https://bluedot.org/grants/rapid"
+        }
+      ],
+      "listItem": "number",
+      "level": 1
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "662721949aa3",
+          "text": "Make a sustained transition:",
+          "marks": [
+            "strong"
+          ]
+        },
+        {
+          "_type": "span",
+          "_key": "a109af9c755f",
+          "text": " ",
+          "marks": []
+        },
+        {
+          "_type": "span",
+          "_key": "1ecadbe5f8f8",
+          "text": "Career Transition Grants",
+          "marks": [
+            "f9e0114ec13b"
+          ]
+        },
+        {
+          "_type": "span",
+          "_key": "5224a04bf37c",
+          "text": " support eligible applicants pursuing an intensive transition into impactful work. Read the current full-time commitment and eligibility requirements before applying.",
+          "marks": []
+        }
+      ],
+      "_key": "1b1ffa8d0c9f",
+      "markDefs": [
+        {
+          "_key": "f9e0114ec13b",
+          "_type": "link",
+          "href": "https://bluedot.org/grants/career-transition"
+        }
+      ],
+      "listItem": "number",
+      "level": 1
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "b4fc58ee4358",
+          "text": "Course places and grants are selective. A rejection does not prevent you from using public learning resources, strengthening your evidence, and applying to a future round if you have made meaningful progress. Verify current requirements and application dates on the official program pages.",
+          "marks": []
+        }
+      ],
+      "_key": "c09d2b283128",
+      "markDefs": []
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "a0f78e2ba488",
+          "text": "Do you need to become a developer?",
+          "marks": []
+        }
+      ],
+      "_key": "3dfda17e0f8f",
+      "markDefs": []
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "f24981c5807e",
+          "text": "Not for every AI-safety career. Threat-intelligence, governance, incident-response, research-operations, and community-building roles draw on different types of expertise. Some require substantial coding or engineering skills; others depend more on investigation, communication, judgment, and domain knowledge.",
+          "marks": []
+        }
+      ],
+      "_key": "f9d9156627e8",
+      "markDefs": []
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "2a86e2b85acb",
+          "text": "What you do need is ",
+          "marks": []
+        },
+        {
+          "_type": "span",
+          "_key": "6a7f3d2e3e4a",
+          "text": "enough technical literacy to understand your chosen problem and validate your work",
+          "marks": [
+            "strong"
+          ]
+        },
+        {
+          "_type": "span",
+          "_key": "1c50235fc5d3",
+          "text": ". An analyst may use AI assistance to write Python or SQL for a permitted dataset while remaining responsible for checking methods, interpreting results, and explaining limitations. Never upload confidential investigation records or personal data to unapproved tools.",
+          "marks": []
+        }
+      ],
+      "_key": "c71a3a61f7d4",
+      "markDefs": []
+    },
+    {
+      "_type": "block",
+      "style": "h2",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "625d589ce22e",
+          "text": "Your day-30 checklist",
+          "marks": []
+        }
+      ],
+      "_key": "b6f6f9f77fd3",
+      "markDefs": []
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "617a1cb69d33",
+          "text": "Complete introductory AI-safety learning.",
+          "marks": []
+        }
+      ],
+      "_key": "e6190fbe5836",
+      "markDefs": [],
+      "listItem": "task",
+      "level": 1,
+      "checked": false
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "b732a81db17e",
+          "text": "Choose one clearly defined research or career focus.",
+          "marks": []
+        }
+      ],
+      "_key": "11451a24f544",
+      "markDefs": [],
+      "listItem": "task",
+      "level": 1,
+      "checked": false
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "0c1d73513189",
+          "text": "Publish a sourced case analysis or short research paper.",
+          "marks": []
+        }
+      ],
+      "_key": "0fada8b38fa6",
+      "markDefs": [],
+      "listItem": "task",
+      "level": 1,
+      "checked": false
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "3dc4fe166556",
+          "text": "Produce one practical framework, threat model, or other work sample.",
+          "marks": []
+        }
+      ],
+      "_key": "6165896542a5",
+      "markDefs": [],
+      "listItem": "task",
+      "level": 1,
+      "checked": false
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "aa34a545db45",
+          "text": "Get feedback from relevant practitioners and document revisions.",
+          "marks": []
+        }
+      ],
+      "_key": "9fccd6d07ba1",
+      "markDefs": [],
+      "listItem": "task",
+      "level": 1,
+      "checked": false
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "9f3929eed894",
+          "text": "Publish a portfolio page and six-month plan.",
+          "marks": []
+        }
+      ],
+      "_key": "d5d47f43a31c",
+      "markDefs": [],
+      "listItem": "task",
+      "level": 1,
+      "checked": false
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "820c5bce779b",
+          "text": "Thirty days will not make you an established AI-safety researcher. But they can turn vague interest into a demonstrable direction. Instead of merely saying ",
+          "marks": []
+        },
+        {
+          "_type": "span",
+          "_key": "3aaa3d90b4ad",
+          "text": "“I want to work in AI safety,”",
+          "marks": [
+            "em"
+          ]
+        },
+        {
+          "_type": "span",
+          "_key": "ed61b026a8e5",
+          "text": " you can show what you have learned, what you have investigated, what you have built, and the questions you intend to answer next.",
+          "marks": []
+        }
+      ],
+      "_key": "f08d27b0e857",
+      "markDefs": []
+    },
+    {
+      "_type": "block",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "15a50a2f8eb1",
+          "text": "Start with curiosity. Build evidence. Seek feedback. Keep contributing.",
+          "marks": [
+            "strong"
+          ]
+        }
+      ],
+      "_key": "996e74ccd5f7",
+      "markDefs": []
+    },
+    {
+      "_type": "block",
+      "style": "blockquote",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "0cb9ceace6c3",
+          "text": "This is an independent career guide by Kayode Popoola. It is not affiliated with or endorsed by BlueDot Impact. Program offerings, admission requirements, and funding criteria may change; refer to the official pages before applying.",
+          "marks": [
+            "em"
+          ]
+        }
+      ],
+      "_key": "a973433902fc",
+      "markDefs": []
+    }
+  ],
+  "tags": [
+    "AI Safety",
+    "Career Development",
+    "BlueDot Impact",
+    "Threat Intelligence",
+    "AI Governance"
+  ],
+  "readingTime": "6 min read",
+  "featured": true
+}

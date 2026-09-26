@@ -164,6 +164,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
               <div className="article-eyebrow mt-8">
                 <span>{getBlogPublicationLabel(post)}</span>
+                {post.category ? <span>{post.category}</span> : null}
                 <span>By {post.author}</span>
                 <span>
                   {post.contentType === "external" ? "Added " : ""}

@@ -142,6 +142,7 @@ export const post = defineType({
           lists: [
             { title: "Bulleted", value: "bullet" },
             { title: "Numbered", value: "number" },
+            { title: "Checklist", value: "task" },
           ],
           marks: {
             decorators: [

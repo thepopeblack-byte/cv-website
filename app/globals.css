@@ -1418,15 +1418,58 @@ html[data-theme="light"] .theme-icon-moon {
   line-height: 1.1;
 }
 
-.article-body ul {
+.article-body ul,
+.article-body ol {
   margin: 1rem 0 0;
-  padding: 0;
-  list-style: none;
+  padding-left: 1.2rem;
+}
+
+.article-body ul {
+  list-style: disc;
+}
+
+.article-body ol {
+  list-style: decimal;
+}
+
+.article-body li::marker {
+  color: var(--accent);
 }
 
 .article-body li {
   border-top: 0;
   padding: 0.8rem 0 0.15rem;
+}
+
+.article-body .article-checklist {
+  display: grid;
+  gap: 0.7rem;
+  margin-top: 1.25rem;
+  padding: 0;
+  list-style: none;
+}
+
+.article-body .article-checklist > li {
+  display: grid;
+  grid-template-columns: 1.15rem minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: start;
+  padding: 0.8rem 0.9rem;
+  border-radius: 0.45rem;
+  background: var(--soft-surface);
+}
+
+.article-checklist-marker {
+  display: inline-grid;
+  place-items: center;
+  width: 1.05rem;
+  height: 1.05rem;
+  margin-top: 0.26rem;
+  border: 1px solid color-mix(in srgb, var(--accent) 55%, var(--line));
+  border-radius: 0.2rem;
+  color: var(--accent);
+  font-size: 0.75rem;
+  line-height: 1;
 }
 
 .article-body h3 {

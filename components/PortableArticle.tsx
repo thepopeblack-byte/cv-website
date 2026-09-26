@@ -26,6 +26,25 @@ const components: PortableTextComponents = {
       return <Link href={href}>{children}</Link>;
     },
   },
+  list: {
+    task: ({ children }) => (
+      <ul className="article-checklist">{children}</ul>
+    ),
+  },
+  listItem: {
+    task: ({ children, value }) => {
+      const checked = Boolean((value as { checked?: boolean }).checked);
+
+      return (
+        <li className={checked ? "is-checked" : undefined}>
+          <span className="article-checklist-marker" aria-hidden="true">
+            {checked ? "✓" : ""}
+          </span>
+          <span>{children}</span>
+        </li>
+      );
+    },
+  },
   types: {
     image: ({ value }) => {
       const image = value as BlogBodyImage;
