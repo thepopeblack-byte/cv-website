@@ -5371,3 +5371,72 @@ html[data-theme="light"] .substack-signup {
     transform: none;
   }
 }
+
+/* Experience proof is intentionally typographic rather than card-based. */
+.experience-proof-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem 2rem;
+  margin: 0.4rem 0 0;
+}
+
+.experience-proof-card {
+  display: block;
+  min-width: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 0;
+  transform: none;
+}
+
+.experience-proof-card dt {
+  margin-top: 0.42rem;
+  color: var(--muted);
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.11em;
+  line-height: 1.55;
+  text-transform: uppercase;
+}
+
+.experience-proof-card dd {
+  margin: 0;
+  color: var(--foreground);
+  font-family: "Sora", "Avenir Next", sans-serif;
+  font-size: clamp(1.2rem, 1.8vw, 1.55rem);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.experience-proof-card:nth-child(-n + 4) dd {
+  color: var(--accent);
+}
+
+.experience-proof-card:hover {
+  border-color: transparent;
+  background: transparent;
+  color: inherit;
+  transform: none;
+}
+
+@media (max-width: 767px) {
+  .experience-proof-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.15rem 1rem;
+    overflow: visible;
+  }
+
+  .experience-proof-card {
+    min-width: 0;
+  }
+
+  .experience-proof-card dd {
+    font-size: 1.2rem;
+  }
+}

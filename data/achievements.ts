@@ -178,18 +178,40 @@ export const heroQuickFacts = [
   achievements.communityReach.short,
 ];
 
-export const experienceProofChips = [
-  achievements.revenue.display + " revenue impact",
-  achievements.deals.display + " strategic deals",
-  achievements.finaStakingGrowth.display + " staking growth contribution",
-  achievements.communityReach.display + " community reach",
-  achievements.countries.display + " countries internationally",
-  achievements.secretRevenue.display + " Secret Network revenue in 90 days",
-  achievements.finaRevenue.display + " Fina Card revenue contribution",
-  achievements.evmPartnerships.display + " EVM / L2 partnerships",
-  achievements.tvlGrowth.display + " TVL growth contribution",
-  achievements.developers.display + " developers trained",
+export const experienceProofPoints = [
+  { value: achievements.revenue.display, label: "Revenue impact" },
+  { value: achievements.deals.display, label: "Strategic deals" },
+  {
+    value: achievements.finaStakingGrowth.display,
+    label: "Staking growth contribution",
+  },
+  { value: achievements.communityReach.display, label: "Community reach" },
+  {
+    value: achievements.countries.display,
+    label: "Countries internationally",
+  },
+  {
+    value: achievements.secretRevenue.display,
+    label: "Secret Network revenue in 90 days",
+  },
+  {
+    value: achievements.finaRevenue.display,
+    label: "Fina Card revenue contribution",
+  },
+  {
+    value: achievements.evmPartnerships.display,
+    label: "EVM / L2 partnerships",
+  },
+  {
+    value: achievements.tvlGrowth.display,
+    label: "TVL growth contribution",
+  },
+  { value: achievements.developers.display, label: "Developers trained" },
 ];
+
+export const experienceProofChips = experienceProofPoints.map(
+  ({ value, label }) => `${value} ${label.toLowerCase()}`,
+);
 
 export const socialProofChips = [
   achievements.revenue.display + " revenue impact",

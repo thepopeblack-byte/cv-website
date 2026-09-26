@@ -7,19 +7,8 @@ import {
   ControlledScene,
   type ControlledSceneItem,
 } from "@/components/ControlledScene";
-import { experienceProofChips } from "@/data/achievements";
+import { experienceProofPoints } from "@/data/achievements";
 import { experience } from "@/data/experience";
-
-const experienceSignals = [
-  "Partnerships",
-  "Revenue",
-  "Ecosystem Growth",
-  "Intelligence",
-  "GTM",
-  "Product Marketing",
-  "Web3",
-  "Africa Expansion",
-];
 
 function getStatus(period: string) {
   return period.includes("Present") ? "Current" : "Previous";
@@ -132,18 +121,14 @@ export function ExperienceTimeline() {
           panelClassName="experience-scene-panel"
           introFooter={
             <div className="experience-scene-signals">
-              <div className="experience-signal-strip" aria-label="Operating signals">
-                {experienceSignals.map((signal) => (
-                  <span key={signal}>{signal}</span>
+              <dl className="experience-proof-grid" aria-label="Experience proof points">
+                {experienceProofPoints.slice(0, 4).map((point) => (
+                  <div key={point.label} className="experience-proof-card">
+                    <dt>{point.label}</dt>
+                    <dd>{point.value}</dd>
+                  </div>
                 ))}
-              </div>
-              <div className="experience-proof-grid" aria-label="Experience proof points">
-                {experienceProofChips.map((chip) => (
-                  <span key={chip} className="experience-proof-card">
-                    {chip}
-                  </span>
-                ))}
-              </div>
+              </dl>
             </div>
           }
         />
