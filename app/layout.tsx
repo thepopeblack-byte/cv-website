@@ -13,7 +13,7 @@ import { profile } from "@/data/profile";
 import { siteDescription, siteName, siteUrl } from "@/data/site";
 
 const metadataTitle =
-  "Kayode Popoola | Web3 Partnerships & Revenue Growth Leader";
+  "Kayode Popoola | Blockchain Intelligence & Commercial Leadership";
 const metadataDescription = siteDescription;
 
 export const metadata: Metadata = {
@@ -59,7 +59,7 @@ export const metadata: Metadata = {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "Kayode Popoola executive profile card",
+        alt: "Kayode Popoola commercial leadership and blockchain intelligence profile card",
       },
     ],
     locale: "en_US",
@@ -98,7 +98,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
       <body>
         <script
           suppressHydrationWarning

@@ -5,20 +5,11 @@ import Link from "next/link";
 import { Container } from "@/components/Container";
 import { MobileSwipeRegion } from "@/components/MobileSwipeRegion";
 import { SectionReveal } from "@/components/SectionReveal";
-import { achievements, experienceProofChips } from "@/data/achievements";
 import { certifications } from "@/data/certifications";
 import { experience } from "@/data/experience";
-import { institutionalOutcomes } from "@/data/outcomes";
 import { portfolioItems, speakingMediaItems } from "@/data/portfolio";
 import { profile } from "@/data/profile";
 import { skillGroups } from "@/data/skills";
-
-const impactPreviewStats = [
-  achievements.revenue,
-  achievements.deals,
-  achievements.finaStakingGrowth,
-  achievements.communityReach,
-];
 
 function PreviewLink({ href, children }: { href: string; children: string }) {
   return (
@@ -30,7 +21,6 @@ function PreviewLink({ href, children }: { href: string; children: string }) {
 }
 
 export function HomeImpactPreview() {
-  const featuredOutcome = institutionalOutcomes[0];
   const featuredProject = portfolioItems[0];
 
   return (
@@ -43,53 +33,48 @@ export function HomeImpactPreview() {
         <SectionReveal className="section-frame home-preview">
           <div className="home-preview-heading">
             <div>
-              <div className="meta-stack">Impact</div>
+              <div className="meta-stack">Work &amp; Evidence</div>
               <h2 className="section-title">
-                Commercial outcomes with institutional relevance.
+                Partnerships at Secret. Intelligence at CipherOwl.
               </h2>
             </div>
-            <PreviewLink href="/impact">Explore Full Impact</PreviewLink>
+            <PreviewLink href="/impact">Explore Work & Evidence</PreviewLink>
           </div>
-
-          <MobileSwipeRegion
-            className="home-metric-row"
-            label="Selected impact statistics"
-          >
-            {impactPreviewStats.map((stat) => (
-              <article key={stat.label} className="home-metric">
-                <strong>{stat.display}</strong>
-                <span>{stat.label}</span>
-              </article>
-            ))}
-          </MobileSwipeRegion>
 
           <div className="home-impact-features">
-            <article className="home-feature home-case-preview">
-              <div className="meta-stack">Featured case study</div>
-              <h3>{featuredOutcome.title}</h3>
-              <p>{featuredOutcome.outcome}</p>
-              <Link href="/impact#outcomes" className="text-link">
-                Review the case study
-              </Link>
-            </article>
-
-            <article className="home-feature home-project-preview">
-              <div className="home-project-image">
-                <Image
-                  src={featuredProject.image}
-                  alt={featuredProject.imageAlt ?? featuredProject.title}
-                  fill
-                  className="object-cover"
-                  sizes="(min-width: 1024px) 42vw, 100vw"
-                />
-              </div>
-              <div>
-                <div className="meta-stack">Featured project</div>
-                <h3>{featuredProject.title}</h3>
-                <p>{featuredProject.summary}</p>
-              </div>
+            <div className="home-secret-preview">
+              <article className="home-feature home-case-preview">
+                <div className="meta-stack">Secret Network · international partnerships</div>
+                <h3>Secret Network Commercial Growth &amp; Partnerships</h3>
+                <p>
+                  Global sales strategy, enterprise partnerships, and partner-led go-to-market execution for privacy-first blockchain and confidential computing infrastructure. Reports document team partnerships; Q2 2024 directly credits my 12-week developer workshop contribution.
+                </p>
+                <Link href="/impact#secret-foundation" className="text-link">
+                  Read the Secret case
+                </Link>
+              </article>
+              <figure className="home-secret-team">
+                <Link href="/impact#secret-foundation" className="home-project-image">
+                  <Image
+                    src={featuredProject.image}
+                    alt="Kayode Popoola with the Secret Network team"
+                    fill
+                    className="object-cover"
+                    style={{ objectPosition: featuredProject.imageObjectPosition }}
+                    sizes="(min-width: 1024px) 30vw, 100vw"
+                  />
+                </Link>
+                <figcaption>With the Secret Network team</figcaption>
+              </figure>
+            </div>
+            <article className="home-feature home-cipherowl-preview">
+              <div className="meta-stack">Blockchain intelligence</div>
+              <h3>CipherOwl</h3>
+              <p>I investigate and attribute crypto-service addresses using transaction analysis and OSINT, with documented evidence and careful confidence limits. The work supports investigations, compliance and financial-crime analysis.</p>
+              <Link href="/impact#cipherowl" className="text-link">Read the CipherOwl case</Link>
             </article>
           </div>
+          <p className="home-secondary-proof">Separate programme: <Link href="/impact#cosmos-hub-africa" className="text-link">Cosmos Hub Nigeria / Naija HackATOM</Link> received $27,250 in ATOM Accelerator funding approval, with outcomes reported by the programme.</p>
         </SectionReveal>
       </Container>
     </section>
@@ -111,8 +96,7 @@ export function HomeExpertisePreview() {
             <div>
               <div className="meta-stack">Expertise</div>
               <h2 className="section-title">
-                Commercial depth, technical fluency, and intelligence-led
-                execution.
+                Commercial and investigative capabilities, with linked evidence.
               </h2>
             </div>
             <PreviewLink href="/expertise">Explore Full Expertise</PreviewLink>
@@ -245,10 +229,11 @@ export function HomeExperiencePreview() {
             })}
           </MobileSwipeRegion>
 
-          <div className="home-proof-strip" aria-label="Selected experience outcomes">
-            {experienceProofChips.slice(0, 4).map((proof) => (
-              <span key={proof}>{proof}</span>
-            ))}
+          <div className="home-proof-strip" aria-label="Career progression">
+            <span>Secret Network Africa</span>
+            <span>Business Development Associate</span>
+            <span>Business Development Manager</span>
+            <span>Head of Sales &amp; Business Development</span>
           </div>
         </SectionReveal>
       </Container>

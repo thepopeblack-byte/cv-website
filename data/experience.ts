@@ -1,8 +1,6 @@
-import { achievements } from "@/data/achievements";
-
 export type Role = {
   title: string;
-  period: string;
+  period?: string;
   location?: string;
   engagementType?: "Part-time" | "Contract" | "Consulting" | "Advisory" | "Full-time";
   bullets: string[];
@@ -17,21 +15,15 @@ export type ExperienceEntry = {
 export const experience: ExperienceEntry[] = [
   {
     company: "Secret Network Foundation",
-    label: "Revenue leadership | ecosystem growth | global partnerships",
+    label: "Global commercial leadership | partnerships | ecosystem adoption",
     roles: [
       {
         title: "Head of Sales & Business Development",
         period: "Mar 2026 - Present",
         location: "Remote",
         bullets: [
-          "Lead global sales strategy, revenue growth, strategic partnerships, and enterprise engagement for Secret Network Foundation.",
-          achievements.secretRevenue.claim,
-          achievements.deals.claim,
-          achievements.evmPartnerships.claim,
-          achievements.mainnetLaunches.claim,
-          achievements.tvlGrowth.claim,
-          "Build relationships with founders, investors, enterprises, developers, infrastructure teams, and ecosystem partners.",
-          "Represent Secret Network in executive meetings, global conferences, partner negotiations, and industry engagements.",
+          "Lead global sales and business development for privacy-focused blockchain and confidential-computing infrastructure.",
+          "Source leads, develop commercial opportunities and coordinate negotiation, partner activation and implementation with colleagues across the Foundation and technical teams.",
         ],
       },
       {
@@ -39,10 +31,8 @@ export const experience: ExperienceEntry[] = [
         period: "Jun 2025 - Mar 2026",
         location: "Remote",
         bullets: [
-          "Managed strategic partnerships, partner success, GTM planning, co-marketing, technical coordination, and commercial follow-up.",
-          "Identified new sales programs, partner-led growth opportunities, and commercial models.",
-          "Conducted market research, competitive analysis, and ecosystem mapping.",
-          "Managed pilot programs with partners and tracked performance outcomes.",
+          "Developed strategic partnerships, partner success plans, go-to-market activity and commercial follow-up across an international pipeline.",
+          "Introduced prospects and helped advance relationships through cross-functional planning; public Foundation reports document team outcomes, not individual deal ownership.",
         ],
       },
       {
@@ -50,9 +40,8 @@ export const experience: ExperienceEntry[] = [
         period: "Apr 2024 - Jun 2025",
         location: "Remote",
         bullets: [
-          "Supported partner acquisition, relationship management, market research, and ecosystem engagement.",
-          "Coordinated go-to-market activities, co-marketing plans, partner communications, and opportunity tracking.",
-          "Built research briefs, partner profiles, and competitive insights.",
+          "Sourced and researched prospective partners, built briefs and moved relevant opportunities into the business-development pipeline.",
+          "Worked with colleagues on co-marketing, partner communications and routes from ecosystem interest to adoption.",
         ],
       },
       {
@@ -61,84 +50,51 @@ export const experience: ExperienceEntry[] = [
         location: "Remote",
         engagementType: "Part-time",
         bullets: [
-          "Built and scaled Secret Network's African ecosystem presence across Nigeria, Kenya, Ghana, Rwanda, and South Africa.",
-          achievements.events.claim,
-          achievements.ambassadors.claim,
-          achievements.developers.claim,
-          "Built partnerships with universities, technology hubs, developer communities, and local Web3 organizations.",
-          "Supported African developers in hackathons, grants, GTM support, and ecosystem visibility.",
-          "Contributed to Secret Network Africa winning Best Blockchain-Based Solution at the 2023 Africa Fintech & AI Awards.",
+          "Developed the Cryptocurrency Academy Kenya education partnership and represented Secret Network Africa at Cybertech Africa, Web3 Lagos and the Africa Blockchain Summit.",
+          "The Foundation's Q2 2024 report names Popeblack for 12 weeks of Zero-to-Hero workshops; the reported developer-onboarding total was a Growth and DevRel team result.",
         ],
       },
     ],
   },
   {
     company: "CipherOwl Inc.",
-    label: "AML | OSINT | crypto investigations",
+    label: "Blockchain intelligence | OSINT | digital-asset risk",
     roles: [
       {
         title: "Blockchain Intelligence Analyst",
         period: "Mar 2026 - Present",
         location: "Remote",
         bullets: [
-          "Conduct blockchain intelligence, cryptocurrency investigations, attribution research, and financial crime analysis.",
-          "Investigate illicit crypto activity across OTC networks, P2P platforms, mixers, crypto ATMs, forums, wallets, and financial crime typologies.",
-          "Document attribution evidence including blockchain addresses, metadata, screenshots, URLs, usernames, transaction patterns, and entity linkages.",
-          "Apply professional classification standards to ensure accuracy, auditability, and defensibility of findings.",
-          "Track emerging crypto-related risks across African digital asset ecosystems.",
-          "Support operational intelligence needs through structured OSINT and evidence-based reporting.",
+          "Investigate and attribute blockchain addresses linked to OTC services, marketplaces, escrow services, forums, ATMs and higher-risk activity using on-chain transaction analysis and OSINT.",
+          "Document verifiable links between addresses and real-world entities or services, recording source evidence, OSINT indicators and confidence limits for auditable intelligence.",
+          "Apply structured taxonomy and metadata to intelligence datasets supporting cryptocurrency investigations, transaction monitoring, compliance and financial-crime analysis.",
+          "Prioritise evidence quality and defensible attribution while protecting confidential investigation details.",
         ],
       },
     ],
   },
   {
-    company: "Fina",
-    label: "Product growth | community scale | ecosystem expansion",
+    company: "WhisperNode",
+    label: "Ecosystem growth & partner communications | descriptive engagement",
     roles: [
       {
-        title: "Community, Growth & Product Marketing",
-        period: "Jun 2023 - Apr 2025",
+        title: "Community, content and partner support",
         bullets: [
-          achievements.finaRevenue.claim,
-          achievements.communityReach.claim,
-          "Led and supported community growth, product marketing, social strategy, user acquisition, campaigns, and ecosystem partnerships.",
-          "Supported adoption across Fina's wallet, staking, and crypto card products, contributing to 5x+ staking growth.",
-          "Supported expansion across Secret Network and the wider Cosmos/IBC ecosystem.",
+          "Managed social and community communications and supported outreach and customer service for partners across networks validated by WhisperNode.",
+          "Co-published WhisperNode Weekly issues credited to WhisperNode & Popeblack; staking-growth percentage awaits validator analytics.",
         ],
       },
     ],
   },
   {
-    company: "Jumia Group",
-    label: "Sales performance | client acquisition | commercial execution",
+    company: "Cosmos Hub Nigeria / Naija HackATOM",
+    label: "Funded ecosystem and developer programme | independent initiative",
     roles: [
       {
-        title: "Senior Sales Consultant",
-        period: "Jun 2015 - Dec 2021",
-        location: "Remote / Nigeria",
+        title: "Founder & programme lead",
         bullets: [
-          "Drove sales growth, customer acquisition, product adoption, and client service excellence.",
-          "Consistently exceeded sales and customer acquisition targets.",
-          "Achieved Gold-Level Sales Recognition.",
-          "Recognized among the youngest top-performing sales consultants in the region.",
-          "Collaborated with marketing and logistics teams to improve campaign performance, conversion, and customer satisfaction.",
-        ],
-      },
-    ],
-  },
-  {
-    company: "QuickTech Media",
-    label: "Creative operations | stakeholder management",
-    roles: [
-      {
-        title: "Graphics Editor / Creative Production Lead",
-        period: "Jan 2016 - Jan 2022",
-        location: "Nigeria",
-        engagementType: "Part-time",
-        bullets: [
-          "Led creative production of scrapbooks, photo booklets, yearbooks, and plaques for 20,000+ students across Nigeria.",
-          "Managed photography, digital organization, design templates, and production coordination.",
-          "Developed strong project coordination, stakeholder management, and client service capabilities.",
+          "Led programme design, local partnerships and delivery across Nigerian cities for a Cosmos Hub developer-activation initiative.",
+          "ATOM Accelerator approved $27,250 for Cosmos Nigeria/Popeblack; the programme report records 500+ attendees and 50+ project submissions.",
         ],
       },
     ],

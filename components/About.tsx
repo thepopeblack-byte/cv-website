@@ -1,82 +1,62 @@
-import { Container } from "@/components/Container";
-import {
-  ControlledScene,
-  type ControlledSceneItem,
-} from "@/components/ControlledScene";
-import { profile } from "@/data/profile";
+import { ArrowUpRight } from "lucide-react";
+import Link from "next/link";
 
-const profilePanels: ControlledSceneItem[] = [
+import { Container } from "@/components/Container";
+import styles from "./About.module.css";
+
+const proof = [
   {
-    id: "who-kayode-helps",
-    label: "Who Kayode helps",
-    content: (
-      <article className="profile-scene-panel">
-        <div className="meta-stack">Institutional relevance</div>
-        <h3>Built for organisations navigating growth and trust.</h3>
-        <p>
-          The work supports enterprises, public-sector institutions,
-          development organisations, universities, technology companies,
-          digital-asset businesses, regulated organisations, investors, and
-          strategic partners navigating growth, market entry, capacity
-          building, and digital-asset risk.
-        </p>
-      </article>
-    ),
-  },
-  {
-    id: "commercial-leadership",
     label: "Commercial leadership",
-    content: (
-      <article className="profile-scene-panel">
-        <div className="meta-stack">Revenue and partnerships</div>
-        <h3>{profile.aboutCards[0].title}</h3>
-        <p>{profile.aboutCards[0].text}</p>
-        <h4>{profile.aboutCards[1].title}</h4>
-        <p>{profile.aboutCards[1].text}</p>
-      </article>
-    ),
+    title: "Secret Network",
+    description: "A progression from regional ecosystem building to global sales and business-development leadership.",
+    href: "/impact#secret-foundation",
+    action: "View workstream",
   },
   {
-    id: "web3-infrastructure",
-    label: "Web3 & infrastructure",
-    content: (
-      <article className="profile-scene-panel">
-        <div className="meta-stack">Infrastructure and ecosystems</div>
-        <h3>{profile.aboutCards[2].title}</h3>
-        <p>{profile.aboutBody}</p>
-        <p>{profile.aboutCards[2].text}</p>
-      </article>
-    ),
+    label: "Blockchain intelligence",
+    title: "CipherOwl",
+    description: "Transaction research, OSINT, careful attribution and defensible reporting, with confidential case details protected.",
+    href: "/impact#cipherowl",
+    action: "View analytical work",
   },
   {
-    id: "intelligence-risk",
-    label: "Intelligence & risk",
-    content: (
-      <article className="profile-scene-panel">
-        <div className="meta-stack">Blockchain intelligence</div>
-        <h3>Evidence-led digital-asset intelligence.</h3>
-        <p>{profile.aboutBodyExtended}</p>
-      </article>
-    ),
+    label: "Published analysis",
+    title: "Hacken",
+    description: "My bylined analysis explains the discipline needed to follow stolen digital assets without overclaiming attribution.",
+    href: "https://hacken.io/discover/tracing-bybit-billion/",
+    action: "Read publication",
+    external: true,
   },
 ];
 
 export function About() {
   return (
-    <section
-      id="about"
-      data-nav-group="profile"
-      data-scene-label="Executive Profile"
-      className="page-layer controlled-section py-12"
-    >
+    <section id="about" data-nav-group="profile" className={styles.section}>
       <Container>
-        <ControlledScene
-          eyebrow="Executive profile"
-          title={profile.aboutTitle}
-          intro="Commercial leadership, infrastructure fluency, ecosystem execution, and intelligence-led operating depth presented in one concise profile."
-          items={profilePanels}
-          ariaLabel="Executive profile topics"
-        />
+        <div className={styles.narrative}>
+          <div>
+            <p className="meta-stack">Career narrative</p>
+            <h2>Commercial execution and investigative discipline.</h2>
+          </div>
+          <div className={styles.body}>
+            <p>I began in digital-commerce sales and community-led technology work. At Secret Network I moved from an ambassadorial and regional ecosystem role into Business Development Associate and Manager positions, then Head of Sales &amp; Business Development. Jillian Godsil&apos;s independent Blockleaders profile traces that progression.</p>
+            <p>From 2024 onward I sourced leads, introduced prospective partners and developed opportunities with colleagues. Today I lead global commercial work for privacy-focused blockchain and confidential-computing infrastructure: connecting founders, enterprises and technical teams, negotiating pathways and helping partnerships reach implementation. The engineers build the technology; I help bring it to market. My experience in African markets is a proof point of execution, not a limit on my international remit.</p>
+            <p>Fina was a project I supported while working with Secret, not an unrelated employer or a Foundation revenue line. I worked on its community, product and social marketing and adoption. I also led the separately funded Cosmos Hub Nigeria programme.</p>
+            <p>My parallel role at CipherOwl has given my interest in digital-asset risk an operational direction. I work with transaction flows, open-source sources, entity relationships and evidence capture for blockchain intelligence and financial-crime analysis. I am building this investigative career while continuing senior commercial work; my Hacken byline shows public analysis, not a confidential client case.</p>
+          </div>
+        </div>
+        <div className={styles.proof} aria-label="Career evidence">
+          {proof.map((item) => (
+            <article key={item.title}>
+              <p className="meta-stack">{item.label}</p>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+              <Link href={item.href} target={item.external ? "_blank" : undefined} rel={item.external ? "noopener noreferrer" : undefined} className="text-link">
+                {item.action} <ArrowUpRight size={14} aria-hidden="true" />
+              </Link>
+            </article>
+          ))}
+        </div>
       </Container>
     </section>
   );

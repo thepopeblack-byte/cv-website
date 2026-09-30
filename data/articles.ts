@@ -89,9 +89,11 @@ export function getFeaturedBlogPost(posts: BlogPost[]) {
 }
 
 export function getBlogPublicationLabel(post: BlogPost) {
-  return post.contentType === "external"
-    ? post.source
-      ? `Published on ${post.source}`
-      : "Externally published"
-    : "Original";
+  if (post.contentType !== "external") return "Original analysis";
+  if (isKayodeByline(post)) return `Bylined in ${post.source || "external publication"}`;
+  return `Independent coverage${post.source ? ` · ${post.source}` : ""}`;
+}
+
+export function isKayodeByline(post: BlogPost) {
+  return /\b(kayode|popoola)\b/i.test(post.author);
 }

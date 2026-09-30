@@ -1,13 +1,10 @@
 "use client";
 
 import { ArrowUpRight } from "lucide-react";
-import { motion } from "framer-motion";
 import Link from "next/link";
 
 import { Container } from "@/components/Container";
 import { LiveClock } from "@/components/LiveClock";
-import { MobileSwipeRegion } from "@/components/MobileSwipeRegion";
-import { heroQuickFacts } from "@/data/achievements";
 import { profile } from "@/data/profile";
 
 type HeroAction = {
@@ -20,33 +17,30 @@ type HeroAction = {
 
 const heroActions: HeroAction[] = [
   {
+    label: "Discuss a role",
+    href: `mailto:${profile.email}?subject=Senior%20commercial%20opportunity`,
+    variant: "button-primary",
+  },
+  { label: "Selected Work", href: "/impact", variant: "button-secondary" },
+  {
+    label: "Download CV",
+    href: profile.cvUrl,
+    variant: "button-ghost",
+    download: true,
+  },
+  {
     label: "Book a Call",
     href: profile.bookCallUrl,
-    variant: "button-primary",
-    external: true,
-  },
-  {
-    label: "View Experience",
-    href: "/experience",
-    variant: "button-secondary",
-  },
-  {
-    label: "Read Blog",
-    href: "/blog",
-    variant: "button-ghost",
-  },
-  {
-    label: "LinkedIn",
-    href: profile.linkedin,
     variant: "button-ghost",
     external: true,
   },
 ];
 
-const heroPillars = [
-  "Commercial Growth.",
-  "Web3 Partnerships.",
-  "Blockchain Intelligence.",
+const proofLinks = [
+  { label: "Secret Network report", href: "https://framerusercontent.com/assets/njSofqEShz6VOC0sURkbP6bSNI.pdf" },
+  { label: "Encryption Day speaking", href: profile.youtube },
+  { label: "Hacken byline", href: "https://hacken.io/discover/tracing-bybit-billion/" },
+  { label: "Independent profile", href: "https://blockleaders.io/popeblacks-web3-journey/" },
 ];
 
 export function Hero() {
@@ -61,17 +55,12 @@ export function Hero() {
       <span id="home" className="anchor-alias" aria-hidden="true" />
       <Container>
         <div className="section-frame">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="grid gap-10 lg:grid-cols-[0.34fr_0.66fr]"
-          >
+          <div className="grid gap-10 lg:grid-cols-[0.34fr_0.66fr]">
             <div className="space-y-8">
               <div className="meta-stack space-y-2">
                 <LiveClock />
-                <div>WEB3 / AI / PARTNERSHIPS / REVENUE</div>
-                <div>BLOCKCHAIN INTELLIGENCE / AML-CFT / OSINT</div>
+                <div>BLOCKCHAIN INTELLIGENCE / FINANCIAL CRIME</div>
+                <div>GLOBAL COMMERCIAL LEADERSHIP</div>
               </div>
 
               <div className="hero-actions">
@@ -93,37 +82,32 @@ export function Hero() {
             </div>
 
             <div>
-              <div className="meta-stack">Executive profile</div>
+              <div className="meta-stack">Secret Network Foundation · CipherOwl</div>
               <h1 className="mt-4 font-['Sora'] text-[4rem] leading-none text-[var(--foreground)] sm:text-[5rem] lg:text-[6rem]">
                 Kayode Popoola
               </h1>
               <div className="hero-pillar-stack mt-5">
-                {heroPillars.map((pillar) => (
-                  <p key={pillar}>{pillar}</p>
+                <p>Commercial growth. Blockchain intelligence.</p>
+              </div>
+              <div className="hero-evidence-links mt-7" aria-label="Independent evidence">
+                <span className="meta-stack">Public evidence</span>
+                {proofLinks.map((link) => (
+                  <Link key={link.href} href={link.href} target="_blank" rel="noopener noreferrer" className="text-link">
+                    {link.label}<ArrowUpRight size={13} aria-hidden="true" />
+                  </Link>
                 ))}
               </div>
               <div className="mt-6 max-w-4xl space-y-5 text-[1.08rem] leading-9 text-[var(--muted-strong)]">
                 <p>
-                  Building revenue, ecosystem growth, and trust infrastructure
-                  across Web3, AI, DeFi, and emerging markets.
+                  At Secret Network Foundation, I lead partnerships, revenue and market adoption for privacy-focused blockchain and AI infrastructure. I turn technical capability into commercial relationships with founders, product teams and enterprises.
                 </p>
-                <p>{profile.currentFocus}</p>
+                <p>
+                  At CipherOwl, I investigate and attribute blockchain addresses linked to cryptocurrency services and higher-risk activity. I combine transaction analysis with OSINT to produce evidence-backed intelligence for investigations, compliance and financial-crime analysis.
+                </p>
               </div>
 
-              <MobileSwipeRegion
-                className="hero-quick-facts mt-10 grid gap-3 pt-3 md:grid-cols-2"
-                label="Selected commercial highlights"
-              >
-                {heroQuickFacts.map((fact) => (
-                  <div key={fact} className="flex gap-4">
-                    <p className="text-[1rem] leading-8 text-[var(--foreground)]">
-                      {fact}
-                    </p>
-                  </div>
-                ))}
-              </MobileSwipeRegion>
             </div>
-          </motion.div>
+          </div>
         </div>
       </Container>
     </section>

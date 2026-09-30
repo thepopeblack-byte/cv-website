@@ -214,10 +214,9 @@ export const experienceProofChips = experienceProofPoints.map(
 );
 
 export const socialProofChips = [
-  achievements.revenue.display + " revenue impact",
-  achievements.deals.display + " strategic deals",
-  achievements.finaStakingGrowth.display + " staking growth",
-  achievements.communityReach.display + " community reach",
+  "Secret Network Foundation",
+  "Cosmos Hub Africa",
+  "Hacken byline",
 ];
 
 export const achievementSummary = [

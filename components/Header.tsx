@@ -190,7 +190,7 @@ export function Header() {
             <Link href="/" className="site-brand min-w-0" onClick={closeMenu}>
               <div className="meta-stack">Kayode Popoola</div>
               <div className="site-brand-subtitle mt-1 truncate font-['Sora'] text-sm text-[var(--foreground)]">
-                Popeblack · Web3 Growth & Intelligence
+                Popeblack · Intelligence &amp; Growth
               </div>
             </Link>
 

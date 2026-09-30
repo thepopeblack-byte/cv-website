@@ -47,6 +47,28 @@ export function ControlledScene({
 }: ControlledSceneProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const tabsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const tabs = tabsRef.current;
+    const activeTab = tabRefs.current[activeIndex];
+
+    if (!tabs || !activeTab || tabs.scrollWidth <= tabs.clientWidth) {
+      return;
+    }
+
+    const tabsRect = tabs.getBoundingClientRect();
+    const activeRect = activeTab.getBoundingClientRect();
+    const leftOverflow = activeRect.left - tabsRect.left;
+    const rightOverflow = activeRect.right - tabsRect.right;
+
+    if (leftOverflow < 0 || rightOverflow > 0) {
+      tabs.scrollTo({
+        left: tabs.scrollLeft + (leftOverflow < 0 ? leftOverflow : rightOverflow),
+        behavior: "auto",
+      });
+    }
+  }, [activeIndex]);
 
   useEffect(() => {
     if (!analyticsEvent) {
@@ -105,6 +127,7 @@ export function ControlledScene({
             <div className="section-copy">{intro}</div>
 
             <div
+              ref={tabsRef}
               className="controlled-scene-tabs"
               aria-label={ariaLabel}
             >

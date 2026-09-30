@@ -17,6 +17,7 @@ const workspaceRoot = fs.existsSync(localNextPackage)
 const nextConfig: NextConfig = {
   output: "standalone",
   outputFileTracingRoot: workspaceRoot,
+  allowedDevOrigins: ["127.0.0.1", "localhost"],
   images: {
     remotePatterns: [
       {

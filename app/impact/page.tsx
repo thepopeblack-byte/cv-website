@@ -2,17 +2,14 @@ import type { Metadata } from "next";
 
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
-import { ImpactStats } from "@/components/ImpactStats";
-import { Portfolio } from "@/components/Portfolio";
 import { RouteIntro } from "@/components/RouteIntro";
-import { SelectedEcosystems } from "@/components/SelectedEcosystems";
-import { SelectedOutcomes } from "@/components/SelectedOutcomes";
+import { WorkEvidence } from "@/components/WorkEvidence";
 import { siteUrl } from "@/data/site";
 
 export const metadata: Metadata = {
-  title: "Impact & Selected Outcomes | Kayode Popoola",
+  title: "Work & Evidence | Kayode Popoola",
   description:
-    "Commercial impact, institutional case studies, ecosystem development, and selected Web3 and blockchain-intelligence work from Kayode Popoola.",
+    "Kayode Popoola's evidence-led Secret Network and Fina commercial portfolio, Cosmos Hub programme, CipherOwl intelligence methods and clearly labelled engagements.",
   alternates: { canonical: `${siteUrl}/impact` },
 };
 
@@ -22,14 +19,11 @@ export default function ImpactPage() {
       <Header />
       <main id="main-content" className="page-layer route-main pb-8">
         <RouteIntro
-          eyebrow="Impact"
-          title="Measured outcomes across partnerships, markets, and ecosystems."
-          intro="Commercial proof and institutional case studies covering revenue growth, strategic partnerships, ecosystem activation, capacity building, and evidence-led digital-asset intelligence."
+          eyebrow="Work & Evidence"
+          title="Work, outcomes, evidence."
+          intro="Secret Network and its Fina ecosystem project lead the commercial story; Cosmos follows as a distinct funded programme. My CipherOwl work and published analysis show the investigative direction."
         />
-        <ImpactStats />
-        <SelectedOutcomes />
-        <SelectedEcosystems />
-        <Portfolio />
+        <WorkEvidence />
       </main>
       <Footer />
     </>

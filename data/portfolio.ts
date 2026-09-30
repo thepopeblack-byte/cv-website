@@ -169,4 +169,31 @@ export const speakingMediaItems: PortfolioItem[] = [
     videoEmbedUrl: "https://www.youtube.com/embed/ktdhwuTZcb0?start=7",
     videoWatchUrl: "https://www.youtube.com/watch?v=ktdhwuTZcb0&t=7s",
   },
+  {
+    title: "Popeblack's Presentation at CoCreate West Africa Tech Expo",
+    category: "Conference Video",
+    description:
+      "A recorded presentation on blockchain at CoCreate West Africa Tech Expo.",
+    image: "/images/popeblack/videos/cocreate-west-africa-tech-expo.jpg",
+    imageAlt:
+      "Kayode Popoola presenting on blockchain at CoCreate West Africa Tech Expo.",
+    videoEmbedUrl: "https://www.youtube.com/embed/ZPtah6a3exU",
+    videoWatchUrl: "https://www.youtube.com/watch?v=ZPtah6a3exU",
+  },
+  {
+    title: "SiBAN Digital Assets Summit 2023, Abuja",
+    category: "Conference Video",
+    description:
+      "Day-two recording of the SiBAN Digital Assets Summit. I moderated a panel on finance and emerging technologies and spoke about blockchain privacy and Secret Network's work in Africa.",
+    image: "/images/popeblack/videos/siban-digital-assets-summit-2023.jpg",
+    imageAlt: "SiBAN Digital Assets Summit 2023 stage in Abuja.",
+    videoEmbedUrl: "https://www.youtube.com/embed/o-2dpcgb8oA",
+    videoWatchUrl: "https://www.youtube.com/watch?v=o-2dpcgb8oA",
+    links: [
+      {
+        label: "Speaking announcement",
+        href: "https://www.linkedin.com/posts/thepopeblack_digitalassets-blockchain-privacy-activity-7105156219450855424-AAWi",
+      },
+    ],
+  },
 ];

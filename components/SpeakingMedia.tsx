@@ -73,6 +73,8 @@ export function SpeakingMedia() {
           "Alt Kings",
           "Web3 Lagos",
           "Cybertech Africa",
+          "CoCreate",
+          "SiBAN Summit",
         ][index] ?? item.title,
       content: (
         <article className="media-card media-feature-card">
@@ -195,7 +197,7 @@ export function SpeakingMedia() {
         <Container>
           <ControlledScene
             eyebrow="Speaking & media"
-            title="Watch Kayode in Action"
+            title="Speaking, interviews and event appearances"
             intro="Selected talks, workshops, media appearances, and public proof across Web3, blockchain privacy, ecosystem growth, and digital assets."
             items={mediaPanels}
             ariaLabel="Speaking and media appearances"

@@ -22,3 +22,5 @@ start-dev-*.ps1
 tsconfig.tsbuildinfo
 next.config.backup.ts
 CV-3006-format
+docs/portfolio-review/claims-awaiting-evidence.md
+docs/portfolio-review/source-cache/

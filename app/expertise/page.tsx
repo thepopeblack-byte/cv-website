@@ -12,7 +12,7 @@ import { siteUrl } from "@/data/site";
 export const metadata: Metadata = {
   title: "Expertise & Credentials | Kayode Popoola",
   description:
-    "Kayode Popoola's capabilities, credentials, education, professional development, and public speaking across commercial growth, Web3, and blockchain intelligence.",
+    "Kayode Popoola's demonstrated capabilities, credentials and public speaking in blockchain intelligence, financial-crime analysis and commercial leadership.",
   alternates: { canonical: `${siteUrl}/expertise` },
 };
 
@@ -23,8 +23,8 @@ export default function ExpertisePage() {
       <main id="main-content" className="page-layer route-main pb-8">
         <RouteIntro
           eyebrow="Expertise"
-          title="Commercial depth, infrastructure fluency, and intelligence-led execution."
-          intro="A focused view of capabilities, credentials, education, professional development, and public proof supporting senior commercial and institutional work."
+          title="Capabilities demonstrated in the work."
+          intro="Two active practices: transaction and open-source analysis for digital-asset risk, and international partnerships and market adoption."
         />
         <Skills />
         <Certifications />

@@ -1,0 +1,10 @@
+.section { padding: clamp(2.5rem, 5vw, 5rem) 0; }
+.narrative { display: grid; grid-template-columns: 0.38fr 0.62fr; gap: 3rem; }
+.narrative h2 { margin: 1rem 0 0; font: 400 clamp(2rem, 3.5vw, 3rem)/1.14 "Sora", sans-serif; letter-spacing: -0.035em; }
+.body { max-width: 46rem; color: var(--muted-strong); font-size: 1.05rem; line-height: 1.85; }
+.body p { margin: 0 0 1.1rem; }
+.proof { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; margin-top: 3rem; }
+.proof article { border-top: 1px solid var(--line); padding-top: 1.3rem; }
+.proof h3 { margin: 0.8rem 0; font: 400 1.45rem/1.25 "Sora", sans-serif; }
+.proof article > p:not(.meta-stack) { color: var(--muted); line-height: 1.65; min-height: 5.2rem; }
+@media (max-width: 767px) { .narrative, .proof { grid-template-columns: 1fr; gap: 1.3rem; } .proof article > p:not(.meta-stack) { min-height: 0; } }

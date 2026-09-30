@@ -9,7 +9,7 @@ import { siteUrl } from "@/data/site";
 export const metadata: Metadata = {
   title: "Professional Experience | Kayode Popoola",
   description:
-    "Kayode Popoola's professional experience across commercial leadership, Web3 infrastructure, blockchain intelligence, digital commerce, and emerging markets.",
+    "Four selected engagements: Secret Network commercial leadership with a nested Fina project, CipherOwl intelligence analysis, WhisperNode communications and a Cosmos Hub programme.",
   alternates: { canonical: `${siteUrl}/experience` },
 };
 
@@ -20,7 +20,7 @@ export default function ExperiencePage() {
       <main id="main-content" className="page-layer route-main pb-8">
         <RouteIntro
           eyebrow="Experience"
-          title="A record of disciplined commercial and institutional execution."
+          title="Commercial and intelligence work, side by side."
           intro="Complete professional experience across sales leadership, strategic partnerships, ecosystem development, digital commerce, and blockchain intelligence."
         />
         <ExperienceTimeline />

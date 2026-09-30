@@ -1,137 +1,72 @@
-"use client";
-
-import { useState } from "react";
+import { ArrowUpRight } from "lucide-react";
+import Link from "next/link";
 
 import { Container } from "@/components/Container";
-import {
-  ControlledScene,
-  type ControlledSceneItem,
-} from "@/components/ControlledScene";
-import { experienceProofPoints } from "@/data/achievements";
 import { experience } from "@/data/experience";
+import styles from "./ExperienceTimeline.module.css";
 
-function getStatus(period: string) {
-  return period.includes("Present") ? "Current" : "Previous";
-}
+const evidenceLinks: Record<string, { href: string; label: string }> = {
+  "Secret Network Foundation": { href: "/impact#secret-foundation", label: "Secret Network workstream" },
+  "CipherOwl Inc.": { href: "/impact#cipherowl", label: "Intelligence method" },
+  "WhisperNode": { href: "/impact#whispernode", label: "Co-credited publication" },
+  "Cosmos Hub Nigeria / Naija HackATOM": { href: "/impact#cosmos-hub-africa", label: "Funding and programme record" },
+};
 
 export function ExperienceTimeline() {
-  const [expandedRoles, setExpandedRoles] = useState<Record<string, boolean>>(
-    {},
-  );
-
-  const toggleRoleDetails = (roleKey: string) => {
-    setExpandedRoles((current) =>
-      current[roleKey] ? {} : { [roleKey]: true },
-    );
-  };
-
-  const experiencePanels: ControlledSceneItem[] = experience.map(
-    (entry, entryIndex) => ({
-      id: entry.company.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
-      label: entry.company,
-      content: (
-        <article className="experience-entry experience-feature">
-          <div className="experience-feature-header">
-            <div>
-              <div className="meta-stack">
-                {entryIndex < 2 ? "Current roles" : "Earlier experience"}
-              </div>
-              <h3>{entry.company}</h3>
-              <p>{entry.label}</p>
-            </div>
-          </div>
-
-          <div className="experience-feature-roles">
-            {entry.roles.map((role, roleIndex) => {
-              const roleKey = `${entry.company}-${role.title}`;
-              const isExpanded = expandedRoles[roleKey] ?? false;
-              const showsPreview = roleIndex === 0 || isExpanded;
-
-              return (
-                <section
-                  key={roleKey}
-                  className={`experience-role ${isExpanded ? "is-expanded" : ""}`}
-                  aria-labelledby={`${roleKey.replace(/[^a-z0-9]+/gi, "-")}-title`}
-                >
-                  <div className="experience-role-heading">
-                    <h4 id={`${roleKey.replace(/[^a-z0-9]+/gi, "-")}-title`}>
-                      {role.title}
-                    </h4>
-                    <span className="meta-stack">{getStatus(role.period)}</span>
-                  </div>
-                  <div className="experience-role-meta meta-stack">
-                    <span>{role.period}</span>
-                    {role.location ? <span>{role.location}</span> : null}
-                    {role.engagementType ? <span>{role.engagementType}</span> : null}
-                  </div>
-                  {showsPreview ? (
-                    <ul className="experience-bullet-list">
-                      {role.bullets.map((bullet, bulletIndex) => (
-                        <li
-                          key={bullet}
-                          className={
-                            bulletIndex >= 2
-                              ? "experience-extra-bullet"
-                              : undefined
-                          }
-                        >
-                          {bullet}
-                        </li>
-                      ))}
-                    </ul>
-                  ) : null}
-                  {role.bullets.length ? (
-                    <button
-                      type="button"
-                      className="experience-details-toggle"
-                      aria-expanded={isExpanded}
-                      onClick={() => toggleRoleDetails(roleKey)}
-                    >
-                      {isExpanded
-                        ? "Show less"
-                        : roleIndex === 0
-                          ? "View details"
-                          : "View role"}
-                    </button>
-                  ) : null}
-                </section>
-              );
-            })}
-          </div>
-        </article>
-      ),
-    }),
-  );
-
   return (
-    <section
-      id="experience"
-      data-nav-group="experience"
-      data-scene-label="Experience"
-      className="page-layer controlled-section py-14 md:py-16 lg:py-12"
-    >
+    <section id="experience" data-nav-group="experience" className={styles.section}>
       <Container>
-        <ControlledScene
-          eyebrow="Experience"
-          title="Operating experience across commercial leadership, Web3 infrastructure, intelligence, and emerging markets."
-          intro="The throughline is disciplined execution: building markets, partnerships, revenue systems, stakeholder programmes, and defensible digital-asset intelligence in complex environments."
-          items={experiencePanels}
-          ariaLabel="Professional experience by company"
-          analyticsEvent="experience_role_view"
-          panelClassName="experience-scene-panel"
-          introFooter={
-            <div className="experience-scene-signals">
-              <dl className="experience-proof-grid" aria-label="Experience proof points">
-                {experienceProofPoints.slice(0, 4).map((point) => (
-                  <div key={point.label} className="experience-proof-card">
-                    <dt>{point.label}</dt>
-                    <dd>{point.value}</dd>
-                  </div>
+        <div className={styles.intro}>
+          <div>
+            <p className="meta-stack">Professional experience</p>
+            <h2>Four selected areas of work.</h2>
+          </div>
+        </div>
+        <div className={styles.timeline}>
+          {experience.map((entry) => (
+            <article key={entry.company} className={styles.entry}>
+              <div className={styles.company}>
+                <h3>{entry.company}</h3>
+                <p>{entry.label}</p>
+                {evidenceLinks[entry.company] ? (
+                  <Link href={evidenceLinks[entry.company].href} className="text-link">
+                    {evidenceLinks[entry.company].label} <ArrowUpRight size={14} aria-hidden="true" />
+                  </Link>
+                ) : null}
+              </div>
+              <div className={styles.roles}>
+                {entry.roles.map((role) => (
+                  <section key={`${entry.company}-${role.title}`} className={styles.role}>
+                    <div className={styles.roleHead}>
+                      <h4>{role.title}</h4>
+                      {role.period ? <span>{role.period}</span> : null}
+                    </div>
+                    {(role.location || role.engagementType) && (
+                      <p className={styles.meta}>{[role.location, role.engagementType].filter(Boolean).join(" · ")}</p>
+                    )}
+                    <ul>
+                      {role.bullets.slice(0, 2).map((bullet) => <li key={bullet}>{bullet}</li>)}
+                    </ul>
+                    {role.bullets.length > 2 ? (
+                      <details className={styles.details}>
+                        <summary>More about this role</summary>
+                        <ul>{role.bullets.slice(2).map((bullet) => <li key={bullet}>{bullet}</li>)}</ul>
+                      </details>
+                    ) : null}
+                  </section>
                 ))}
-              </dl>
-            </div>
-          }
-        />
+                {entry.company === "Secret Network Foundation" ? (
+                  <aside className={styles.project} aria-label="Fina ecosystem project">
+                    <p className="meta-stack">Nested Secret ecosystem project</p>
+                    <h4>Fina / Fina Cash</h4>
+                    <p>While working with Secret, I supported Fina&apos;s community, product and social marketing, campaigns, user acquisition and wallet, card and staking adoption. Fina&apos;s product results are separate from Foundation revenue.</p>
+                    <Link href="/impact#fina" className="text-link">View the Fina subcase <ArrowUpRight size={14} aria-hidden="true" /></Link>
+                  </aside>
+                ) : null}
+              </div>
+            </article>
+          ))}
+        </div>
       </Container>
     </section>
   );

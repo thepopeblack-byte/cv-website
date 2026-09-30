@@ -1,0 +1,23 @@
+.section { padding: clamp(2.5rem, 5vw, 5rem) 0; }
+.intro, .entry { display: grid; grid-template-columns: 0.35fr 0.65fr; gap: 3rem; }
+.intro { grid-template-columns: 1fr; margin-bottom: 3rem; }
+.intro h2 { margin: 1rem 0 0; font: 400 clamp(2rem, 3.5vw, 3rem)/1.13 "Sora", sans-serif; letter-spacing: -0.035em; }
+.intro > p { color: var(--muted-strong); line-height: 1.8; }
+.entry { padding: 2rem 0; border-top: 1px solid var(--line); }
+.company h3 { margin: 0; font: 400 1.4rem/1.3 "Sora", sans-serif; }
+.company p { color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
+.roles { display: grid; gap: 1.8rem; }
+.role + .role { padding-top: 1.8rem; border-top: 1px solid var(--line); }
+.roleHead { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+.roleHead h4 { margin: 0; font: 500 1.13rem/1.35 "Sora", sans-serif; }
+.roleHead span { color: var(--bronze); font-size: 0.78rem; white-space: nowrap; }
+.meta { color: var(--muted); font-size: 0.8rem; }
+.role ul { padding-left: 1.1rem; color: var(--muted-strong); line-height: 1.7; }
+.role li { margin: 0.35rem 0; }
+.details { margin-top: 0.8rem; color: var(--muted-strong); }
+.details summary { color: var(--accent); cursor: pointer; font-weight: 700; width: fit-content; }
+.details summary:hover { text-decoration: underline; }
+.project { padding: 1.25rem 1.4rem; border-radius: 0.75rem; background: var(--soft-surface); }
+.project h4 { margin: 0.5rem 0; font: 500 1.1rem/1.35 "Sora", sans-serif; }
+.project p:not(.meta-stack) { margin: 0 0 0.8rem; color: var(--muted-strong); line-height: 1.65; }
+@media (max-width: 767px) { .intro, .entry { grid-template-columns: 1fr; gap: 1rem; } .roleHead { flex-direction: column; gap: 0.4rem; } .roleHead span { white-space: normal; } }

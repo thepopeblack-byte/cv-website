@@ -161,5 +161,11 @@ export async function getBlogPostBySlug(
   );
   const normalizedPost = sanityPost ? normalizePost(sanityPost) : null;
 
-  return normalizedPost;
+  if (normalizedPost) {
+    return normalizedPost;
+  }
+
+  // The published index may still be cached when an individual Sanity lookup fails.
+  const publishedPosts = await getBlogPosts();
+  return publishedPosts.find((post) => post.slug === slug) ?? null;
 }

@@ -10,6 +10,7 @@ import { SubstackSignup } from "@/components/SubstackSignup";
 import {
   getBlogPublicationLabel,
   getFeaturedBlogPost,
+  isKayodeByline,
   type BlogPost,
 } from "@/data/articles";
 import { siteDescription, siteUrl } from "@/data/site";
@@ -97,7 +98,6 @@ function StoryCard({ post, lead = false }: { post: BlogPost; lead?: boolean }) {
           <div className={styles.byline}>
             <span>By {post.author}</span>
             <span>
-              {post.contentType === "external" ? "Added " : ""}
               <time dateTime={post.date}>{formatDate(post.date)}</time>
             </span>
             {post.readingTime ? <span>{post.readingTime}</span> : null}
@@ -114,8 +114,12 @@ function StoryCard({ post, lead = false }: { post: BlogPost; lead?: boolean }) {
 
 export default async function BlogPage() {
   const posts = await getBlogPosts();
-  const featuredArticle = getFeaturedBlogPost(posts);
-  const otherArticles = posts.filter(
+  const authoredPosts = posts.filter(isKayodeByline);
+  const independentCoverage = posts.filter((post) => !isKayodeByline(post));
+  const featuredArticle =
+    authoredPosts.find((post) => post.source?.toLowerCase() === "hacken") ??
+    getFeaturedBlogPost(authoredPosts);
+  const otherArticles = authoredPosts.filter(
     (post) => post.slug !== featuredArticle?.slug,
   );
   const supportingArticles = otherArticles.slice(0, 1);
@@ -127,13 +131,12 @@ export default async function BlogPage() {
       <main id="main-content" className={`page-layer ${styles.page}`}>
         <Container className={styles.container}>
           <header className={styles.masthead}>
-            <div className="meta-stack">Writing / Published features</div>
+            <div className="meta-stack">Writing &amp; Speaking</div>
             <div className={styles.introduction}>
-              <h1 className={styles.title}>From the Desk of Kayode Popoola</h1>
+              <h1 className={styles.title}>Analysis, publication and public conversation.</h1>
               <p className={styles.description}>
-                Original essays, published features, and field notes across AI,
-                privacy, Web3 growth, blockchain intelligence, partnerships, and
-                emerging markets.
+                My bylined work on digital trust and commercial technology,
+                separate from independent reporting about my career and public speaking.
               </p>
             </div>
           </header>
@@ -144,7 +147,7 @@ export default async function BlogPage() {
             >
               <section aria-labelledby="featured-story-heading">
                 <h2 id="featured-story-heading" className={styles.sectionLabel}>
-                  Featured story
+                  Featured analysis
                 </h2>
                 <StoryCard post={featuredArticle} lead />
               </section>
@@ -154,7 +157,7 @@ export default async function BlogPage() {
                     id="latest-writing-heading"
                     className={styles.sectionLabel}
                   >
-                    Latest writing
+                    More by Kayode
                   </h2>
                   <div className={styles.supportingStories}>
                     {supportingArticles.map((post) => (
@@ -179,7 +182,7 @@ export default async function BlogPage() {
               aria-labelledby="more-writing-heading"
             >
               <h2 id="more-writing-heading" className={styles.sectionLabel}>
-                More writing
+                More by Kayode
               </h2>
               <div className={styles.archiveGrid}>
                 {archiveArticles.map((post) => (
@@ -188,6 +191,22 @@ export default async function BlogPage() {
               </div>
             </section>
           ) : null}
+
+          {independentCoverage.length ? (
+            <section className={styles.archive} aria-labelledby="coverage-heading">
+              <h2 id="coverage-heading" className={styles.sectionLabel}>Independent coverage</h2>
+              <p className={styles.description}>Reporting about my work, written by others. These are not my bylines.</p>
+              <div className={styles.archiveGrid}>
+                {independentCoverage.map((post) => <StoryCard key={post.slug} post={post} />)}
+              </div>
+            </section>
+          ) : null}
+
+          <section className={styles.archive} aria-labelledby="speaking-heading">
+            <h2 id="speaking-heading" className={styles.sectionLabel}>Speaking</h2>
+            <p className={styles.description}>Selected event appearances and recordings are documented on the expertise page, including the official Cybertech Africa speaker listing.</p>
+            <Link href="/expertise#speaking" className="text-link">View speaking evidence <ArrowUpRight size={14} aria-hidden="true" /></Link>
+          </section>
 
           <div className={styles.newsletter}>
             <SubstackSignup variant="compact" location="blog_page" />

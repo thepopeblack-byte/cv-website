@@ -6,7 +6,7 @@ export type PrimaryNavigationItem = {
 
 export const primaryNavigation: PrimaryNavigationItem[] = [
   { id: "profile", label: "Profile", href: "/profile" },
-  { id: "impact", label: "Impact", href: "/impact" },
+  { id: "impact", label: "Work & Evidence", href: "/impact" },
   { id: "expertise", label: "Expertise", href: "/expertise" },
   { id: "experience", label: "Experience", href: "/experience" },
   { id: "blog", label: "Blog", href: "/blog" },

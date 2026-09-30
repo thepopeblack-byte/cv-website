@@ -1,8 +1,6 @@
 import { ImageResponse } from "next/og";
 
-import { socialProofChips } from "@/data/achievements";
-
-export const alt = "Kayode Popoola executive profile card";
+export const alt = "Kayode Popoola blockchain intelligence and commercial leadership profile";
 export const size = {
   width: 1200,
   height: 630,
@@ -37,7 +35,7 @@ export default function OpenGraphImage() {
           }}
         >
           <span>Popeblack</span>
-          <span>Global Partnerships</span>
+          <span>Digital-asset trust and growth</span>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: "22px" }}>
           <div
@@ -58,12 +56,11 @@ export default function OpenGraphImage() {
               lineHeight: 1.3,
             }}
           >
-            Web3 Partnerships & Revenue Growth Leader | Confidential
-            Computing | Emerging Markets Growth
+            Blockchain intelligence and global commercial leadership in digital assets
           </div>
         </div>
         <div style={{ display: "flex", gap: "18px" }}>
-          {socialProofChips.map(
+          {["CipherOwl · Analysis", "Secret Network · Partnerships"].map(
             (item) => (
               <div
                 key={item}

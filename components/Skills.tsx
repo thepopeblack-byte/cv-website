@@ -1,12 +1,21 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 
 import { Container } from "@/components/Container";
 import { MobileSwipeRegion } from "@/components/MobileSwipeRegion";
 import { SectionReveal } from "@/components/SectionReveal";
 import { skillGroups } from "@/data/skills";
 import { normalizeAnalyticsId, trackEvent } from "@/lib/analytics";
+
+const capabilityEvidence = [
+  { href: "/impact#secret-foundation", label: "See commercial work" },
+  { href: "/impact#secret-africa", label: "See ecosystem work" },
+  { href: "/impact#fina", label: "See product adoption context" },
+  { href: "/impact#cipherowl", label: "See intelligence method" },
+  { href: "/impact#cipherowl", label: "See analysis workflow" },
+];
 
 export function Skills() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -147,17 +156,19 @@ export function Skills() {
   };
 
   const selectCluster = (nextActiveIndex: number) => {
+    activateCluster(nextActiveIndex);
+
+    if (window.matchMedia("(max-width: 768px)").matches) {
+      return;
+    }
+
     const target = clusterRefs.current[nextActiveIndex];
 
     if (target) {
-      const compactViewport = window.matchMedia("(max-width: 768px)").matches;
-      const reducedMotion = window.matchMedia(
-        "(prefers-reduced-motion: reduce)",
-      ).matches;
       target.scrollIntoView({
-        behavior: reducedMotion ? "auto" : "smooth",
-        block: compactViewport ? "nearest" : "center",
-        inline: "center",
+        behavior: "auto",
+        block: "center",
+        inline: "nearest",
       });
     }
   };
@@ -187,9 +198,9 @@ export function Skills() {
               <div className="capability-orbit" aria-hidden="true" />
               <h2 className="section-title">Capabilities.</h2>
               <p className="section-copy">
-                Senior commercial leadership, enterprise partnerships,
-                ecosystem development, Web3 infrastructure, digital-asset
-                intelligence, and emerging-market execution.
+                Demonstrated commercial and investigative work. Intelligence
+                methods and linked writing sit alongside sales and partnership
+                practice; technical fluency is not a claim to have built the infrastructure.
               </p>
 
               <div className="capability-active-card" aria-live="polite">
@@ -248,6 +259,9 @@ export function Skills() {
                       </li>
                     ))}
                   </ul>
+                  <Link href={capabilityEvidence[index].href} className="text-link capability-evidence-link">
+                    {capabilityEvidence[index].label}
+                  </Link>
                 </article>
               ))}
             </MobileSwipeRegion>

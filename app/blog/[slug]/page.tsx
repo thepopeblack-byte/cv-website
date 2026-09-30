@@ -70,12 +70,16 @@ export async function generateMetadata({
     height: 630,
     quality: 90,
   });
+  const canonical =
+    post.source?.toLowerCase() === "hacken" && post.externalUrl
+      ? post.externalUrl
+      : `${siteUrl}/blog/${post.slug}`;
 
   return {
     title: `${post.title} | Kayode Popoola`,
     description: post.excerpt,
     alternates: {
-      canonical: `${siteUrl}/blog/${post.slug}`,
+      canonical,
     },
     openGraph: {
       title: post.title,
@@ -123,7 +127,19 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       post.coverImage?.asset?._ref,
   );
 
-  const articleJsonLd = JSON.stringify({
+  const isIndependentCoverage =
+    post.contentType === "external" && !/\b(kayode|popoola)\b/i.test(post.author);
+  const isHackenRepost = post.source?.toLowerCase() === "hacken" && post.externalUrl;
+  const articleJsonLd = JSON.stringify(isIndependentCoverage ? {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: post.title,
+    description: post.excerpt,
+    url: `${siteUrl}/blog/${post.slug}`,
+    about: { "@type": "Person", name: "Kayode Popoola", url: siteUrl },
+    citation: post.externalUrl,
+    publisher: { "@type": "Person", name: "Kayode Popoola", url: siteUrl },
+  } : {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     headline: post.title,
@@ -135,11 +151,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       url: siteUrl,
     },
     publisher: {
-      "@type": "Person",
-      name: "Kayode Popoola",
-      url: siteUrl,
+      "@type": isHackenRepost ? "Organization" : "Person",
+      name: isHackenRepost ? "Hacken" : "Kayode Popoola",
+      url: isHackenRepost ? "https://hacken.io/" : siteUrl,
     },
-    mainEntityOfPage: `${siteUrl}/blog/${post.slug}`,
+    mainEntityOfPage: isHackenRepost ? post.externalUrl : `${siteUrl}/blog/${post.slug}`,
     isPartOf: {
       "@type": "WebSite",
       name: siteName,
@@ -167,7 +183,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 {post.category ? <span>{post.category}</span> : null}
                 <span>By {post.author}</span>
                 <span>
-                  {post.contentType === "external" ? "Added " : ""}
                   {formatDate(post.date)}
                 </span>
                 <span>{post.readingTime}</span>

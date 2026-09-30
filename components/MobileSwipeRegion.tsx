@@ -161,12 +161,9 @@ export function MobileSwipeRegion({
       return;
     }
 
-    const reducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
     scroller.scrollTo({
       left: target.offsetLeft - scroller.offsetLeft,
-      behavior: reducedMotion ? "auto" : "smooth",
+      behavior: "auto",
     });
   }, [controlledActiveIndex]);
 

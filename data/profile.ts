@@ -13,11 +13,11 @@ export const profile = {
   youtube: "https://www.youtube.com/watch?v=pTdEnLmJA9Q",
   headline: "Head of Sales & Business Development",
   strapline:
-    "Web3 Business Development Leader | Strategic Partnerships | Revenue Growth",
+    "Blockchain intelligence and global commercial leadership",
   subheadline:
     "I help Web3, AI, and emerging technology teams grow through strategic partnerships, revenue systems, ecosystem expansion, and go-to-market execution.",
   executiveSummary:
-    "Web3 Business Development Leader and Strategic Partnerships Leader with 10+ years of experience across revenue growth, enterprise sales, blockchain partnerships, Web3 partnerships, go-to-market strategy, blockchain infrastructure, financial technology, digital commerce, and emerging markets growth.",
+    "I lead global partnerships and market adoption for privacy-focused blockchain and AI infrastructure, and work in blockchain intelligence and financial-crime analysis at CipherOwl. My commercial and investigative work meet in the realities of digital-asset trust and risk.",
   currentFocus:
     "Currently Head of Sales & Business Development at Secret Network Foundation, where I lead global revenue growth, enterprise partnerships, and ecosystem adoption for privacy-first blockchain and confidential computing infrastructure.",
   proofLine: achievementSummary,
@@ -30,7 +30,7 @@ export const profile = {
   speakingIntro:
     "Selected appearances across Web3 business development, blockchain privacy, DeFi, digital assets, ecosystem growth, blockchain intelligence, and emerging technology adoption.",
   audienceLabel:
-    "Built for enterprises, public-sector institutions, development organisations, technology companies and strategic partners evaluating commercial leadership, ecosystem growth, digital-asset intelligence and emerging-market execution.",
+    "I welcome conversations about blockchain intelligence, crypto investigations and financial-crime analysis roles, as well as senior commercial leadership, sales, partnerships and ecosystem opportunities. Choose the route that fits your team.",
   heroHighlights: [
     "Global commercial leadership for privacy-first Web3 and confidential computing ecosystems",
     "Enterprise sales, blockchain partnerships, GTM design, and revenue operations",
@@ -52,15 +52,10 @@ export const profile = {
   ],
   stats: impactStats,
   opportunityTypes: [
-    "Institutional Partnership",
-    "Enterprise Partnership",
-    "Public-Sector or Development Programme",
-    "Market Entry and Ecosystem Strategy",
-    "Blockchain Intelligence and Financial Crime",
-    "Training and Capacity Building",
-    "Speaking and Stakeholder Engagement",
-    "Advisory or Consulting",
-    "Executive or Commercial Leadership Opportunity",
+    "Blockchain Intelligence or Financial Crime Role",
+    "Senior Commercial Leadership Role",
+    "Strategic Partnership",
+    "Speaking or Media",
     "Other",
   ],
   education: {
@@ -68,7 +63,7 @@ export const profile = {
     degree: "Bachelor of Business Administration",
     course: "Business Administration and Management",
     universityLeadership: [
-      "Organised workshops, meetups, events and educational programmes reaching more than 10,000 participants.",
+      "Organised workshops, meetups, events and educational programmes for students and emerging technology communities.",
       "Received recognition in the Bayero University Weekly Bulletin.",
     ],
     professionalDevelopment: [

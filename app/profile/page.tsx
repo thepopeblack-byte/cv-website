@@ -7,9 +7,9 @@ import { RouteIntro } from "@/components/RouteIntro";
 import { siteUrl } from "@/data/site";
 
 export const metadata: Metadata = {
-  title: "Executive Profile | Kayode Popoola",
+  title: "Profile | Kayode Popoola",
   description:
-    "Kayode Popoola's executive profile across commercial leadership, Web3 infrastructure, blockchain intelligence, and emerging-market execution.",
+    "Kayode Popoola's progression through Secret Network commercial leadership and developing blockchain-intelligence work at CipherOwl, with sourced project evidence.",
   alternates: { canonical: `${siteUrl}/profile` },
 };
 
@@ -20,8 +20,8 @@ export default function ProfilePage() {
       <main id="main-content" className="page-layer route-main pb-8">
         <RouteIntro
           eyebrow="Profile"
-          title="Commercial leadership for growth, infrastructure, and trust."
-          intro="A complete executive profile spanning enterprise partnerships, market development, Web3 infrastructure, digital-asset intelligence, and institutional execution across emerging markets."
+          title="Two directions, grounded in digital assets."
+          intro="I lead global partnerships and adoption for privacy-focused infrastructure, and work in blockchain intelligence and financial-crime analysis. Both disciplines depend on clear evidence and trust."
         />
         <About />
       </main>

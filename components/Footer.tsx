@@ -90,8 +90,8 @@ export function Footer() {
               {profile.name} / {profile.brandName}
             </div>
             <p>
-              Commercial leadership, Web3 partnerships, blockchain
-              intelligence, and emerging-market execution.
+              Blockchain intelligence and global commercial leadership across
+              digital assets, privacy and trust.
             </p>
           </div>
 

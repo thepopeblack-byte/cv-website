@@ -36,7 +36,7 @@ export function SelectedEcosystems() {
             </div>
 
             <div className="min-w-0">
-              <p className="logo-marquee-label">Trusted by:</p>
+              <p className="logo-marquee-label">Selected relationships:</p>
               <div
                 className="logo-marquee"
                 aria-label="Selected organisations, ecosystems, and projects"

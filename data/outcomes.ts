@@ -30,9 +30,8 @@ export const institutionalOutcomes: InstitutionalOutcome[] = [
     actions:
       "Built regional partnerships, supported physical and virtual programmes, created developer education pathways, and connected teams with hackathons, grants, go-to-market support, and ecosystem visibility.",
     outcome: `${achievements.ambassadors.claim} ${achievements.events.claim} ${achievements.developers.claim}`,
-    evidenceLabel: "View public ecosystem context",
-    evidenceHref:
-      "/blog/secret-network-africa-cryptocurrency-academy-kenya-blockchain-crypto-adoption",
+    evidenceLabel: "View Secret Network Africa workstream",
+    evidenceHref: "/impact#secret-africa",
   },
   {
     title: "Blockchain intelligence and digital-asset risk analysis",

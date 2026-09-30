@@ -386,12 +386,10 @@ export function AnalyticsProvider() {
           aria-labelledby="analytics-consent-title"
         >
           <div className="analytics-consent-copy">
-            <div className="meta-stack">Privacy preferences</div>
-            <h2 id="analytics-consent-title">Optional website analytics</h2>
+            <h2 id="analytics-consent-title">Optional analytics</h2>
             <p>
-              With your permission, Google Analytics and Microsoft Clarity help
-              improve this website. Contact-form content is masked and form
-              values are never sent to analytics. Read the{" "}
+              With your consent, Google Analytics and Microsoft Clarity help improve this site.
+              Contact-form content is masked; form values are never sent to analytics. Read the{" "}
               <Link href="/privacy">privacy notice</Link>.
             </p>
           </div>
