@@ -15,6 +15,7 @@ import { siteDescription, siteName, siteUrl } from "@/data/site";
 const metadataTitle =
   "Kayode Popoola | Blockchain Intelligence & Commercial Leadership";
 const metadataDescription = siteDescription;
+const socialImageUrl = "/opengraph-image?v=20260930";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -56,10 +57,10 @@ export const metadata: Metadata = {
     siteName,
     images: [
       {
-        url: "/opengraph-image",
+        url: socialImageUrl,
         width: 1200,
         height: 630,
-        alt: "Kayode Popoola commercial leadership and blockchain intelligence profile card",
+        alt: "Kayode Popoola. Blockchain intelligence. Commercial leadership. CipherOwl and Secret Network Foundation.",
       },
     ],
     locale: "en_US",
@@ -69,7 +70,7 @@ export const metadata: Metadata = {
   card: "summary_large_image",
   title: metadataTitle,
   description: metadataDescription,
-  images: ["/opengraph-image"],
+  images: [socialImageUrl],
 },
 icons: {
   icon: [

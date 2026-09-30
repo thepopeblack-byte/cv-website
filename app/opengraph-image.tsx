@@ -1,6 +1,7 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Kayode Popoola blockchain intelligence and commercial leadership profile";
+export const alt =
+  "Kayode Popoola. Blockchain intelligence. Commercial leadership. CipherOwl and Secret Network Foundation.";
 export const size = {
   width: 1200,
   height: 630,
@@ -12,72 +13,69 @@ export default function OpenGraphImage() {
     (
       <div
         style={{
-          height: "100%",
-          width: "100%",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          padding: "56px",
-          color: "#f4efe8",
+          width: "100%",
+          height: "100%",
+          padding: "68px 76px 70px",
           background:
-            "radial-gradient(circle at top left, rgba(244, 239, 232, 0.12), transparent 28%), linear-gradient(180deg, #0a0b0d 0%, #111317 100%)",
+            "radial-gradient(circle at 94% 6%, rgba(110, 168, 255, 0.12), transparent 40%), linear-gradient(135deg, #0b0d10 0%, #13161b 100%)",
+          color: "#f3efe7",
+          fontFamily: "sans-serif",
         }}
       >
         <div
           style={{
             display: "flex",
-            justifyContent: "space-between",
             alignItems: "center",
-            fontSize: 24,
-            letterSpacing: "0.28em",
-            textTransform: "uppercase",
-            color: "#9a968d",
+            fontSize: 22,
+            fontWeight: 600,
+            letterSpacing: "0.22em",
+            color: "#9bc2ff",
           }}
         >
-          <span>Popeblack</span>
-          <span>Digital-asset trust and growth</span>
+          POPEBLACK
         </div>
-        <div style={{ display: "flex", flexDirection: "column", gap: "22px" }}>
+
+        <div style={{ display: "flex", flexDirection: "column" }}>
           <div
             style={{
-              fontSize: 78,
+              display: "flex",
+              fontSize: 76,
               fontWeight: 700,
-              letterSpacing: "-0.07em",
-              lineHeight: 1,
+              letterSpacing: "-0.055em",
+              lineHeight: 1.05,
+              marginBottom: 35,
             }}
           >
             Kayode Popoola
           </div>
           <div
             style={{
-              maxWidth: "860px",
-              fontSize: 34,
-              color: "#cbc6bb",
-              lineHeight: 1.3,
+              display: "flex",
+              flexDirection: "column",
+              fontSize: 45,
+              fontWeight: 500,
+              letterSpacing: "-0.035em",
+              lineHeight: 1.18,
             }}
           >
-            Blockchain intelligence and global commercial leadership in digital assets
+            <span>Blockchain intelligence.</span>
+            <span>Commercial leadership.</span>
           </div>
         </div>
-        <div style={{ display: "flex", gap: "18px" }}>
-          {["CipherOwl · Analysis", "Secret Network · Partnerships"].map(
-            (item) => (
-              <div
-                key={item}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  border: "1px solid rgba(244, 239, 232, 0.15)",
-                  borderRadius: 999,
-                  padding: "16px 22px",
-                  background: "rgba(244, 239, 232, 0.04)",
-                  fontSize: 24,
-                }}
-              >
-                {item}
-              </div>
-            ),
-          )}
+
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            fontSize: 28,
+            fontWeight: 500,
+            color: "#cbc6bb",
+          }}
+        >
+          CipherOwl · Secret Network Foundation
         </div>
       </div>
     ),
