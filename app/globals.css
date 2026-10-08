@@ -887,6 +887,10 @@ html[data-theme="light"] .theme-icon-moon {
   min-height: 12.5rem;
 }
 
+.media-image-panel--contain {
+  background: #102c41;
+}
+
 .experience-sidebar {
   position: relative;
   overflow: hidden;

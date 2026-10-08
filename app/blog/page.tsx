@@ -116,6 +116,11 @@ export default async function BlogPage() {
   const posts = await getBlogPosts();
   const authoredPosts = posts.filter(isKayodeByline);
   const independentCoverage = posts.filter((post) => !isKayodeByline(post));
+  const featuredCoverage =
+    independentCoverage.find((post) => post.featured) ?? independentCoverage[0];
+  const remainingCoverage = independentCoverage.filter(
+    (post) => post.slug !== featuredCoverage?.slug,
+  );
   const featuredArticle =
     authoredPosts.find((post) => post.source?.toLowerCase() === "hacken") ??
     getFeaturedBlogPost(authoredPosts);
@@ -196,9 +201,16 @@ export default async function BlogPage() {
             <section className={styles.archive} aria-labelledby="coverage-heading">
               <h2 id="coverage-heading" className={styles.sectionLabel}>Independent coverage</h2>
               <p className={styles.description}>Reporting about my work, written by others. These are not my bylines.</p>
-              <div className={styles.archiveGrid}>
-                {independentCoverage.map((post) => <StoryCard key={post.slug} post={post} />)}
-              </div>
+              {featuredCoverage ? (
+                <div className={styles.coverageFeature}>
+                  <StoryCard post={featuredCoverage} lead />
+                </div>
+              ) : null}
+              {remainingCoverage.length ? (
+                <div className={styles.archiveGrid}>
+                  {remainingCoverage.map((post) => <StoryCard key={post.slug} post={post} />)}
+                </div>
+              ) : null}
             </section>
           ) : null}
 

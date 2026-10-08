@@ -67,6 +67,7 @@ export function SpeakingMedia() {
       label:
         [
           "Encryption Day",
+          "Solana Summit",
           "Tech Talk",
           "Secret Agent",
           "Daybreak Extra",
@@ -78,15 +79,17 @@ export function SpeakingMedia() {
         ][index] ?? item.title,
       content: (
         <article className="media-card media-feature-card">
-          <div className="image-panel media-image-panel relative">
+          <div className={`image-panel media-image-panel relative${item.imageFit === "contain" ? " media-image-panel--contain" : ""}`}>
             <Image
               src={item.image}
               alt={item.imageAlt ?? item.title}
               fill
-              className="object-cover"
+              className={item.imageFit === "contain" ? "object-contain" : "object-cover"}
               sizes="(min-width: 1180px) 34vw, 100vw"
             />
-            <div className="media-image-shade" aria-hidden="true" />
+            {item.imageFit === "contain" ? null : (
+              <div className="media-image-shade" aria-hidden="true" />
+            )}
           </div>
           <div className="media-feature-copy">
             <div className="meta-stack">{item.category}</div>

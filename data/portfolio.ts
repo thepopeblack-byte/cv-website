@@ -112,6 +112,16 @@ export const speakingMediaItems: PortfolioItem[] = [
     videoWatchUrl: "https://www.youtube.com/watch?v=pTdEnLmJA9Q",
   },
   {
+    title: "DeFi for the Masses at Solana Summit: Stablecoins Africa",
+    category: "Conference Panel",
+    description:
+      "Panel discussion in Abuja on practical DeFi adoption beyond speculation, with Kayode Popoola representing Secret Network.",
+    image: "/images/popeblack/videos/solana-summit-stablecoins-africa-event.jpg",
+    imageAlt: "Solana Summit Africa: Stablecoins event poster for Abuja, November 2025.",
+    videoEmbedUrl: "https://www.youtube.com/embed/agX-dFKvf6M?start=19342",
+    videoWatchUrl: "https://www.youtube.com/watch?v=agX-dFKvf6M&t=19342s",
+  },
+  {
     title: "Tech Talk Episode 4: Web 3.0: The Future of the Internet",
     category: "Media Video",
     description:
@@ -151,12 +161,15 @@ export const speakingMediaItems: PortfolioItem[] = [
     title: "Speaker at Web3 Lagos Conference",
     category: "Conference Video",
     description:
-      "Conference session on Web3 education, developer adoption, ecosystem participation, and blockchain infrastructure opportunities in Africa.",
-    image: "/images/popeblack/videos/web3-lagos-conference.webp",
+      "My Web3 Lagos Conference 2.0 presentation on the design and timeline of Web3 privacy, representing Secret Network Africa.",
+    image: "/images/popeblack/videos/web3-lagos-popeblack-speaker.png",
+    imageAlt:
+      "Web3 Lagos Conference 2.0 speaker poster naming Pope Black as Secret Network Africa Lead and Secret Agent Coordinator.",
+    imageFit: "contain",
     href: "https://event.web3bridge.com/",
     ctaLabel: "Event",
-    videoEmbedUrl: "https://www.youtube.com/embed/nC9zMBwnukU?start=4440",
-    videoWatchUrl: "https://www.youtube.com/watch?v=nC9zMBwnukU&t=4440s",
+    videoEmbedUrl: "https://www.youtube.com/embed/nC9zMBwnukU?start=3379",
+    videoWatchUrl: "https://www.youtube.com/watch?v=nC9zMBwnukU&t=3379s",
   },
   {
     title: "Cybertech Africa Conference Kigali, Rwanda 2023",
@@ -185,10 +198,12 @@ export const speakingMediaItems: PortfolioItem[] = [
     category: "Conference Video",
     description:
       "Day-two recording of the SiBAN Digital Assets Summit. I moderated a panel on finance and emerging technologies and spoke about blockchain privacy and Secret Network's work in Africa.",
-    image: "/images/popeblack/videos/siban-digital-assets-summit-2023.jpg",
-    imageAlt: "SiBAN Digital Assets Summit 2023 stage in Abuja.",
-    videoEmbedUrl: "https://www.youtube.com/embed/o-2dpcgb8oA",
-    videoWatchUrl: "https://www.youtube.com/watch?v=o-2dpcgb8oA",
+    image: "/images/popeblack/videos/siban-popeblack-speaking-announcement.jpg",
+    imageAlt:
+      "SiBAN Digital Assets Summit 2023 panel graphic naming Kayode Popoola as moderator.",
+    imageFit: "contain",
+    videoEmbedUrl: "https://www.youtube.com/embed/o-2dpcgb8oA?start=11340",
+    videoWatchUrl: "https://www.youtube.com/watch?v=o-2dpcgb8oA&t=11340s",
     links: [
       {
         label: "Speaking announcement",

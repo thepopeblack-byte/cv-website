@@ -209,6 +209,11 @@
   margin-top: clamp(2.75rem, 5vw, 4rem);
 }
 
+.coverageFeature {
+  max-width: 50rem;
+  margin: 1.5rem 0 2.75rem;
+}
+
 .newsletter :global(.substack-signup.is-compact) {
   gap: 1.75rem;
   padding: clamp(1.25rem, 3vw, 2rem);
