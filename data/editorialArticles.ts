@@ -1,6 +1,34 @@
 import type { BlogPost } from "@/data/articles";
 import aiSafetyArticle from "@/data/ai-safety-article.json";
 
+const hackerNoonBybitCoverage: BlogPost = {
+  _id: "local.the-bybit-hack-tracing-is-only-half-the-battle",
+  title: "The Bybit $1.46 Billion Hack Shows Why Tracing Stolen Crypto Is Only Half the Battle",
+  slug: "the-bybit-hack-tracing-is-only-half-the-battle",
+  date: "2026-10-13T00:00:00.000Z",
+  publishedAt: "2026-10-13T00:00:00.000Z",
+  _createdAt: "2026-10-13T00:00:00.000Z",
+  type: "Featured",
+  contentType: "external",
+  visibility: "public",
+  category: "Blockchain Intelligence",
+  source: "HackerNoon",
+  author: "Harry Hood",
+  excerpt:
+    "Harry Hood draws on my Hacken analysis of the Bybit theft to examine why tracing stolen funds is different from establishing attribution or recovering assets.",
+  body:
+    "In this HackerNoon article, Harry Hood discusses my published analysis for Hacken alongside reporting from blockchain-investigation firms. The piece examines the gap between following stolen value across services and building evidence strong enough to support attribution or intervention. This is independent coverage of my work, not an article I wrote for HackerNoon. Read the full story at the original publication.",
+  tags: ["Blockchain Intelligence", "Financial Crime", "Bybit", "Crypto Investigations"],
+  coverImage: {
+    url: "/images/blog/hackernoon-bybit-coverage.svg",
+    alt: "Editorial graphic for HackerNoon coverage of the Bybit theft analysis.",
+  },
+  externalUrl:
+    "https://hackernoon.com/the-bybit-$146-billion-hack-shows-why-tracing-stolen-crypto-is-only-half-the-battle",
+  readingTime: "4 min read",
+  featured: true,
+};
+
 const blockleadersCommercialFeature: BlogPost = {
   _id: "local.kayode-popoola-commercial-achievements-and-international-partnerships",
   title: "Kayode Popoola: Commercial Achievements and International Partnerships",
@@ -61,6 +89,7 @@ const blockleadersFeature: BlogPost = {
 // Locally authored editorial entries are merged with published Sanity posts.
 export const editorialBlogPosts = [
   aiSafetyArticle as BlogPost,
+  hackerNoonBybitCoverage,
   blockleadersCommercialFeature,
   blockleadersFeature,
 ];

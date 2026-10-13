@@ -48,7 +48,15 @@ function formatDate(date: string) {
   }).format(new Date(date));
 }
 
-function StoryCard({ post, lead = false }: { post: BlogPost; lead?: boolean }) {
+function StoryCard({
+  post,
+  variant = "standard",
+}: {
+  post: BlogPost;
+  variant?: "standard" | "lead" | "coverage";
+}) {
+  const lead = variant === "lead";
+  const coverage = variant === "coverage";
   const imageUrl = getSanityImageUrl(post.coverImage, {
     width: lead ? 1280 : 960,
     height: lead ? 720 : 540,
@@ -57,7 +65,9 @@ function StoryCard({ post, lead = false }: { post: BlogPost; lead?: boolean }) {
   const titleId = `story-${post.slug}`;
 
   return (
-    <article className={`${styles.story} ${lead ? styles.leadStory : ""}`}>
+    <article
+      className={`${styles.story} ${lead ? styles.leadStory : ""} ${coverage ? styles.coverageStory : ""} ${imageUrl ? "" : styles.textOnlyStory}`}
+    >
       <Link
         href={`/blog/${post.slug}`}
         className={styles.storyLink}
@@ -72,8 +82,10 @@ function StoryCard({ post, lead = false }: { post: BlogPost; lead?: boolean }) {
               className={styles.coverImage}
               sizes={
                 lead
-                  ? "(min-width: 1200px) 650px, (min-width: 900px) 58vw, calc(100vw - 40px)"
-                  : "(min-width: 1200px) 420px, (min-width: 900px) 37vw, calc(100vw - 40px)"
+                  ? "(min-width: 1200px) 568px, (min-width: 900px) 50vw, calc(100vw - 40px)"
+                  : coverage
+                    ? "(min-width: 700px) 240px, calc(100vw - 40px)"
+                    : "(min-width: 1200px) 540px, (min-width: 700px) 46vw, calc(100vw - 40px)"
               }
               priority={lead}
             />
@@ -81,20 +93,13 @@ function StoryCard({ post, lead = false }: { post: BlogPost; lead?: boolean }) {
         ) : null}
         <div className={styles.storyCopy}>
           <div className={styles.kicker}>
-            <span>{getBlogPublicationLabel(post)}</span>
-            {post.category ? <span>{post.category}</span> : null}
+            <span>{coverage ? post.source || "Independent coverage" : getBlogPublicationLabel(post)}</span>
+            {!coverage && post.category ? <span>{post.category}</span> : null}
           </div>
           <h3 id={titleId} className={styles.storyTitle}>
             {post.title}
           </h3>
           <p className={styles.excerpt}>{post.excerpt}</p>
-          {lead && post.tags.length ? (
-            <ul className={styles.tags} aria-label="Article topics">
-              {post.tags.map((tag) => (
-                <li key={tag}>{tag}</li>
-              ))}
-            </ul>
-          ) : null}
           <div className={styles.byline}>
             <span>By {post.author}</span>
             <span>
@@ -116,19 +121,12 @@ export default async function BlogPage() {
   const posts = await getBlogPosts();
   const authoredPosts = posts.filter(isKayodeByline);
   const independentCoverage = posts.filter((post) => !isKayodeByline(post));
-  const featuredCoverage =
-    independentCoverage.find((post) => post.featured) ?? independentCoverage[0];
-  const remainingCoverage = independentCoverage.filter(
-    (post) => post.slug !== featuredCoverage?.slug,
-  );
   const featuredArticle =
     authoredPosts.find((post) => post.source?.toLowerCase() === "hacken") ??
     getFeaturedBlogPost(authoredPosts);
   const otherArticles = authoredPosts.filter(
     (post) => post.slug !== featuredArticle?.slug,
   );
-  const supportingArticles = otherArticles.slice(0, 1);
-  const archiveArticles = otherArticles.slice(1);
 
   return (
     <>
@@ -136,42 +134,38 @@ export default async function BlogPage() {
       <main id="main-content" className={`page-layer ${styles.page}`}>
         <Container className={styles.container}>
           <header className={styles.masthead}>
-            <div className="meta-stack">Writing &amp; Speaking</div>
+            <div className="meta-stack">From the desk of Kayode Popoola</div>
             <div className={styles.introduction}>
-              <h1 className={styles.title}>Analysis, publication and public conversation.</h1>
+              <h1 className={styles.title}>Writing &amp; public conversation.</h1>
               <p className={styles.description}>
-                My bylined work on digital trust and commercial technology,
-                separate from independent reporting about my career and public speaking.
+                Analysis on digital trust, blockchain intelligence and commercial
+                technology, alongside independent coverage of my work.
               </p>
             </div>
+            <nav className={styles.sectionNav} aria-label="On this page">
+              {authoredPosts.length ? <Link href="#writing-heading">Writing &amp; analysis</Link> : null}
+              {independentCoverage.length ? <Link href="#coverage-heading">Independent coverage</Link> : null}
+              <Link href="#speaking-heading">Speaking</Link>
+            </nav>
           </header>
 
           {featuredArticle ? (
-            <div
-              className={`${styles.frontPage} ${supportingArticles.length ? styles.hasSupporting : ""}`}
-            >
-              <section aria-labelledby="featured-story-heading">
-                <h2 id="featured-story-heading" className={styles.sectionLabel}>
-                  Featured analysis
+            <section className={styles.section} aria-labelledby="writing-heading">
+              <div className={styles.sectionHeading}>
+                <h2 id="writing-heading" className={styles.sectionTitle}>
+                  Writing &amp; analysis
                 </h2>
-                <StoryCard post={featuredArticle} lead />
-              </section>
-              {supportingArticles.length ? (
-                <section aria-labelledby="latest-writing-heading">
-                  <h2
-                    id="latest-writing-heading"
-                    className={styles.sectionLabel}
-                  >
-                    More by Kayode
-                  </h2>
-                  <div className={styles.supportingStories}>
-                    {supportingArticles.map((post) => (
-                      <StoryCard key={post.slug} post={post} />
-                    ))}
-                  </div>
-                </section>
+                <p>Original essays and published analysis.</p>
+              </div>
+              <StoryCard post={featuredArticle} variant="lead" />
+              {otherArticles.length ? (
+                <div className={styles.writingGrid}>
+                  {otherArticles.map((post) => (
+                    <StoryCard key={post.slug} post={post} />
+                  ))}
+                </div>
               ) : null}
-            </div>
+            </section>
           ) : null}
 
           {!featuredArticle ? (
@@ -181,43 +175,29 @@ export default async function BlogPage() {
             </section>
           ) : null}
 
-          {archiveArticles.length ? (
-            <section
-              className={styles.archive}
-              aria-labelledby="more-writing-heading"
-            >
-              <h2 id="more-writing-heading" className={styles.sectionLabel}>
-                More by Kayode
-              </h2>
-              <div className={styles.archiveGrid}>
-                {archiveArticles.map((post) => (
-                  <StoryCard key={post.slug} post={post} />
+          {independentCoverage.length ? (
+            <section className={styles.section} aria-labelledby="coverage-heading">
+              <div className={styles.sectionHeading}>
+                <h2 id="coverage-heading" className={styles.sectionTitle}>Independent coverage</h2>
+                <p>Profiles, mentions and commentary from other publications.</p>
+              </div>
+              <div className={styles.coverageList}>
+                {independentCoverage.map((post) => (
+                  <StoryCard key={post.slug} post={post} variant="coverage" />
                 ))}
               </div>
             </section>
           ) : null}
 
-          {independentCoverage.length ? (
-            <section className={styles.archive} aria-labelledby="coverage-heading">
-              <h2 id="coverage-heading" className={styles.sectionLabel}>Independent coverage</h2>
-              <p className={styles.description}>Reporting about my work, written by others. These are not my bylines.</p>
-              {featuredCoverage ? (
-                <div className={styles.coverageFeature}>
-                  <StoryCard post={featuredCoverage} lead />
-                </div>
-              ) : null}
-              {remainingCoverage.length ? (
-                <div className={styles.archiveGrid}>
-                  {remainingCoverage.map((post) => <StoryCard key={post.slug} post={post} />)}
-                </div>
-              ) : null}
-            </section>
-          ) : null}
-
-          <section className={styles.archive} aria-labelledby="speaking-heading">
-            <h2 id="speaking-heading" className={styles.sectionLabel}>Speaking</h2>
-            <p className={styles.description}>Selected event appearances and recordings are documented on the expertise page, including the official Cybertech Africa speaker listing.</p>
-            <Link href="/expertise#speaking" className="text-link">View speaking evidence <ArrowUpRight size={14} aria-hidden="true" /></Link>
+          <section className={`${styles.section} ${styles.speaking}`} aria-labelledby="speaking-heading">
+            <div>
+              <h2 id="speaking-heading" className={styles.sectionTitle}>Speaking &amp; appearances</h2>
+              <p className={styles.description}>Talks, panels and interviews on privacy, digital assets and ecosystem growth.</p>
+            </div>
+            <Link href="/expertise#speaking" className={styles.sectionLink}>
+              Explore speaking
+              <ArrowUpRight size={16} aria-hidden="true" />
+            </Link>
           </section>
 
           <div className={styles.newsletter}>
