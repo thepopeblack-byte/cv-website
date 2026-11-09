@@ -21,6 +21,7 @@ function withAutoplay(url: string) {
 
 export function SpeakingMedia() {
   const [activeMedia, setActiveMedia] = useState<ActiveMedia>(null);
+  const dialogRef = useRef<HTMLDialogElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const mediaTriggerRef = useRef<HTMLButtonElement | null>(null);
   const scrollPositionRef = useRef(0);
@@ -40,21 +41,16 @@ export function SpeakingMedia() {
     if (scrollbarWidth > 0) {
       document.body.style.paddingRight = `${scrollbarWidth}px`;
     }
-    closeButtonRef.current?.focus();
-
-    const closeOnEscape = (event: globalThis.KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setActiveMedia(null);
-      }
-    };
-
-    document.addEventListener("keydown", closeOnEscape);
+    // A native modal keeps keyboard focus inside the player, including its iframe.
+    const dialog = dialogRef.current;
+    dialog?.showModal();
+    closeButtonRef.current?.focus({ preventScroll: true });
 
     return () => {
+      dialog?.close();
       document.body.style.overflow = previousOverflow;
       document.body.style.paddingRight = previousPaddingRight;
-      document.removeEventListener("keydown", closeOnEscape);
-      window.scrollTo({ top: scrollPositionRef.current, behavior: "auto" });
+      window.scrollTo({ top: scrollPositionRef.current, behavior: "instant" });
       window.requestAnimationFrame(() => {
         mediaTriggerRef.current?.focus({ preventScroll: true });
       });
@@ -153,11 +149,15 @@ export function SpeakingMedia() {
   );
 
   const mediaDialog = activeMedia?.videoEmbedUrl ? (
-    <div
+    <dialog
+      ref={dialogRef}
       className="media-dialog-backdrop"
-      role="dialog"
       aria-modal="true"
       aria-labelledby="media-dialog-title"
+      onCancel={(event) => {
+        event.preventDefault();
+        setActiveMedia(null);
+      }}
     >
       <div className="media-dialog-shell">
         <div className="media-dialog">
@@ -186,7 +186,7 @@ export function SpeakingMedia() {
           </div>
         </div>
       </div>
-    </div>
+    </dialog>
   ) : null;
 
   return (

@@ -39,7 +39,11 @@ export function ThemeToggle() {
 
     document.documentElement.dataset.theme = nextTheme;
     document.documentElement.style.colorScheme = nextTheme;
-    window.localStorage.setItem("popeblack-theme", nextTheme);
+    try {
+      window.localStorage.setItem("popeblack-theme", nextTheme);
+    } catch {
+      // Keep the toggle functional when privacy settings block persistence.
+    }
     window.dispatchEvent(new Event(themeChangeEvent));
     trackEvent("theme_change", { theme: nextTheme });
   };

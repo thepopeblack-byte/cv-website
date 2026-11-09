@@ -209,6 +209,7 @@ export function Contact() {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (submitting) return;
 
     const form = event.currentTarget;
     const formData = new FormData(form);
@@ -230,10 +231,14 @@ export function Contact() {
       return;
     }
 
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 15000);
     try {
       setSubmitting(true);
+      setStatus({ type: "idle", message: "" });
       const response = await fetch(contactEndpoint, {
         method: "POST",
+        signal: controller.signal,
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
@@ -263,9 +268,12 @@ export function Contact() {
       setStatus({
         type: "error",
         message:
-          "Something went wrong. Please use the email link or try again.",
+          controller.signal.aborted
+            ? "The request timed out. Your message has been kept. Please try again or use the email link."
+            : "Something went wrong. Please use the email link or try again.",
       });
     } finally {
+      window.clearTimeout(timeout);
       setSubmitting(false);
     }
   }

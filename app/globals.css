@@ -3736,6 +3736,14 @@ html[data-theme="light"] .controlled-scene-panel {
 .media-dialog-backdrop {
   position: fixed;
   inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  border: 0;
+  color: var(--foreground);
   z-index: 130;
   display: grid;
   overflow-y: auto;
@@ -3745,8 +3753,17 @@ html[data-theme="light"] .controlled-scene-panel {
   backdrop-filter: blur(8px);
 }
 
+.media-dialog-backdrop:not([open]) {
+  display: none;
+}
+
+.media-dialog-backdrop::backdrop {
+  background: transparent;
+}
+
 .media-dialog-shell {
   display: flex;
+  width: 100%;
   min-height: 100%;
   max-width: 64rem;
   align-items: center;

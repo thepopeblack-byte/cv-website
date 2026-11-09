@@ -58,6 +58,30 @@ export function Header() {
   const closeMenu = () => setOpen(false);
 
   useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 1024px)");
+    const handleDesktopChange = (event: MediaQueryListEvent) => {
+      if (!event.matches) return;
+
+      const focusIsInMobileNavigation =
+        mobileMenuRef.current?.contains(document.activeElement) ||
+        document.activeElement === menuButtonRef.current;
+
+      setOpen(false);
+
+      if (focusIsInMobileNavigation) {
+        const desktopLink =
+          document.querySelector<HTMLAnchorElement>(
+            '.desktop-nav a[aria-current="page"]',
+          ) ?? document.querySelector<HTMLAnchorElement>(".desktop-nav a");
+        desktopLink?.focus({ preventScroll: true });
+      }
+    };
+
+    desktop.addEventListener("change", handleDesktopChange);
+    return () => desktop.removeEventListener("change", handleDesktopChange);
+  }, []);
+
+  useEffect(() => {
     if (!open) {
       return;
     }

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState, type ReactNode } from "react";
 
 type SectionRevealProps = {
@@ -17,6 +17,7 @@ export function SectionReveal({
   delay = 0,
 }: SectionRevealProps) {
   const [isCompactViewport, setIsCompactViewport] = useState(true);
+  const reducedMotion = useReducedMotion();
 
   useEffect(() => {
     const mediaQuery = window.matchMedia(compactViewportQuery);
@@ -28,18 +29,16 @@ export function SectionReveal({
     return () => mediaQuery.removeEventListener("change", syncViewport);
   }, []);
 
-  if (isCompactViewport) {
-    return <div className={className}>{children}</div>;
-  }
-
+  // Keep the wrapper type stable so resizing never remounts forms or controls.
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y: 22 }}
+      initial={false}
+      animate={isCompactViewport || reducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 22 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.08, margin: "0px 0px -14% 0px" }}
       transition={{
-        duration: 0.52,
+        duration: isCompactViewport || reducedMotion ? 0 : 0.52,
         ease: [0.16, 1, 0.3, 1],
         delay: Math.min(delay, 0.12),
       }}

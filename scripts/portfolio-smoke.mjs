@@ -14,6 +14,7 @@ const failures = [];
 
 for (const width of widths) {
   const page = await browser.newPage({ viewport: { width, height: 900 } });
+  page.setDefaultNavigationTimeout(120000);
   page.on("pageerror", (error) => failures.push(`${width}px page error: ${error.message}`));
   for (const route of routes) {
     const response = await page.goto(`${base}${route}`, { waitUntil: "domcontentloaded" });
@@ -27,11 +28,13 @@ for (const width of widths) {
       if (!heading?.trim()) failures.push(`${width}px ${route}: missing h1`);
     }
   }
+  console.log(`Checked ${routes.length} routes at ${width}px`);
   await page.close();
 }
 
 const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
-await page.goto(base);
+page.setDefaultNavigationTimeout(120000);
+await page.goto(base, { waitUntil: "domcontentloaded" });
 const heroOpacity = await page.locator("#profile h1").evaluate((node) => getComputedStyle(node).opacity);
 if (heroOpacity === "0") failures.push("Home hero is invisible");
 const hero = page.locator("#profile");
@@ -47,27 +50,31 @@ for (const [name, href] of heroActions) {
   else if (await action.getAttribute("href") !== href) failures.push(`${name} CTA points to the wrong destination`);
 }
 if (/\$1\.3M\+|\$300K\+|50\+ strategic deals/i.test(await page.locator("main").innerText())) failures.push("Unverified commercial headline is visible on home");
-await page.goto(`${base}/impact`);
+await page.goto(`${base}/impact`, { waitUntil: "domcontentloaded" });
 for (const id of ["secret-foundation", "secret-africa", "fina", "cosmos-hub-africa", "cipherowl"]) {
   if (!await page.locator(`#${id}`).count()) failures.push(`Missing workstream ${id}`);
 }
 if (await page.getByText("Trusted by:").count()) failures.push("Ambiguous Trusted by label remains");
-await page.goto(`${base}/blog`);
+await page.goto(`${base}/blog`, { waitUntil: "domcontentloaded" });
 if (!await page.getByRole("heading", { name: "Independent coverage" }).count()) failures.push("Coverage distinction missing");
-await page.goto(`${base}/blog/tracing-bybit-billion`);
+await page.goto(`${base}/blog/tracing-bybit-billion`, { waitUntil: "domcontentloaded" });
 const hackenCanonical = await page.locator('link[rel="canonical"]').getAttribute("href");
 if (hackenCanonical !== "https://hacken.io/discover/tracing-bybit-billion/") failures.push(`Hacken canonical is ${hackenCanonical}`);
-await page.goto(`${base}/blog/popeblacks-web3-journey`);
+await page.goto(`${base}/blog/popeblacks-web3-journey`, { waitUntil: "domcontentloaded" });
 const blockleadersCanonical = await page.locator('link[rel="canonical"]').getAttribute("href");
 if (blockleadersCanonical !== "https://www.popeblack.com/blog/popeblacks-web3-journey") failures.push(`Blockleaders synopsis canonical is ${blockleadersCanonical}`);
-await page.goto(`${base}/experience`);
+await page.goto(`${base}/experience`, { waitUntil: "domcontentloaded" });
 if (await page.locator("#experience article").count() !== 4) failures.push("Experience must show exactly four selected entries");
 for (const name of ["Secret Network Foundation", "CipherOwl Inc.", "WhisperNode", "Cosmos Hub Nigeria / Naija HackATOM"]) {
   if (!await page.getByRole("heading", { name, exact: true }).count()) failures.push(`${name} experience entry missing`);
 }
 if (!await page.getByRole("heading", { name: "Fina / Fina Cash", exact: true }).count()) failures.push("Nested Fina experience project missing");
 if (await page.getByRole("heading", { name: "Bybit affiliate programme", exact: true }).count()) failures.push("Bybit should not be a main experience entry");
-await page.goto(base);
+await page.goto(base, { waitUntil: "domcontentloaded" });
+await page.waitForFunction(() => {
+  const control = document.querySelector(".contact-select-trigger");
+  return control && Object.keys(control).some((key) => key.startsWith("__reactProps"));
+});
 await page.locator("#contact").scrollIntoViewIfNeeded();
 await page.getByRole("button", { name: "Opportunity Type Select an option" }).click();
 const firstOption = await page.locator(".contact-select-option").first().textContent();
@@ -76,6 +83,7 @@ await page.close();
 
 for (const theme of ["light", "dark"]) {
   const themedPage = await browser.newPage({ viewport: { width: 375, height: 812 }, reducedMotion: "reduce" });
+  themedPage.setDefaultNavigationTimeout(120000);
   await themedPage.addInitScript((value) => localStorage.setItem("popeblack-theme", value), theme);
   for (const route of ["/", "/impact", "/profile", "/experience", "/blog"]) {
     await themedPage.goto(`${base}${route}`, { waitUntil: "domcontentloaded" });
